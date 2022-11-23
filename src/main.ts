@@ -1,3 +1,33 @@
+// Resolution
+const vals = {
+  "2160": 7,
+  "1440": 6,
+  "1080": 5,
+  "720": 4,
+  "480": 3,
+  "360": 2,
+  "250": 1,
+  "144": 0,
+};
+document.querySelector<HTMLButtonElement>(".ytp-settings-button")?.click();
+const menu = document
+  .querySelector(".ytp-panel")
+  ?.querySelectorAll<HTMLButtonElement>(".ytp-menuitem");
+menu![menu!.length - 1].click();
+const items = document
+  .querySelector(".ytp-quality-menu")
+  ?.querySelectorAll<HTMLButtonElement>(".ytp-menuitem");
+const val = 6;
+for (const item of items!) {
+  const text = item.innerText;
+  const p = vals[text.substring(0, text.search("p")) as keyof typeof vals];
+  if (p <= val) {
+    item.click();
+    break;
+  }
+}
+
+// Replay
 const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 svg.setAttribute("viewbox", "0 0 24 24");
 svg.setAttribute("width", "100%");
@@ -34,6 +64,7 @@ document
   .querySelector(".ytp-right-controls")
   ?.insertBefore(btn, document.querySelector(".ytp-subtitles-button"));
 
+// Hotkeys
 document.addEventListener("keydown", (ev) => {
   switch (ev.key) {
     case "a":
