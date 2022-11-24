@@ -1,4 +1,6 @@
 /node_modules
-dist/js/*
+*.js
+*.css
+*.css.map
 yarn-debug.log*
 yarn-error.log*

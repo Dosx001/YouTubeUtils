@@ -17,15 +17,17 @@ menu![menu!.length - 1].click();
 const items = document
   .querySelector(".ytp-quality-menu")
   ?.querySelectorAll<HTMLButtonElement>(".ytp-menuitem");
-const val = 6;
-for (const item of items!) {
-  const text = item.innerText;
-  const p = vals[text.substring(0, text.search("p")) as keyof typeof vals];
-  if (p <= val) {
-    item.click();
-    break;
+browser.storage.local.get("res").then((res) => {
+  const val = Number(res.res ?? 5);
+  for (const item of items!) {
+    const text = item.innerText;
+    const p = vals[text.substring(0, text.search("p")) as keyof typeof vals];
+    if (p <= val) {
+      item.click();
+      break;
+    }
   }
-}
+});
 
 // Replay
 const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
