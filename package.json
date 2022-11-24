@@ -2,6 +2,11 @@
   "name": "YouTubeUtils",
   "version": "1.0.0",
   "description": "Extra YouTube functionality",
+  "scripts": {
+    "build": "web-ext build -s dist -i '**/*.css.map' --overwrite-dest",
+    "sass": "sass --watch src:dest",
+    "watch": "tsc --watch"
+  },
   "devDependencies": {
     "@types/firefox-webext-browser": "^94.0.1",
     "@typescript-eslint/eslint-plugin": "^5.44.0",
