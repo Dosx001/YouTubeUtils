@@ -36,8 +36,8 @@ svg.setAttribute("width", "100%");
 svg.setAttribute("height", "100%");
 svg.style.fill = "#e6e6e6";
 svg.style.position = "relative";
-svg.style.top = "1rem";
-svg.style.left = "1rem";
+svg.style.top = "1.25rem";
+svg.style.left = "1.5rem";
 
 const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
 const on =
@@ -50,6 +50,7 @@ let state = false;
 const btn = document.createElement("button");
 btn.className = "ytp-button";
 btn.id = "replay";
+btn.title = "Replay (r)";
 btn.onclick = () => {
   document
     .getElementById("movie_player")
@@ -58,6 +59,8 @@ btn.onclick = () => {
     .querySelector(".ytp-contextmenu")
     ?.querySelector<HTMLButtonElement>(".ytp-menuitem")
     ?.click();
+  state = !state;
+  path.setAttribute("d", state ? on : off);
 };
 
 svg.append(path);
@@ -75,9 +78,7 @@ document.addEventListener("keydown", (ev) => {
         ?.click();
       break;
     case "r":
-      document.getElementById("replay")?.click();
-      state = !state;
-      path.setAttribute("d", state ? on : off);
+      btn.click();
       break;
   }
 });
