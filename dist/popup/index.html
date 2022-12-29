@@ -5,23 +5,177 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>YouTube Utils Popup</title>
-  <link rel="stylesheet" type="text/css" href="styles.css" />
+  <script src="scripts/jquery-3.2.1.min.js"></script>
   <script src="index.js"></script>
+  <link rel="stylesheet" href="bootstrap-3.3.1-dist/dist/css/bootstrap.min.css" />
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="bootstrap-3.3.1-dist/dist/css/bootstrap-theme.min.css" />
+  <link rel="stylesheet" href="styles.css" type="text/css" />
 </head>
 
 <body>
-  <div>
-    <span>Resolution: </span>
-    <select id="sel">
-      <option value="7">4k</option>
-      <option value="6">1440p</option>
-      <option value="5">1080p</option>
-      <option value="4">720p</option>
-      <option value="3">480p</option>
-      <option value="2">360p</option>
-      <option value="1">250p</option>
-      <option value="0">144p</option>
-    </select>
+  <div id="popup">
+    <div class="optiondiv">
+      <fieldset>
+        <legend>Video Quality</legend>
+        <div class="wrapper">
+          <select>
+            <option value="highres">Highres</option>
+            <option value="hd2160">4K 2160p</option>
+            <option value="hd1440">HD 1440p</option>
+            <option value="hd1080">HD 1080p</option>
+            <option value="hd720">720p</option>
+            <option value="large">Large</option>
+            <option value="medium">Medium</option>
+            <option value="small">Small</option>
+            <option value="tiny">Tiny</option>
+            <option value="default">Default</option>
+          </select>
+        </div>
+      </fieldset>
+    </div>
+    <div class="optiondiv">
+      <fieldset>
+        <legend>Video Size</legend>
+        <div class="wrapper">
+          <select>
+            <option value="fullpage">Full Page</option>
+            <option value="expand">Expand</option>
+            <option id="shrink" value="shrink">Shrink</option>
+            <option value="default">Default</option>
+          </select>
+        </div>
+      </fieldset>
+    </div>
+    <div class="optiondiv">
+      <fieldset>
+        <legend>Video Speed</legend>
+        <div class="wrapper">
+          <select>
+            <option value="2">2</option>
+            <option value="1.5">1.5</option>
+            <option value="1.25">1.25</option>
+            <option value="1">Normal</option>
+            <option value="0.75">0.75</option>
+            <option value="0.5">0.5</option>
+            <option value="0.25">0.25</option>
+          </select>
+        </div>
+      </fieldset>
+    </div>
+    <div class="optiondiv" style="display: none">
+      <fieldset>
+        <legend>Annotations</legend>
+        <div class="wrapper">
+          <input type="checkbox" id="annotationsoff" /> Turn off annotations
+        </div>
+      </fieldset>
+    </div>
+    <div class="optiondiv">
+      <fieldset>
+        <legend>Volume</legend>
+        <div class="wrapper">
+          <form id="volume" style="margin-bottom: 0px">
+            <div style="margin-bottom: 10px">
+              <div style="float: left; margin-right: 10px">
+                <input type="radio" name="volume" class="vol_default" value="default" />
+                Default
+                <br />
+              </div>
+              <div style="float: left; margin-right: 10px">
+                <input type="radio" name="volume" class="vol_mute" value="mute" />
+                Mute
+                <br />
+              </div>
+              <div>
+                <input type="radio" name="volume" class="vol_100" value="100" />
+                100%
+              </div>
+            </div>
+            <div style="clear: both">
+              <input type="radio" name="volume" class="vol_volumelevel" value="volumelevel" id="volumelevelinput" />
+              Volume Level
+              <input style="margin-left: 10px !important" id="volumelevel" type="number" step="1" min="0" max="100" />
+            </div>
+          </form>
+        </div>
+      </fieldset>
+    </div>
+    <div class="optiondiv">
+      <fieldset>
+        <legend>Auto Play</legend>
+        <div class="wrapper">
+          <div style="margin-bottom: 10px">
+            YouTube Video Auto Play Behaviour
+            <select style="float: right" id="youtubevideoautoplaybehavior">
+              <option value="default">Default</option>
+              <option value="autoplay">Auto Play</option>
+              <option value="autopause">Auto Pause</option>
+            </select>
+          </div>
+          <div style="clear: both; margin-bottom: 10px">
+            Playlist Auto Play Behaviour
+            <select style="float: right" id="playlistvideoautoplaybehavior">
+              <option value="default">Default</option>
+              <option value="autoplay">Auto Play</option>
+              <option value="autopause">Auto Pause</option>
+            </select>
+          </div>
+          <input type="checkbox" id="suggestedautoplay" /> Suggested video
+          auto play next
+        </div>
+      </fieldset>
+    </div>
+    <div class="optiondiv">
+      <fieldset>
+        <legend>Embedded Video</legend>
+        <div class="wrapper">
+          <div>
+            Auto Play Behaviour
+            <select style="float: right" id="embeddedvideoautoplaybehavior">
+              <option value="default">Default</option>
+              <option value="autoplay">Auto Play</option>
+              <option value="autopause">Auto Pause</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <div class="optiondiv">
+      <fieldset>
+        <legend>Auto Subtitles/Closed Captions (CC)</legend>
+        <div class="wrapper">
+          <form id="autosubtitles" style="margin-bottom: 0px">
+            <div style="">
+              <div style="float: left; margin-right: 30px">
+                <input type="radio" name="autosubtitles" class="subt_default" value="default" />
+                Default
+                <br />
+              </div>
+              <div style="float: left; margin-right: 30px">
+                <input type="radio" name="autosubtitles" class="subt_on" value="on" />
+                On
+                <br />
+              </div>
+              <div style="">
+                <input type="radio" name="autosubtitles" class="subt_off" value="off" />
+                Off
+                <br />
+              </div>
+            </div>
+          </form>
+        </div>
+      </fieldset>
+    </div>
+    <div class="optiondiv">
+      <fieldset>
+        <legend>Generic</legend>
+        <div class="wrapper">
+          <input type="checkbox" id="autoexpanddescription" /> Auto expand
+          video description box
+        </div>
+      </fieldset>
+    </div>
   </div>
 </body>
 

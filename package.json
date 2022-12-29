@@ -4,8 +4,8 @@
   "description": "Extra YouTube functionality",
   "scripts": {
     "build": "web-ext build -s dist -i '**/*.css.map' --overwrite-dest",
-    "sass": "sass --watch src:dest",
-    "watch": "tsc --watch"
+    "tar": "tar czvf YouTubeUtils.tar.gz src dist build.sh package.json tsconfig.json yarn.lock README_FIREFOX.md",
+    "sass": "sass --update src:dist"
   },
   "devDependencies": {
     "@types/firefox-webext-browser": "^94.0.1",

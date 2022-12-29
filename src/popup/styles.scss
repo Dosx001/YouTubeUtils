@@ -1,5 +1,62 @@
 body {
-  background-color: #181a1b;
-  color: darkgray;
-  margin: 1rem;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 20px 25px 25px 25px;
+  font-family: "Segoe UI", "Source Sans Pro", Frutiger, "Frutiger Linotype",
+    "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+  background-color: #ac0;
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 20px,
+    rgba(255, 255, 255, 0.15) 20px,
+    rgba(255, 255, 255, 0.15) 40px
+  );
+  /*
+		background-color: rgba(255, 158, 46, 0.1);background-image: url(1.jpg);
+		background-image: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,.8) 20px, rgba(255,255,255,.5) 40px);
+		*/
+  /*
+		background-image: url(../1.jpg);
+		*/
+  /*
+		background-color:darkred;
+		background-image:-webkit-radial-gradient(circle, hsl(0, 80%, 50%), darkred);
+		background-image:-webkit-linear-gradient(top, hsl(0, 80%, 70%), darkred);
+		*/
+}
+#popup {
+  width: 450px;
+  height: auto;
+}
+fieldset {
+  margin-bottom: 15px;
+}
+legend {
+  border: none !important;
+  margin-bottom: 5px !important;
+  font-size: 15px !important;
+  font-weight: bold !important;
+}
+/*
+	.optiondiv  * {
+		font-size:1.24em;
+	}
+
+	.optiondiv legend {
+		color:white;
+	}
+	.optiondiv:nth-of-type(1){
+		margin-bottom:20px;
+	}
+	*/
+.wrapper {
+  border: 1px solid grey;
+  padding: 10px;
+  background-image: url(0.jpg);
+  background-color: rgba(245, 255, 239, 0.66);
+  /*text-shadow:0 0 8px white;*/
+}
+#shrink {
+  display: none;
 }
