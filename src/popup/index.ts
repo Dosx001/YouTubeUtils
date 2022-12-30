@@ -113,7 +113,7 @@ function adjustOptions(
   const sug = document.querySelector<HTMLInputElement>("#suggestedautoplay");
   sug.checked = suggestedautoplay;
   sug.addEventListener("change", requestVideoQualitySizeChange, true);
-  document.getElementById("autoexpanddescription").checked =
+  document.querySelector<HTMLInputElement>("#autoexpanddescription").checked =
     autoexpanddescription;
   document
     .getElementById("autosubtitles")
@@ -130,8 +130,13 @@ function adjustOptions(
   document
     .querySelector("#embeddedvideoautoplaybehavior")
     .addEventListener("change", requestVideoQualitySizeChange, true);
-  document.querySelector(
+  document.querySelector<HTMLInputElement>(
     '#volume input[type="radio"].vol_' + volume + ""
+  ).checked = true;
+  document.querySelector<HTMLInputElement>(
+    '#autosubtitles input[type="radio"].subt_' +
+    (autosubtitles ? autosubtitles : "default") +
+    ""
   ).checked = true;
   document.querySelector(
     '#youtubevideoautoplaybehavior [value="' +
@@ -148,11 +153,6 @@ function adjustOptions(
     embeddedvideoautoplaybehavior +
     '"]'
   ).selected = true;
-  document.querySelector(
-    '#autosubtitles input[type="radio"].subt_' +
-    (autosubtitles ? autosubtitles : "default") +
-    ""
-  ).checked = true;
 }
 
 const askQualitySize = () => {
