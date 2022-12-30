@@ -77,41 +77,35 @@ function adjustOptions(
   autoexpanddescription,
   autosubtitles
 ) {
-  var a;
-  var b;
-  var c;
+  var sel0;
+  var sel1;
+  var sel2;
 
-  a = document.getElementsByTagName("select")[0];
+  sel0 = document.getElementsByTagName("select")[0];
+  sel1 = document.getElementsByTagName("select")[1];
+  sel2 = document.getElementsByTagName("select")[2];
 
-  for (var i = 0; i < a.length; i++) {
-    if (a[i].getAttribute("value") == quality) {
-      a.selectedIndex = i;
+  for (var i = 0; i < sel0.length; i++) {
+    if (sel0[i].getAttribute("value") == quality) {
+      sel0.selectedIndex = i;
       break;
     }
   }
-
   document
     .getElementsByTagName("select")[0]
     .addEventListener("change", requestVideoQualitySizeChange, true);
-
-  b = document.getElementsByTagName("select")[1];
-
-  for (var i = 0; i < b.length; i++) {
-    if (b[i].getAttribute("value") == size) {
-      b.selectedIndex = i;
+  for (var i = 0; i < sel1.length; i++) {
+    if (sel1[i].getAttribute("value") == size) {
+      sel1.selectedIndex = i;
       break;
     }
   }
-
   document
     .getElementsByTagName("select")[1]
     .addEventListener("change", requestVideoQualitySizeChange, true);
-
-  c = document.getElementsByTagName("select")[2];
-
-  for (var i = 0; i < c.length; i++) {
-    if (c[i].getAttribute("value") == speed) {
-      c.selectedIndex = i;
+  for (var i = 0; i < sel2.length; i++) {
+    if (sel2[i].getAttribute("value") == speed) {
+      sel2.selectedIndex = i;
       break;
     }
   }
