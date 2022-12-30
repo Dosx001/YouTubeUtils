@@ -103,14 +103,10 @@ function adjustOptions(
   document
     .getElementById("annotationsoff")
     .addEventListener("change", requestVideoQualitySizeChange, true);
-
-  document.querySelector(
-    '#volume input[type="radio"].vol_' + volume + ""
-  ).checked = true;
-  document.querySelector("#volumelevel").value = volumelevel;
   document
     .getElementById("volume")
     .addEventListener("change", requestVideoQualitySizeChange, true);
+  document.querySelector("#volumelevel").value = volumelevel;
   document.getElementById("volumelevel").addEventListener(
     "focus",
     function(event) {
@@ -121,53 +117,50 @@ function adjustOptions(
   document
     .getElementById("volumelevel")
     .addEventListener("change", requestVideoQualitySizeChange, true);
-
+  document.getElementById("suggestedautoplay").checked = suggestedautoplay;
+  document
+    .getElementById("suggestedautoplay")
+    .addEventListener("change", requestVideoQualitySizeChange, true);
+  document.getElementById("autoexpanddescription").checked =
+    autoexpanddescription;
+  document
+    .getElementById("autosubtitles")
+    .addEventListener("change", requestVideoQualitySizeChange, true);
+  document
+    .getElementById("autoexpanddescription")
+    .addEventListener("change", requestVideoQualitySizeChange, true);
+  document
+    .querySelector("#youtubevideoautoplaybehavior")
+    .addEventListener("change", requestVideoQualitySizeChange, true);
+  document
+    .querySelector("#playlistvideoautoplaybehavior")
+    .addEventListener("change", requestVideoQualitySizeChange, true);
+  document
+    .querySelector("#embeddedvideoautoplaybehavior")
+    .addEventListener("change", requestVideoQualitySizeChange, true);
+  document.querySelector(
+    '#volume input[type="radio"].vol_' + volume + ""
+  ).checked = true;
   document.querySelector(
     '#youtubevideoautoplaybehavior [value="' +
     youtubevideoautoplaybehavior +
     '"]'
   ).selected = true;
-  document
-    .querySelector("#youtubevideoautoplaybehavior")
-    .addEventListener("change", requestVideoQualitySizeChange, true);
-
   document.querySelector(
     '#playlistvideoautoplaybehavior [value="' +
     playlistvideoautoplaybehavior +
     '"]'
   ).selected = true;
-  document
-    .querySelector("#playlistvideoautoplaybehavior")
-    .addEventListener("change", requestVideoQualitySizeChange, true);
-
-  document.getElementById("suggestedautoplay").checked = suggestedautoplay;
-  document
-    .getElementById("suggestedautoplay")
-    .addEventListener("change", requestVideoQualitySizeChange, true);
-
   document.querySelector(
     '#embeddedvideoautoplaybehavior [value="' +
     embeddedvideoautoplaybehavior +
     '"]'
   ).selected = true;
-  document
-    .querySelector("#embeddedvideoautoplaybehavior")
-    .addEventListener("change", requestVideoQualitySizeChange, true);
-
-  document.getElementById("autoexpanddescription").checked =
-    autoexpanddescription;
-  document
-    .getElementById("autoexpanddescription")
-    .addEventListener("change", requestVideoQualitySizeChange, true);
-
   document.querySelector(
     '#autosubtitles input[type="radio"].subt_' +
     (autosubtitles ? autosubtitles : "default") +
     ""
   ).checked = true;
-  document
-    .getElementById("autosubtitles")
-    .addEventListener("change", requestVideoQualitySizeChange, true);
 }
 
 const askQualitySize = () => {
