@@ -6,32 +6,28 @@ const ExtPop = {
 
 const requestVideoQualitySizeChange = async () => {
   const [sel0, sel1, sel2] = document.querySelectorAll("select");
-  var quality = sel0.options[sel0.selectedIndex].getAttribute("value");
-  var size = sel1.options[sel1.selectedIndex].getAttribute("value");
-  var speed = sel2.options[sel2.selectedIndex].getAttribute("value");
-  var volume = document.querySelector(
+  const quality = sel0.options[sel0.selectedIndex].getAttribute("value");
+  const size = sel1.options[sel1.selectedIndex].getAttribute("value");
+  const speed = sel2.options[sel2.selectedIndex].getAttribute("value");
+  const volume = document.querySelector(
     '#volume input[type="radio"][name="volume"]:checked'
   ).value;
-  var volumelevel = document.querySelector("#volumelevel").value;
-
-  var youtubevideoautoplaybehavior = document.querySelector(
+  const volumelevel = document.querySelector("#volumelevel").value;
+  const youtubevideoautoplaybehavior = document.querySelector(
     "#youtubevideoautoplaybehavior"
   ).value;
-  var playlistvideoautoplaybehavior = document.querySelector(
+  const playlistvideoautoplaybehavior = document.querySelector(
     "#playlistvideoautoplaybehavior"
   ).value;
-
-  var suggestedautoplay = document.getElementById("suggestedautoplay").checked;
-
-  var embeddedvideoautoplaybehavior = document.querySelector(
+  const suggestedautoplay =
+    document.getElementById("suggestedautoplay").checked;
+  const embeddedvideoautoplaybehavior = document.querySelector(
     "#embeddedvideoautoplaybehavior"
   ).value;
-
-  var autoexpanddescription = document.getElementById(
+  const autoexpanddescription = document.getElementById(
     "autoexpanddescription"
   ).checked;
-
-  var autosubtitles = document.querySelector(
+  const autosubtitles = document.querySelector(
     '#autosubtitles input[type="radio"][name="autosubtitles"]:checked'
   ).value;
   for (const tab of await browser.tabs.query({
