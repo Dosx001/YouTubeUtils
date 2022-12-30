@@ -100,11 +100,6 @@ const Ext = {
       browser.tabs.create({ url: passedObject["url"] });
     }
   },
-  bs: (v) => {
-    if (v.split(".").length == 2) return v;
-    return v.substring(0, v.lastIndexOf("."));
-    //return ((v.split(".").length==2) ? v : v.substring(0,v.lastIndexOf(".")));
-  },
 };
 
 browser.runtime.onMessage.addListener((request, sender) => {
