@@ -1,4 +1,4 @@
-const annotationsoff = false;
+let annotationsoff = false;
 
 const settings = {
   installed: false,
@@ -58,8 +58,8 @@ const Ext = {
   getStorage: () =>
     Ext.sto === "sync" ? browser.storage.sync : browser.storage.local,
   init: () => {
-    Ext.getStorage().get(settings, function(items) {
-      var ver = browser.runtime.getManifest().version;
+    Ext.getStorage().get(settings, async (items: typeof settings) => {
+      const ver = browser.runtime.getManifest().version;
       if (!items.installed) {
         items.installed = true;
         items.version = ver;
@@ -69,17 +69,9 @@ const Ext = {
           items.version = ver;
           if (browser.runtime.getBrowserInfo) {
             items.transition = true;
-            browser.runtime.getBrowserInfo(function(info) {
-              Ext.version = info.version;
-              var v = parseInt(Ext.version.split(".")[0]);
-              //if(v==55 && browser.i18n.getUILanguage()=="en_US"){
-              //Ext.oRTCT({'url': "http://barisderin.com/?p=1115"});
-              //}
-            });
+            const info = await browser.runtime.getBrowserInfo();
+            Ext.version = info.version;
           }
-          Ext.getStorage().set(items, function() {
-            //foo
-          });
         }
       }
       annotationsoff = items.annotationsoff;
