@@ -75,36 +75,21 @@ const askQualitySize = () => {
       autosubtitles: string;
       embeddedvideoautoplaybehavior: string;
       playlistvideoautoplaybehavior: string;
-      quality: string;
-      size: string;
-      speed: string;
       suggestedautoplay: boolean;
+      video_quality: string;
+      video_size: string;
+      video_speed: string;
       volume: string;
       volumelevel: string;
       youtubevideoautoplaybehavior: string;
     }) => {
       const [sel0, sel1, sel2] = document.querySelectorAll("select");
+      sel0.value = keys.video_quality;
+      sel1.value = keys.video_size;
+      sel2.value = keys.video_speed;
       sel0.onchange = () => requestVideoQualitySizeChange();
       sel1.onchange = () => requestVideoQualitySizeChange();
       sel2.onchange = () => requestVideoQualitySizeChange();
-      for (let i = 0; i < sel0.length; i++) {
-        if ((sel0[i] as HTMLOptionElement).value === keys.quality) {
-          sel0.selectedIndex = i;
-          break;
-        }
-      }
-      for (let i = 0; i < sel1.length; i++) {
-        if ((sel1[i] as HTMLOptionElement).value === keys.size) {
-          sel1.selectedIndex = i;
-          break;
-        }
-      }
-      for (let i = 0; i < sel2.length; i++) {
-        if ((sel2[i] as HTMLOptionElement).value === keys.speed) {
-          sel2.selectedIndex = i;
-          break;
-        }
-      }
       const anno = document.querySelector<HTMLInputElement>("#annotationsoff");
       anno.checked = annotationsoff;
       anno.addEventListener("change", requestVideoQualitySizeChange, true);
