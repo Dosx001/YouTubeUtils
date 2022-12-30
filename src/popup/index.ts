@@ -78,35 +78,27 @@ function adjustOptions(
   autosubtitles
 ) {
   const [sel0, sel1, sel2] = document.querySelectorAll("select");
+  sel0.onchange = () => requestVideoQualitySizeChange();
+  sel1.onchange = () => requestVideoQualitySizeChange();
+  sel2.onchange = () => requestVideoQualitySizeChange();
   for (var i = 0; i < sel0.length; i++) {
     if (sel0[i].getAttribute("value") == quality) {
       sel0.selectedIndex = i;
       break;
     }
   }
-  document
-    .getElementsByTagName("select")[0]
-    .addEventListener("change", requestVideoQualitySizeChange, true);
   for (var i = 0; i < sel1.length; i++) {
     if (sel1[i].getAttribute("value") == size) {
       sel1.selectedIndex = i;
       break;
     }
   }
-  document
-    .getElementsByTagName("select")[1]
-    .addEventListener("change", requestVideoQualitySizeChange, true);
   for (var i = 0; i < sel2.length; i++) {
     if (sel2[i].getAttribute("value") == speed) {
       sel2.selectedIndex = i;
       break;
     }
   }
-
-  document
-    .getElementsByTagName("select")[2]
-    .addEventListener("change", requestVideoQualitySizeChange, true);
-
   document.getElementById("annotationsoff").checked = annotationsoff;
   document
     .getElementById("annotationsoff")
