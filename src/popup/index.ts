@@ -5,15 +5,10 @@ const ExtPop = {
 };
 
 const requestVideoQualitySizeChange = async (event) => {
-  var f = document.getElementsByTagName("select")[0];
-  var quality = f.options[f.selectedIndex].getAttribute("value");
-
-  var g = document.getElementsByTagName("select")[1];
-  var size = g.options[g.selectedIndex].getAttribute("value");
-
-  var gg = document.getElementsByTagName("select")[2];
-  var speed = gg.options[gg.selectedIndex].getAttribute("value");
-
+  const [sel0, sel1, sel2] = document.querySelectorAll("select");
+  var quality = sel0.options[sel0.selectedIndex].getAttribute("value");
+  var size = sel1.options[sel1.selectedIndex].getAttribute("value");
+  var speed = sel2.options[sel2.selectedIndex].getAttribute("value");
   var j = document.getElementById("annotationsoff");
   var a = j.checked;
 
