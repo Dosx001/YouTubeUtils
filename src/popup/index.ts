@@ -124,22 +124,6 @@ function saveQualitySize(
     }
   );
 }
-/*
-        function requestVideoSizeChange(size) {
-            
-            browser.tabs.query({
-                    active: true,
-                    currentWindow:true
-                }, function(tabs) {
-                    browser.tabs.sendMessage(tabs[0].id, {action: 'video_size_change', 'size' : size}, function(response) {
-                            //foo
-                        }
-                    );
-                }
-            );          
-        
-        }
-    */
 
 function adjustOptions(
   q,
@@ -278,17 +262,12 @@ function adjustOptions(
     .addEventListener("change", requestVideoQualitySizeChange, true);
 }
 
-function askQualitySize() {
+const askQualitySize = () => {
   if (!ExtPop.sto) {
-    browser.runtime.sendMessage(
-      { action: "storage_ask_by_popup" },
-      function(o) {
-        //
-      }
-    );
+    browser.runtime.sendMessage({ action: "storage_ask_by_popup" });
     return;
   }
-  ExtPop.getStorage().get(null, function(items) {
+  ExtPop.getStorage().get(null, (items) => {
     adjustOptions(
       items["video_quality"],
       items["video_size"],
@@ -304,14 +283,7 @@ function askQualitySize() {
       items["autosubtitles"]
     );
   });
-  /*
-        browser.runtime.sendMessage({'action' : 'qualitysize_ask'}, 
-            function(o) {
-                adjustOptions(o['video_quality'],o['video_size']);
-            }
-        );
-        */
-}
+};
 
 browser.runtime.onMessage.addListener((req) => {
   if (req.action == "storage_answer_to_popup") {
