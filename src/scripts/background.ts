@@ -24,30 +24,6 @@ const Ext = {
   win: "CTRL+SHIFT+Y",
   mac: "CMD+SHIFT+Y",
   sto: "sync",
-  gotPlatformInfo: function(info) {
-    Ext.os = info.os;
-    var v = 61;
-    try {
-      v = /Chrome\/([0-9.]+)/.exec(window.navigator.userAgent)[1];
-    } catch (e) { }
-    if (browser.runtime.getBrowserInfo)
-      browser.runtime.getBrowserInfo(Ext.gotBrowserInfo);
-    else Ext.faq(v);
-  },
-  gotBrowserInfo: function(info) {
-    Ext.version = info.version;
-    Ext.faq(Ext.version);
-  },
-  faq: function(version) {
-    var v = parseInt(version.split(".")[0]);
-    if (
-      v < 55 ||
-      (v == 55 && browser.i18n.getUILanguage() == "en_US") ||
-      v > 55
-    ) {
-      Ext.oRTCT({ url: "http://barisderin.com/?p=1115" });
-    }
-  },
   checkStorage: {
     checkHTMLLocalStorage: function() {
       if (typeof localStorage !== "undefined") {
@@ -88,9 +64,6 @@ const Ext = {
         items.installed = true;
         items.version = ver;
         items.transition = true;
-        Ext.getStorage().set(items, function() {
-          browser.runtime.getPlatformInfo(Ext.gotPlatformInfo);
-        });
       } else {
         if (ver != items.version) {
           items.version = ver;
