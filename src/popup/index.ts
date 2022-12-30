@@ -4,15 +4,11 @@ const ExtPop = {
     ExtPop.sto === "sync" ? browser.storage.sync : browser.storage.local,
 };
 
-const requestVideoQualitySizeChange = async (event) => {
+const requestVideoQualitySizeChange = async () => {
   const [sel0, sel1, sel2] = document.querySelectorAll("select");
   var quality = sel0.options[sel0.selectedIndex].getAttribute("value");
   var size = sel1.options[sel1.selectedIndex].getAttribute("value");
   var speed = sel2.options[sel2.selectedIndex].getAttribute("value");
-
-  var v = document.getElementById("volume");
-  var vl = document.getElementById("volumelevel");
-
   var volume = document.querySelector(
     '#volume input[type="radio"][name="volume"]:checked'
   ).value;
