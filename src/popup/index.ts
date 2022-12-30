@@ -72,57 +72,21 @@ function requestVideoQualitySizeChange(event) {
       );
     }
   );
-
-  saveQualitySize(
-    quality,
-    size,
-    speed,
-    a,
-    volume,
-    volumelevel,
-    youtubevideoautoplaybehavior,
-    playlistvideoautoplaybehavior,
-    suggestedautoplay,
-    embeddedvideoautoplaybehavior,
-    autoexpanddescription,
-    autosubtitles
-  );
-}
-
-function saveQualitySize(
-  quality,
-  size,
-  speed,
-  a,
-  volume,
-  volumelevel,
-  youtubevideoautoplaybehavior,
-  playlistvideoautoplaybehavior,
-  suggestedautoplay,
-  embeddedvideoautoplaybehavior,
-  autoexpanddescription,
-  autosubtitles
-) {
-  browser.runtime.sendMessage(
-    {
-      action: "qualitysize_save",
-      quality: quality,
-      size: size,
-      speed: speed,
-      annotationsoff: a,
-      volume: volume,
-      volumelevel: volumelevel,
-      youtubevideoautoplaybehavior: youtubevideoautoplaybehavior,
-      playlistvideoautoplaybehavior: playlistvideoautoplaybehavior,
-      suggestedautoplay: suggestedautoplay,
-      embeddedvideoautoplaybehavior: embeddedvideoautoplaybehavior,
-      autoexpanddescription: autoexpanddescription,
-      autosubtitles: autosubtitles,
-    },
-    function(o) {
-      //foo
-    }
-  );
+  browser.runtime.sendMessage({
+    action: "qualitysize_save",
+    quality: quality,
+    size: size,
+    speed: speed,
+    annotationsoff: a,
+    volume: volume,
+    volumelevel: volumelevel,
+    youtubevideoautoplaybehavior: youtubevideoautoplaybehavior,
+    playlistvideoautoplaybehavior: playlistvideoautoplaybehavior,
+    suggestedautoplay: suggestedautoplay,
+    embeddedvideoautoplaybehavior: embeddedvideoautoplaybehavior,
+    autoexpanddescription: autoexpanddescription,
+    autosubtitles: autosubtitles,
+  });
 }
 
 function adjustOptions(
