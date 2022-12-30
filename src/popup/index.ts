@@ -14,19 +14,8 @@ const requestVideoQualitySizeChange = async () => {
   ).value;
   const volumelevel =
     document.querySelector<HTMLInputElement>("#volumelevel").value;
-  const youtubevideoautoplaybehavior = document.querySelector<HTMLInputElement>(
-    "#youtubevideoautoplaybehavior"
-  ).value;
-  const playlistvideoautoplaybehavior =
-    document.querySelector<HTMLInputElement>(
-      "#playlistvideoautoplaybehavior"
-    ).value;
   const suggestedautoplay =
     document.querySelector<HTMLInputElement>("#suggestedautoplay").checked;
-  const embeddedvideoautoplaybehavior =
-    document.querySelector<HTMLInputElement>(
-      "#embeddedvideoautoplaybehavior"
-    ).value;
   const autoexpanddescription = document.querySelector<HTMLInputElement>(
     "#autoexpanddescription"
   ).checked;
@@ -55,16 +44,22 @@ const requestVideoQualitySizeChange = async () => {
     quality: quality,
     size: size,
     speed: speed,
-    annotationsoff:
-      document.querySelector<HTMLInputElement>("#annotationsoff").checked,
     volume: volume,
     volumelevel: volumelevel,
-    youtubevideoautoplaybehavior: youtubevideoautoplaybehavior,
-    playlistvideoautoplaybehavior: playlistvideoautoplaybehavior,
     suggestedautoplay: suggestedautoplay,
-    embeddedvideoautoplaybehavior: embeddedvideoautoplaybehavior,
     autoexpanddescription: autoexpanddescription,
     autosubtitles: autosubtitles,
+    annotationsoff:
+      document.querySelector<HTMLInputElement>("#annotationsoff").checked,
+    youtubevideoautoplaybehavior: document.querySelector<HTMLInputElement>(
+      "#youtubevideoautoplaybehavior"
+    ).value,
+    playlistvideoautoplaybehavior: document.querySelector<HTMLInputElement>(
+      "#playlistvideoautoplaybehavior"
+    ).value,
+    embeddedvideoautoplaybehavior: document.querySelector<HTMLInputElement>(
+      "#embeddedvideoautoplaybehavior"
+    ).value,
   });
 };
 
