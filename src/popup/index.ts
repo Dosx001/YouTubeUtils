@@ -4,7 +4,7 @@ const ExtPop = {
     ExtPop.sto === "sync" ? browser.storage.sync : browser.storage.local,
 };
 
-function requestVideoQualitySizeChange(event) {
+const requestVideoQualitySizeChange = async (event) => {
   var f = document.getElementsByTagName("select")[0];
   var quality = f.options[f.selectedIndex].getAttribute("value");
 
@@ -45,33 +45,23 @@ function requestVideoQualitySizeChange(event) {
   var autosubtitles = document.querySelector(
     '#autosubtitles input[type="radio"][name="autosubtitles"]:checked'
   ).value;
-
-  browser.tabs.query(
-    {
-      active: true,
-      currentWindow: true,
-    },
-    function(tabs) {
-      browser.tabs.sendMessage(
-        tabs[0].id,
-        {
-          action: "video_qualitysize_change",
-          quality: quality,
-          size: size,
-          speed: speed,
-          volume: volume,
-          volumelevel: volumelevel,
-          suggestedautoplay: suggestedautoplay,
-          autoexpanddescription: autoexpanddescription,
-          autosubtitles: autosubtitles,
-          isOptionHandle: true,
-        },
-        function(response) {
-          //foo
-        }
-      );
-    }
-  );
+  for (const tab of await browser.tabs.query({
+    active: true,
+    currentWindow: true,
+  })) {
+    browser.tabs.sendMessage(tab.id, {
+      action: "video_qualitysize_change",
+      quality: quality,
+      size: size,
+      speed: speed,
+      volume: volume,
+      volumelevel: volumelevel,
+      suggestedautoplay: suggestedautoplay,
+      autoexpanddescription: autoexpanddescription,
+      autosubtitles: autosubtitles,
+      isOptionHandle: true,
+    });
+  }
   browser.runtime.sendMessage({
     action: "qualitysize_save",
     quality: quality,
@@ -87,7 +77,7 @@ function requestVideoQualitySizeChange(event) {
     autoexpanddescription: autoexpanddescription,
     autosubtitles: autosubtitles,
   });
-}
+};
 
 function adjustOptions(
   quality,
