@@ -154,37 +154,26 @@ browser.runtime.onMessage.addListener((request, sender) => {
   if (request.action == "video_quality_change") {
     changeVideoQuality(request.quality);
   } else if (request.action == "qualitysize_ask") {
-    Ext.getStorage().get(null, function(items) {
-      browser.tabs.sendMessage(
-        sender.tab.id,
-        {
-          action: "video_qualitysize_change",
-          quality: items.video_quality,
-          size: items.video_size,
-        },
-        function(response) {
-          //foo
-        }
-      );
+    Ext.getStorage().get((items) => {
+      browser.tabs.sendMessage(sender.tab.id, {
+        action: "video_qualitysize_change",
+        quality: items.video_quality,
+        size: items.video_size,
+      });
     });
   } else if (request.action == "storage_ask") {
-    Ext.getStorage().get(null, function(items) {
-      browser.tabs.sendMessage(
-        sender.tab.id,
-        { action: "storage_answer", sto: Ext.sto },
-        function(response) {
-          //foo
-        }
-      );
+    Ext.getStorage().get(() => {
+      browser.tabs.sendMessage(sender.tab.id, {
+        action: "storage_answer",
+        sto: Ext.sto,
+      });
     });
   } else if (request.action == "storage_ask_by_popup") {
-    Ext.getStorage().get(null, function(items) {
-      browser.runtime.sendMessage(
-        { action: "storage_answer_to_popup", sto: Ext.sto },
-        function(response) {
-          //foo
-        }
-      );
+    Ext.getStorage().get(() => {
+      browser.runtime.sendMessage({
+        action: "storage_answer_to_popup",
+        sto: Ext.sto,
+      });
     });
   } else if (request.action == "qualitysize_save") {
     Ext.getStorage().set(
