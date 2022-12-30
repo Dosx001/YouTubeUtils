@@ -85,21 +85,6 @@ const Ext = {
       annotationsoff = items.annotationsoff;
     });
   },
-  oRTCT: async (passedObject) => {
-    const tab = await browser.tabs.query({
-      active: true,
-      currentWindow: true,
-    });
-    if (tab.length !== 0) {
-      const index = tab[0].index;
-      browser.tabs.create({
-        url: passedObject["url"],
-        index: index + 1,
-      });
-    } else {
-      browser.tabs.create({ url: passedObject["url"] });
-    }
-  },
 };
 
 browser.runtime.onMessage.addListener((request, sender) => {
