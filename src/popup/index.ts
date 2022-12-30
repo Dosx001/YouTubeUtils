@@ -1,8 +1,7 @@
-var ExtPop = {
+const ExtPop = {
   sto: null,
-  getStorage: function() {
-    return ExtPop.sto == "sync" ? browser.storage.sync : browser.storage.local;
-  },
+  getStorage: () =>
+    ExtPop.sto === "sync" ? browser.storage.sync : browser.storage.local,
 };
 
 function requestVideoQualitySizeChange(event) {
