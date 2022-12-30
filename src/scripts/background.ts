@@ -1,6 +1,6 @@
-var annotationsoff = false;
+const annotationsoff = false;
 
-var settings = {
+const settings = {
   installed: false,
   version: "",
   video_quality: "highres",
@@ -18,7 +18,7 @@ var settings = {
   transition: false,
 };
 
-var Ext = {
+const Ext = {
   os: null,
   version: null,
   win: "CTRL+SHIFT+Y",
@@ -209,7 +209,7 @@ function onRequest(request, sender, callback) {
   }
 }
 browser.runtime.onMessage.addListener(onRequest);
-var response = function(details) {
+const response = function(details) {
   if (annotationsoff)
     return {
       cancel:
