@@ -313,23 +313,13 @@ function askQualitySize() {
         */
 }
 
-browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if (request.action == "storage_answer_to_popup") {
-    try {
-      ExtPop.sto = request.sto;
-      askQualitySize();
-    } catch (e) {
-      alert(e);
-    }
+browser.runtime.onMessage.addListener((req) => {
+  if (req.action == "storage_answer_to_popup") {
+    ExtPop.sto = req.sto;
+    askQualitySize();
   }
 });
 
 ExtPop.sto = "local";
 
-document.addEventListener(
-  "DOMContentLoaded",
-  function(event) {
-    askQualitySize();
-  },
-  false
-);
+document.addEventListener("DOMContentLoaded", () => askQualitySize(), false);
