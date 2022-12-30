@@ -1,7 +1,7 @@
 var ExtPop = {
   sto: null,
   getStorage: function() {
-    return ExtPop.sto == "sync" ? chrome.storage.sync : chrome.storage.local;
+    return ExtPop.sto == "sync" ? browser.storage.sync : browser.storage.local;
   },
 };
 
@@ -47,13 +47,13 @@ function requestVideoQualitySizeChange(event) {
     '#autosubtitles input[type="radio"][name="autosubtitles"]:checked'
   ).value;
 
-  chrome.tabs.query(
+  browser.tabs.query(
     {
       active: true,
       currentWindow: true,
     },
     function(tabs) {
-      chrome.tabs.sendMessage(
+      browser.tabs.sendMessage(
         tabs[0].id,
         {
           action: "video_qualitysize_change",
@@ -104,7 +104,7 @@ function saveQualitySize(
   autoexpanddescription,
   autosubtitles
 ) {
-  chrome.runtime.sendMessage(
+  browser.runtime.sendMessage(
     {
       action: "qualitysize_save",
       quality: q,
@@ -128,11 +128,11 @@ function saveQualitySize(
 /*
         function requestVideoSizeChange(size) {
             
-            chrome.tabs.query({
+            browser.tabs.query({
                     active: true,
                     currentWindow:true
                 }, function(tabs) {
-                    chrome.tabs.sendMessage(tabs[0].id, {action: 'video_size_change', 'size' : size}, function(response) {
+                    browser.tabs.sendMessage(tabs[0].id, {action: 'video_size_change', 'size' : size}, function(response) {
                             //foo
                         }
                     );
@@ -281,7 +281,7 @@ function adjustOptions(
 
 function askQualitySize() {
   if (!ExtPop.sto) {
-    chrome.runtime.sendMessage(
+    browser.runtime.sendMessage(
       { action: "storage_ask_by_popup" },
       function(o) {
         //
@@ -306,7 +306,7 @@ function askQualitySize() {
     );
   });
   /*
-        chrome.runtime.sendMessage({'action' : 'qualitysize_ask'}, 
+        browser.runtime.sendMessage({'action' : 'qualitysize_ask'}, 
             function(o) {
                 adjustOptions(o['video_quality'],o['video_size']);
             }
@@ -314,7 +314,7 @@ function askQualitySize() {
         */
 }
 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.action == "storage_answer_to_popup") {
     try {
       ExtPop.sto = request.sto;

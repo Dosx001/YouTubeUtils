@@ -140,7 +140,7 @@ var YouTubeHighDefinition = {
     }
   },
   askQualitySize: function() {
-    chrome.runtime.sendMessage({ action: "qualitysize_ask" }, function(o) {
+    browser.runtime.sendMessage({ action: "qualitysize_ask" }, function(o) {
       YouTubeHighDefinition.changeVideoQuality(
         document,
         o["video_quality"],
@@ -828,7 +828,7 @@ var YouTubeHighDefinition = {
         }
       }, 1000);
 
-      //chrome.cookies.set({"url": ".youtube.com", "name": "wide", "value": 1});
+      //browser.cookies.set({"url": ".youtube.com", "name": "wide", "value": 1});
     } else if (currentvideosize == "shrink") {
       if (dc.getElementById("ythdlink"))
         dc.getElementById("ythdlink").parentNode.removeChild(
@@ -978,7 +978,7 @@ var YouTubeHighDefinition = {
         }
       }, 1000);
 
-      //chrome.cookies.set({"url": ".youtube.com", "name": "wide", "value": 0});
+      //browser.cookies.set({"url": ".youtube.com", "name": "wide", "value": 0});
     } else if (currentvideosize == "default") {
       if (isOptionHandle) {
         //if(dc.body.classList.contains("fullytpagesize")) {

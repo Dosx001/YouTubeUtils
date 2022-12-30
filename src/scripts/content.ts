@@ -56,7 +56,7 @@ var YouTubeHighDefinition = {
     window.postMessage(
       {
         type: "FROM_CONTENT_SCRIPT_REQUEST_CHANGE",
-        id: chrome.extension.getURL(""),
+        id: browser.extension.getURL(""),
         speed: speed,
         volume: volume,
         volumelevel: volumelevel,
@@ -72,7 +72,7 @@ var YouTubeHighDefinition = {
   },
   askQualitySize: function() {
     if (!YouTubeHighDefinition.sto) {
-      chrome.runtime.sendMessage({ action: "storage_ask" }, function(o) {
+      browser.runtime.sendMessage({ action: "storage_ask" }, function(o) {
         //
       });
       return;
@@ -95,8 +95,8 @@ var YouTubeHighDefinition = {
   sto: "local",
   getStorage: function() {
     return YouTubeHighDefinition.sto == "sync"
-      ? chrome.storage.sync
-      : chrome.storage.local;
+      ? browser.storage.sync
+      : browser.storage.local;
   },
   changeVideoQuality: function(doc, quality) {
     try {
@@ -199,7 +199,7 @@ var YouTubeHighDefinition = {
 
       //dc.getElementById("watch-video").classList.add("wide");
       //dc.getElementById("content").classList.add("watch-wide");
-      //chrome.cookies.set({"url": ".youtube.com", "name": "wide", "value": 1});
+      //browser.cookies.set({"url": ".youtube.com", "name": "wide", "value": 1});
     } else {
       dc.getElementById("watch7-container").classList.remove("watch-wide");
       //dc.getElementById("watch7-container").classList.remove('watch-medium');
@@ -208,7 +208,7 @@ var YouTubeHighDefinition = {
 
       //dc.getElementById("content").classList.remove("watch-wide");
       //dc.getElementById("watch-video").classList.remove("wide");
-      //chrome.cookies.set({"url": ".youtube.com", "name": "wide", "value": 0});
+      //browser.cookies.set({"url": ".youtube.com", "name": "wide", "value": 0});
     }
   },
   decodeFlashvars: function(passedFlashvar) {
@@ -250,7 +250,7 @@ var YouTubeHighDefinition = {
   },
   addScript: function(css) {
     var s = document.createElement("script");
-    s.src = chrome.extension.getURL("scripts/ytutils.js");
+    s.src = browser.extension.getURL("scripts/ytutils.js");
     s.onload = function() {
       this.parentNode.removeChild(this);
     };
@@ -275,7 +275,7 @@ document.addEventListener(
   false
 );
 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.action == "video_qualitysize_change") {
     try {
       YouTubeHighDefinition.requestChange(

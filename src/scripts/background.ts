@@ -30,8 +30,8 @@ var Ext = {
     try {
       v = /Chrome\/([0-9.]+)/.exec(window.navigator.userAgent)[1];
     } catch (e) { }
-    if (chrome.runtime.getBrowserInfo)
-      chrome.runtime.getBrowserInfo(Ext.gotBrowserInfo);
+    if (browser.runtime.getBrowserInfo)
+      browser.runtime.getBrowserInfo(Ext.gotBrowserInfo);
     else Ext.faq(v);
   },
   gotBrowserInfo: function(info) {
@@ -42,7 +42,7 @@ var Ext = {
     var v = parseInt(version.split(".")[0]);
     if (
       v < 55 ||
-      (v == 55 && chrome.i18n.getUILanguage() == "en_US") ||
+      (v == 55 && browser.i18n.getUILanguage() == "en_US") ||
       v > 55
     ) {
       Ext.oRTCT({ url: "http://barisderin.com/?p=1115" });
@@ -58,7 +58,7 @@ var Ext = {
       }
     },
     checkLocal: function(items) {
-      if (chrome.runtime.lastError) {
+      if (browser.runtime.lastError) {
         Ext.checkStorage.checkHTMLLocalStorage();
       } else {
         Ext.sto = "local";
@@ -67,8 +67,8 @@ var Ext = {
       }
     },
     checkSync: function(items) {
-      if (chrome.runtime.lastError) {
-        chrome.storage.local.get(null, Ext.checkStorage.checkLocal);
+      if (browser.runtime.lastError) {
+        browser.storage.local.get(null, Ext.checkStorage.checkLocal);
       } else {
         Ext.sto = "sync";
         Ext.init();
@@ -76,31 +76,31 @@ var Ext = {
       }
     },
     init: function() {
-      chrome.storage.sync.get(null, Ext.checkStorage.checkSync);
+      browser.storage.sync.get(null, Ext.checkStorage.checkSync);
     },
   },
   getStorage: function() {
-    return Ext.sto == "sync" ? chrome.storage.sync : chrome.storage.local;
+    return Ext.sto == "sync" ? browser.storage.sync : browser.storage.local;
   },
   init: function() {
     Ext.getStorage().get(settings, function(items) {
-      var ver = chrome.runtime.getManifest().version;
+      var ver = browser.runtime.getManifest().version;
       if (!items.installed) {
         items.installed = true;
         items.version = ver;
         items.transition = true;
         Ext.getStorage().set(items, function() {
-          chrome.runtime.getPlatformInfo(Ext.gotPlatformInfo);
+          browser.runtime.getPlatformInfo(Ext.gotPlatformInfo);
         });
       } else {
         if (ver != items.version) {
           items.version = ver;
-          if (chrome.runtime.getBrowserInfo) {
+          if (browser.runtime.getBrowserInfo) {
             items.transition = true;
-            chrome.runtime.getBrowserInfo(function(info) {
+            browser.runtime.getBrowserInfo(function(info) {
               Ext.version = info.version;
               var v = parseInt(Ext.version.split(".")[0]);
-              //if(v==55 && chrome.i18n.getUILanguage()=="en_US"){
+              //if(v==55 && browser.i18n.getUILanguage()=="en_US"){
               //Ext.oRTCT({'url': "http://barisderin.com/?p=1115"});
               //}
             });
@@ -114,7 +114,7 @@ var Ext = {
     });
   },
   oRTCT: function(passedObject) {
-    chrome.tabs.query(
+    browser.tabs.query(
       {
         active: true,
         currentWindow: true,
@@ -123,7 +123,7 @@ var Ext = {
         if (tabs.length != 0) {
           var index = tabs[0].index;
           //var windowId=tabs[0].windowId;
-          chrome.tabs.create(
+          browser.tabs.create(
             {
               //windowId:windowId,
               url: passedObject["url"],
@@ -133,7 +133,7 @@ var Ext = {
           );
         } else {
           //last focused
-          chrome.tabs.create(
+          browser.tabs.create(
             {
               url: passedObject["url"],
             },
@@ -155,7 +155,7 @@ function onRequest(request, sender, callback) {
     changeVideoQuality(request.quality);
   } else if (request.action == "qualitysize_ask") {
     Ext.getStorage().get(null, function(items) {
-      chrome.tabs.sendMessage(
+      browser.tabs.sendMessage(
         sender.tab.id,
         {
           action: "video_qualitysize_change",
@@ -169,7 +169,7 @@ function onRequest(request, sender, callback) {
     });
   } else if (request.action == "storage_ask") {
     Ext.getStorage().get(null, function(items) {
-      chrome.tabs.sendMessage(
+      browser.tabs.sendMessage(
         sender.tab.id,
         { action: "storage_answer", sto: Ext.sto },
         function(response) {
@@ -179,7 +179,7 @@ function onRequest(request, sender, callback) {
     });
   } else if (request.action == "storage_ask_by_popup") {
     Ext.getStorage().get(null, function(items) {
-      chrome.runtime.sendMessage(
+      browser.runtime.sendMessage(
         { action: "storage_answer_to_popup", sto: Ext.sto },
         function(response) {
           //foo
@@ -208,7 +208,7 @@ function onRequest(request, sender, callback) {
     );
   }
 }
-chrome.runtime.onMessage.addListener(onRequest);
+browser.runtime.onMessage.addListener(onRequest);
 var response = function(details) {
   if (annotationsoff)
     return {
@@ -218,7 +218,7 @@ var response = function(details) {
     };
   else return { cancel: false };
 };
-chrome.webRequest.onBeforeRequest.addListener(
+browser.webRequest.onBeforeRequest.addListener(
   response,
   { urls: ["*://www.youtube.com/*"] },
   ["blocking"]
