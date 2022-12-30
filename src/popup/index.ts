@@ -6,9 +6,9 @@ const ExtPop = {
 
 const requestVideoQualitySizeChange = async () => {
   const [sel0, sel1, sel2] = document.querySelectorAll("select");
-  const quality = sel0.options[sel0.selectedIndex].getAttribute("value");
-  const size = sel1.options[sel1.selectedIndex].getAttribute("value");
-  const speed = sel2.options[sel2.selectedIndex].getAttribute("value");
+  const quality = sel0.options[sel0.selectedIndex].value;
+  const size = sel1.options[sel1.selectedIndex].value;
+  const speed = sel2.options[sel2.selectedIndex].value;
   const volume = document.querySelector<HTMLInputElement>(
     '#volume input[type="radio"][name="volume"]:checked'
   ).value;
@@ -82,19 +82,19 @@ function adjustOptions(
   sel1.onchange = () => requestVideoQualitySizeChange();
   sel2.onchange = () => requestVideoQualitySizeChange();
   for (let i = 0; i < sel0.length; i++) {
-    if (sel0[i].getAttribute("value") === quality) {
+    if ((sel0[i] as HTMLOptionElement).value === quality) {
       sel0.selectedIndex = i;
       break;
     }
   }
   for (let i = 0; i < sel1.length; i++) {
-    if (sel1[i].getAttribute("value") === size) {
+    if ((sel1[i] as HTMLOptionElement).value === size) {
       sel1.selectedIndex = i;
       break;
     }
   }
   for (let i = 0; i < sel2.length; i++) {
-    if (sel2[i].getAttribute("value") === speed) {
+    if ((sel2[i] as HTMLOptionElement).value === speed) {
       sel2.selectedIndex = i;
       break;
     }
