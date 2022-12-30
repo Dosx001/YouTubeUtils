@@ -170,18 +170,18 @@ const askQualitySize = () => {
   }
   ExtPop.getStorage().get(null, (items) => {
     adjustOptions(
-      items["video_quality"],
-      items["video_size"],
-      items["video_speed"],
-      items["annotationsoff"],
-      items["volume"],
-      items["volumelevel"],
-      items["youtubevideoautoplaybehavior"],
-      items["playlistvideoautoplaybehavior"],
-      items["suggestedautoplay"],
-      items["embeddedvideoautoplaybehavior"],
-      items["autoexpanddescription"],
-      items["autosubtitles"]
+      items.video_quality,
+      items.video_size,
+      items.video_speed,
+      items.annotationsoff,
+      items.volume,
+      items.volumelevel,
+      items.youtubevideoautoplaybehavior,
+      items.playlistvideoautoplaybehavior,
+      items.suggestedautoplay,
+      items.embeddedvideoautoplaybehavior,
+      items.autoexpanddescription,
+      items.autosubtitles
     );
   });
 };
