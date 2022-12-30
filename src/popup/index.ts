@@ -77,14 +77,7 @@ function adjustOptions(
   autoexpanddescription,
   autosubtitles
 ) {
-  var sel0;
-  var sel1;
-  var sel2;
-
-  sel0 = document.getElementsByTagName("select")[0];
-  sel1 = document.getElementsByTagName("select")[1];
-  sel2 = document.getElementsByTagName("select")[2];
-
+  const [sel0, sel1, sel2] = document.querySelectorAll("select");
   for (var i = 0; i < sel0.length; i++) {
     if (sel0[i].getAttribute("value") == quality) {
       sel0.selectedIndex = i;
