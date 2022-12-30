@@ -209,20 +209,20 @@ function onRequest(request, sender, callback) {
   }
 }
 browser.runtime.onMessage.addListener(onRequest);
-const response = function(details) {
-  if (annotationsoff)
-    return {
-      cancel:
-        details.url.indexOf("/annotations_invideo") != -1 &&
-        details.url.indexOf("instream_ad") == -1,
-    };
-  else return { cancel: false };
-};
+
 browser.webRequest.onBeforeRequest.addListener(
-  response,
+  (details) => {
+    if (annotationsoff)
+      return {
+        cancel:
+          details.url.indexOf("/annotations_invideo") != -1 &&
+          details.url.indexOf("instream_ad") == -1,
+      };
+    else return { cancel: false };
+  },
   { urls: ["*://www.youtube.com/*"] },
   ["blocking"]
 );
-//Ext.checkStorage.init();
+
 Ext.sto = "local";
 Ext.init();
