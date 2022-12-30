@@ -80,20 +80,15 @@ function adjustOptions(
   var a;
   var b;
   var c;
-  var si;
-  var sib;
-  var sic;
 
   a = document.getElementsByTagName("select")[0];
 
   for (var i = 0; i < a.length; i++) {
     if (a[i].getAttribute("value") == quality) {
-      si = i;
+      a.selectedIndex = i;
       break;
     }
   }
-
-  a.selectedIndex = si;
 
   document
     .getElementsByTagName("select")[0]
@@ -103,12 +98,10 @@ function adjustOptions(
 
   for (var i = 0; i < b.length; i++) {
     if (b[i].getAttribute("value") == size) {
-      sib = i;
+      b.selectedIndex = i;
       break;
     }
   }
-
-  b.selectedIndex = sib;
 
   document
     .getElementsByTagName("select")[1]
@@ -118,12 +111,10 @@ function adjustOptions(
 
   for (var i = 0; i < c.length; i++) {
     if (c[i].getAttribute("value") == speed) {
-      sic = i;
+      c.selectedIndex = i;
       break;
     }
   }
-
-  c.selectedIndex = sic;
 
   document
     .getElementsByTagName("select")[2]
