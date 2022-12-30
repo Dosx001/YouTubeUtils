@@ -99,28 +99,20 @@ function adjustOptions(
       break;
     }
   }
-  document.getElementById("annotationsoff").checked = annotationsoff;
-  document
-    .getElementById("annotationsoff")
-    .addEventListener("change", requestVideoQualitySizeChange, true);
+  const anno = document.querySelector<HTMLInputElement>("#annotationsoff");
+  anno.checked = annotationsoff;
+  anno.addEventListener("change", requestVideoQualitySizeChange, true);
   document
     .getElementById("volume")
     .addEventListener("change", requestVideoQualitySizeChange, true);
-  document.querySelector("#volumelevel").value = volumelevel;
-  document.getElementById("volumelevel").addEventListener(
-    "focus",
-    function(event) {
-      document.getElementById("volumelevelinput").checked = true;
-    },
-    true
-  );
-  document
-    .getElementById("volumelevel")
-    .addEventListener("change", requestVideoQualitySizeChange, true);
-  document.getElementById("suggestedautoplay").checked = suggestedautoplay;
-  document
-    .getElementById("suggestedautoplay")
-    .addEventListener("change", requestVideoQualitySizeChange, true);
+  const volLvl = document.querySelector<HTMLInputElement>("#volumelevel");
+  volLvl.value = volumelevel;
+  volLvl.onchange = () => requestVideoQualitySizeChange();
+  volLvl.onfocus = () =>
+    document.querySelector<HTMLInputElement>("#volumelevelinput").click();
+  const sug = document.querySelector<HTMLInputElement>("#suggestedautoplay");
+  sug.checked = suggestedautoplay;
+  sug.addEventListener("change", requestVideoQualitySizeChange, true);
   document.getElementById("autoexpanddescription").checked =
     autoexpanddescription;
   document
