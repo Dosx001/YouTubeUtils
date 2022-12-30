@@ -6,13 +6,13 @@ const ExtPop = {
 
 function requestVideoQualitySizeChange(event) {
   var f = document.getElementsByTagName("select")[0];
-  var q = f.options[f.selectedIndex].getAttribute("value");
+  var quality = f.options[f.selectedIndex].getAttribute("value");
 
   var g = document.getElementsByTagName("select")[1];
-  var s = g.options[g.selectedIndex].getAttribute("value");
+  var size = g.options[g.selectedIndex].getAttribute("value");
 
   var gg = document.getElementsByTagName("select")[2];
-  var ss = gg.options[gg.selectedIndex].getAttribute("value");
+  var speed = gg.options[gg.selectedIndex].getAttribute("value");
 
   var j = document.getElementById("annotationsoff");
   var a = j.checked;
@@ -56,9 +56,9 @@ function requestVideoQualitySizeChange(event) {
         tabs[0].id,
         {
           action: "video_qualitysize_change",
-          quality: q,
-          size: s,
-          speed: ss,
+          quality: quality,
+          size: size,
+          speed: speed,
           volume: volume,
           volumelevel: volumelevel,
           suggestedautoplay: suggestedautoplay,
@@ -74,9 +74,9 @@ function requestVideoQualitySizeChange(event) {
   );
 
   saveQualitySize(
-    q,
-    s,
-    ss,
+    quality,
+    size,
+    speed,
     a,
     volume,
     volumelevel,
@@ -90,9 +90,9 @@ function requestVideoQualitySizeChange(event) {
 }
 
 function saveQualitySize(
-  q,
-  s,
-  ss,
+  quality,
+  size,
+  speed,
   a,
   volume,
   volumelevel,
@@ -106,9 +106,9 @@ function saveQualitySize(
   browser.runtime.sendMessage(
     {
       action: "qualitysize_save",
-      quality: q,
-      size: s,
-      speed: ss,
+      quality: quality,
+      size: size,
+      speed: speed,
       annotationsoff: a,
       volume: volume,
       volumelevel: volumelevel,
@@ -126,9 +126,9 @@ function saveQualitySize(
 }
 
 function adjustOptions(
-  q,
-  s,
-  spd,
+  quality,
+  size,
+  speed,
   annotationsoff,
   volume,
   volumelevel,
@@ -149,7 +149,7 @@ function adjustOptions(
   a = document.getElementsByTagName("select")[0];
 
   for (var i = 0; i < a.length; i++) {
-    if (a[i].getAttribute("value") == q) {
+    if (a[i].getAttribute("value") == quality) {
       si = i;
       break;
     }
@@ -164,7 +164,7 @@ function adjustOptions(
   b = document.getElementsByTagName("select")[1];
 
   for (var i = 0; i < b.length; i++) {
-    if (b[i].getAttribute("value") == s) {
+    if (b[i].getAttribute("value") == size) {
       sib = i;
       break;
     }
@@ -179,7 +179,7 @@ function adjustOptions(
   c = document.getElementsByTagName("select")[2];
 
   for (var i = 0; i < c.length; i++) {
-    if (c[i].getAttribute("value") == spd) {
+    if (c[i].getAttribute("value") == speed) {
       sic = i;
       break;
     }
