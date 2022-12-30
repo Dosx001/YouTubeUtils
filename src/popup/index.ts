@@ -81,20 +81,20 @@ function adjustOptions(
   sel0.onchange = () => requestVideoQualitySizeChange();
   sel1.onchange = () => requestVideoQualitySizeChange();
   sel2.onchange = () => requestVideoQualitySizeChange();
-  for (var i = 0; i < sel0.length; i++) {
-    if (sel0[i].getAttribute("value") == quality) {
+  for (let i = 0; i < sel0.length; i++) {
+    if (sel0[i].getAttribute("value") === quality) {
       sel0.selectedIndex = i;
       break;
     }
   }
-  for (var i = 0; i < sel1.length; i++) {
-    if (sel1[i].getAttribute("value") == size) {
+  for (let i = 0; i < sel1.length; i++) {
+    if (sel1[i].getAttribute("value") === size) {
       sel1.selectedIndex = i;
       break;
     }
   }
-  for (var i = 0; i < sel2.length; i++) {
-    if (sel2[i].getAttribute("value") == speed) {
+  for (let i = 0; i < sel2.length; i++) {
+    if (sel2[i].getAttribute("value") === speed) {
       sel2.selectedIndex = i;
       break;
     }
