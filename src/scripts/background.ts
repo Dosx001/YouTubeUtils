@@ -113,35 +113,20 @@ const Ext = {
       annotationsoff = items.annotationsoff;
     });
   },
-  oRTCT: function(passedObject) {
-    browser.tabs.query(
-      {
-        active: true,
-        currentWindow: true,
-      },
-      function(tabs) {
-        if (tabs.length != 0) {
-          var index = tabs[0].index;
-          //var windowId=tabs[0].windowId;
-          browser.tabs.create(
-            {
-              //windowId:windowId,
-              url: passedObject["url"],
-              index: index + 1,
-            },
-            function(tab) { }
-          );
-        } else {
-          //last focused
-          browser.tabs.create(
-            {
-              url: passedObject["url"],
-            },
-            function(tab) { }
-          );
-        }
-      }
-    );
+  oRTCT: async (passedObject) => {
+    const tab = await browser.tabs.query({
+      active: true,
+      currentWindow: true,
+    });
+    if (tab.length !== 0) {
+      const index = tab[0].index;
+      browser.tabs.create({
+        url: passedObject["url"],
+        index: index + 1,
+      });
+    } else {
+      browser.tabs.create({ url: passedObject["url"] });
+    }
   },
   bs: function(v) {
     if (v.split(".").length == 2) return v;
