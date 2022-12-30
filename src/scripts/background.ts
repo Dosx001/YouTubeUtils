@@ -33,7 +33,7 @@ const Ext = {
         //??????????????
       }
     },
-    checkLocal: function(items) {
+    checkLocal: () => {
       if (browser.runtime.lastError) {
         Ext.checkStorage.checkHTMLLocalStorage();
       } else {
@@ -42,7 +42,7 @@ const Ext = {
         //remove test variable
       }
     },
-    checkSync: function(items) {
+    checkSync: () => {
       if (browser.runtime.lastError) {
         browser.storage.local.get(null, Ext.checkStorage.checkLocal);
       } else {
@@ -51,13 +51,13 @@ const Ext = {
         //remove test variable
       }
     },
-    init: function() {
+    init: () => {
       browser.storage.sync.get(null, Ext.checkStorage.checkSync);
     },
   },
   getStorage: () =>
     Ext.sto === "sync" ? browser.storage.sync : browser.storage.local,
-  init: function() {
+  init: () => {
     Ext.getStorage().get(settings, function(items) {
       var ver = browser.runtime.getManifest().version;
       if (!items.installed) {
@@ -100,7 +100,7 @@ const Ext = {
       browser.tabs.create({ url: passedObject["url"] });
     }
   },
-  bs: function(v) {
+  bs: (v) => {
     if (v.split(".").length == 2) return v;
     return v.substring(0, v.lastIndexOf("."));
     //return ((v.split(".").length==2) ? v : v.substring(0,v.lastIndexOf(".")));
