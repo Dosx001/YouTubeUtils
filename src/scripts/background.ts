@@ -150,7 +150,7 @@ const Ext = {
   },
 };
 
-function onRequest(request, sender, callback) {
+browser.runtime.onMessage.addListener((request, sender) => {
   if (request.action == "video_quality_change") {
     changeVideoQuality(request.quality);
   } else if (request.action == "qualitysize_ask") {
@@ -207,8 +207,7 @@ function onRequest(request, sender, callback) {
       }
     );
   }
-}
-browser.runtime.onMessage.addListener(onRequest);
+});
 
 browser.webRequest.onBeforeRequest.addListener(
   (details) => {
