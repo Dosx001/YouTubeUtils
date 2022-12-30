@@ -63,119 +63,106 @@ const requestVideoQualitySizeChange = async () => {
   });
 };
 
-function adjustOptions(
-  quality,
-  size,
-  speed,
-  annotationsoff,
-  volume,
-  volumelevel,
-  youtubevideoautoplaybehavior,
-  playlistvideoautoplaybehavior,
-  suggestedautoplay,
-  embeddedvideoautoplaybehavior,
-  autoexpanddescription,
-  autosubtitles
-) {
-  const [sel0, sel1, sel2] = document.querySelectorAll("select");
-  sel0.onchange = () => requestVideoQualitySizeChange();
-  sel1.onchange = () => requestVideoQualitySizeChange();
-  sel2.onchange = () => requestVideoQualitySizeChange();
-  for (let i = 0; i < sel0.length; i++) {
-    if ((sel0[i] as HTMLOptionElement).value === quality) {
-      sel0.selectedIndex = i;
-      break;
-    }
-  }
-  for (let i = 0; i < sel1.length; i++) {
-    if ((sel1[i] as HTMLOptionElement).value === size) {
-      sel1.selectedIndex = i;
-      break;
-    }
-  }
-  for (let i = 0; i < sel2.length; i++) {
-    if ((sel2[i] as HTMLOptionElement).value === speed) {
-      sel2.selectedIndex = i;
-      break;
-    }
-  }
-  const anno = document.querySelector<HTMLInputElement>("#annotationsoff");
-  anno.checked = annotationsoff;
-  anno.addEventListener("change", requestVideoQualitySizeChange, true);
-  document
-    .getElementById("volume")
-    .addEventListener("change", requestVideoQualitySizeChange, true);
-  const volLvl = document.querySelector<HTMLInputElement>("#volumelevel");
-  volLvl.value = volumelevel;
-  volLvl.onchange = () => requestVideoQualitySizeChange();
-  volLvl.onfocus = () =>
-    document.querySelector<HTMLInputElement>("#volumelevelinput").click();
-  const sug = document.querySelector<HTMLInputElement>("#suggestedautoplay");
-  sug.checked = suggestedautoplay;
-  sug.addEventListener("change", requestVideoQualitySizeChange, true);
-  document.querySelector<HTMLInputElement>("#autoexpanddescription").checked =
-    autoexpanddescription;
-  document
-    .getElementById("autosubtitles")
-    .addEventListener("change", requestVideoQualitySizeChange, true);
-  document
-    .getElementById("autoexpanddescription")
-    .addEventListener("change", requestVideoQualitySizeChange, true);
-  document
-    .querySelector("#youtubevideoautoplaybehavior")
-    .addEventListener("change", requestVideoQualitySizeChange, true);
-  document
-    .querySelector("#playlistvideoautoplaybehavior")
-    .addEventListener("change", requestVideoQualitySizeChange, true);
-  document
-    .querySelector("#embeddedvideoautoplaybehavior")
-    .addEventListener("change", requestVideoQualitySizeChange, true);
-  document.querySelector<HTMLInputElement>(
-    '#volume input[type="radio"].vol_' + volume + ""
-  ).checked = true;
-  document.querySelector<HTMLInputElement>(
-    '#autosubtitles input[type="radio"].subt_' +
-    (autosubtitles ? autosubtitles : "default") +
-    ""
-  ).checked = true;
-  document.querySelector(
-    '#youtubevideoautoplaybehavior [value="' +
-    youtubevideoautoplaybehavior +
-    '"]'
-  ).selected = true;
-  document.querySelector(
-    '#playlistvideoautoplaybehavior [value="' +
-    playlistvideoautoplaybehavior +
-    '"]'
-  ).selected = true;
-  document.querySelector(
-    '#embeddedvideoautoplaybehavior [value="' +
-    embeddedvideoautoplaybehavior +
-    '"]'
-  ).selected = true;
-}
-
 const askQualitySize = () => {
   if (!ExtPop.sto) {
     browser.runtime.sendMessage({ action: "storage_ask_by_popup" });
     return;
   }
-  ExtPop.getStorage().get(null, (items) => {
-    adjustOptions(
-      items.video_quality,
-      items.video_size,
-      items.video_speed,
-      items.annotationsoff,
-      items.volume,
-      items.volumelevel,
-      items.youtubevideoautoplaybehavior,
-      items.playlistvideoautoplaybehavior,
-      items.suggestedautoplay,
-      items.embeddedvideoautoplaybehavior,
-      items.autoexpanddescription,
-      items.autosubtitles
-    );
-  });
+  ExtPop.getStorage().get(
+    (keys: {
+      annotationsoff: boolean;
+      autoexpanddescription: boolean;
+      autosubtitles: string;
+      embeddedvideoautoplaybehavior: string;
+      playlistvideoautoplaybehavior: string;
+      quality: string;
+      size: string;
+      speed: string;
+      suggestedautoplay: boolean;
+      volume: string;
+      volumelevel: string;
+      youtubevideoautoplaybehavior: string;
+    }) => {
+      const [sel0, sel1, sel2] = document.querySelectorAll("select");
+      sel0.onchange = () => requestVideoQualitySizeChange();
+      sel1.onchange = () => requestVideoQualitySizeChange();
+      sel2.onchange = () => requestVideoQualitySizeChange();
+      for (let i = 0; i < sel0.length; i++) {
+        if ((sel0[i] as HTMLOptionElement).value === keys.quality) {
+          sel0.selectedIndex = i;
+          break;
+        }
+      }
+      for (let i = 0; i < sel1.length; i++) {
+        if ((sel1[i] as HTMLOptionElement).value === keys.size) {
+          sel1.selectedIndex = i;
+          break;
+        }
+      }
+      for (let i = 0; i < sel2.length; i++) {
+        if ((sel2[i] as HTMLOptionElement).value === keys.speed) {
+          sel2.selectedIndex = i;
+          break;
+        }
+      }
+      const anno = document.querySelector<HTMLInputElement>("#annotationsoff");
+      anno.checked = annotationsoff;
+      anno.addEventListener("change", requestVideoQualitySizeChange, true);
+      document
+        .getElementById("volume")
+        .addEventListener("change", requestVideoQualitySizeChange, true);
+      const volLvl = document.querySelector<HTMLInputElement>("#volumelevel");
+      volLvl.value = keys.volumelevel;
+      volLvl.onchange = () => requestVideoQualitySizeChange();
+      volLvl.onfocus = () =>
+        document.querySelector<HTMLInputElement>("#volumelevelinput").click();
+      const sug =
+        document.querySelector<HTMLInputElement>("#suggestedautoplay");
+      sug.checked = keys.suggestedautoplay;
+      sug.addEventListener("change", requestVideoQualitySizeChange, true);
+      document.querySelector<HTMLInputElement>(
+        "#autoexpanddescription"
+      ).checked = keys.autoexpanddescription;
+      document
+        .getElementById("autosubtitles")
+        .addEventListener("change", requestVideoQualitySizeChange, true);
+      document
+        .getElementById("autoexpanddescription")
+        .addEventListener("change", requestVideoQualitySizeChange, true);
+      document
+        .querySelector("#youtubevideoautoplaybehavior")
+        .addEventListener("change", requestVideoQualitySizeChange, true);
+      document
+        .querySelector("#playlistvideoautoplaybehavior")
+        .addEventListener("change", requestVideoQualitySizeChange, true);
+      document
+        .querySelector("#embeddedvideoautoplaybehavior")
+        .addEventListener("change", requestVideoQualitySizeChange, true);
+      document.querySelector<HTMLInputElement>(
+        '#volume input[type="radio"].vol_' + keys.volume + ""
+      ).checked = true;
+      document.querySelector<HTMLInputElement>(
+        '#autosubtitles input[type="radio"].subt_' +
+        (keys.autosubtitles ? keys.autosubtitles : "default") +
+        ""
+      ).checked = true;
+      document.querySelector(
+        '#youtubevideoautoplaybehavior [value="' +
+        keys.youtubevideoautoplaybehavior +
+        '"]'
+      ).selected = true;
+      document.querySelector(
+        '#playlistvideoautoplaybehavior [value="' +
+        playlistvideoautoplaybehavior +
+        '"]'
+      ).selected = true;
+      document.querySelector(
+        '#embeddedvideoautoplaybehavior [value="' +
+        keys.embeddedvideoautoplaybehavior +
+        '"]'
+      ).selected = true;
+    }
+  );
 };
 
 browser.runtime.onMessage.addListener((req) => {
