@@ -79,9 +79,8 @@ const Ext = {
       browser.storage.sync.get(null, Ext.checkStorage.checkSync);
     },
   },
-  getStorage: function() {
-    return Ext.sto == "sync" ? browser.storage.sync : browser.storage.local;
-  },
+  getStorage: () =>
+    Ext.sto === "sync" ? browser.storage.sync : browser.storage.local,
   init: function() {
     Ext.getStorage().get(settings, function(items) {
       var ver = browser.runtime.getManifest().version;
