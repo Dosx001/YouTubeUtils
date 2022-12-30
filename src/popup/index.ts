@@ -9,25 +9,28 @@ const requestVideoQualitySizeChange = async () => {
   const quality = sel0.options[sel0.selectedIndex].getAttribute("value");
   const size = sel1.options[sel1.selectedIndex].getAttribute("value");
   const speed = sel2.options[sel2.selectedIndex].getAttribute("value");
-  const volume = document.querySelector(
+  const volume = document.querySelector<HTMLInputElement>(
     '#volume input[type="radio"][name="volume"]:checked'
   ).value;
-  const volumelevel = document.querySelector("#volumelevel").value;
-  const youtubevideoautoplaybehavior = document.querySelector(
+  const volumelevel =
+    document.querySelector<HTMLInputElement>("#volumelevel").value;
+  const youtubevideoautoplaybehavior = document.querySelector<HTMLInputElement>(
     "#youtubevideoautoplaybehavior"
   ).value;
-  const playlistvideoautoplaybehavior = document.querySelector(
-    "#playlistvideoautoplaybehavior"
-  ).value;
+  const playlistvideoautoplaybehavior =
+    document.querySelector<HTMLInputElement>(
+      "#playlistvideoautoplaybehavior"
+    ).value;
   const suggestedautoplay =
-    document.getElementById("suggestedautoplay").checked;
-  const embeddedvideoautoplaybehavior = document.querySelector(
-    "#embeddedvideoautoplaybehavior"
-  ).value;
-  const autoexpanddescription = document.getElementById(
-    "autoexpanddescription"
+    document.querySelector<HTMLInputElement>("#suggestedautoplay").checked;
+  const embeddedvideoautoplaybehavior =
+    document.querySelector<HTMLInputElement>(
+      "#embeddedvideoautoplaybehavior"
+    ).value;
+  const autoexpanddescription = document.querySelector<HTMLInputElement>(
+    "#autoexpanddescription"
   ).checked;
-  const autosubtitles = document.querySelector(
+  const autosubtitles = document.querySelector<HTMLInputElement>(
     '#autosubtitles input[type="radio"][name="autosubtitles"]:checked'
   ).value;
   for (const tab of await browser.tabs.query({
