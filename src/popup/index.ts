@@ -9,8 +9,6 @@ const requestVideoQualitySizeChange = async (event) => {
   var quality = sel0.options[sel0.selectedIndex].getAttribute("value");
   var size = sel1.options[sel1.selectedIndex].getAttribute("value");
   var speed = sel2.options[sel2.selectedIndex].getAttribute("value");
-  var j = document.getElementById("annotationsoff");
-  var a = j.checked;
 
   var v = document.getElementById("volume");
   var vl = document.getElementById("volumelevel");
@@ -62,7 +60,8 @@ const requestVideoQualitySizeChange = async (event) => {
     quality: quality,
     size: size,
     speed: speed,
-    annotationsoff: a,
+    annotationsoff:
+      document.querySelector<HTMLInputElement>("#annotationsoff").checked,
     volume: volume,
     volumelevel: volumelevel,
     youtubevideoautoplaybehavior: youtubevideoautoplaybehavior,
