@@ -22,7 +22,6 @@ const ytutils = {
     autosubtitles,
     isOptionHandle
   ) {
-    //YouTubeHighDefinition.askQualitySize();
     //YouTubeHighDefinition.changeVideoQuality(document);
     ytutils.changeVideoQuality(
       document,
@@ -136,17 +135,6 @@ const ytutils = {
         doc.querySelector("paper-button#less").click();
       }
     }
-  },
-  askQualitySize: function() {
-    browser.runtime.sendMessage({ action: "qualitysize_ask" }, function(o) {
-      ytutils.changeVideoQuality(
-        document,
-        o["video_quality"],
-        volume,
-        volumelevel
-      );
-      ytutils.changeVideoSize(document, o["video_size"]);
-    });
   },
   getVolumeLevel: (volume: string, volumelevel: number) => {
     switch (volume) {
