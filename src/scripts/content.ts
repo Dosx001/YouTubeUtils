@@ -112,33 +112,20 @@ const ytworker = {
         );
       }
       if (player) {
-        var flashvars = player.getAttribute("flashvars");
-        function changeFlashvars(flashvars, option, value) {
-          var delimit = "&" + option;
-          if (flashvars.indexOf(delimit) == -1) {
-            flashvars += delimit + "=" + value;
-          } else {
-            var splitarray = flashvars.split(delimit);
-            var result = splitarray[1].indexOf("&");
-            if (result != -1) {
-              flashvars =
-                splitarray[0] +
-                delimit +
-                "=" +
-                value +
-                splitarray[1].substr(result);
-            } else {
-              flashvars = splitarray[0] + delimit + "=" + value;
-            }
-          }
-          return flashvars;
+        let flashvars = player.getAttribute("flashvars");
+        const delimit = "&vq";
+        if (flashvars.indexOf(delimit) === -1) {
+          flashvars += `${delimit}=${ytworker.quality}`;
+        } else {
+          const splitarray = flashvars.split(delimit);
+          const result = splitarray[1].indexOf("&");
+          flashvars =
+            result !== -1
+              ? `${splitarray[0]}${delimit}=${ytworker.quality
+              }${splitarray[1].substring(result)}`
+              : `${splitarray[0]}${delimit}=${ytworker.quality}`;
         }
-
-        player.setAttribute(
-          "flashvars",
-          changeFlashvars(flashvars, "vq", ytworker.quality)
-        );
-
+        player.setAttribute("flashvars", flashvars);
         var oldplayer = player;
         var playerparentnode = oldplayer.parentNode;
         var playernextsibling = oldplayer.nextSibling;
