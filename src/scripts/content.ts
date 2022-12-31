@@ -230,24 +230,6 @@ const YouTubeHighDefinition = {
     }
     return newFlashVars;
   },
-  addStyle: function(css) {
-    if (document.getElementById("youtubehighdefinition-stylesheet") == null) {
-      var link = document.createElement("link");
-      link.setAttribute("type", "text/css");
-      link.setAttribute("rel", "stylesheet");
-      link.setAttribute("id", "youtubehighdefinition-stylesheet");
-      link.setAttribute("href", css);
-      document.getElementsByTagName("head")[0].appendChild(link);
-      //document.getElementById("page").classList.add('watch-wide');
-      //document.getElementById("watch-video").classList.add('medium');
-    } else {
-      document
-        .getElementById("youtubehighdefinition-stylesheet")
-        .parentNode.removeChild(
-          document.getElementById("youtubehighdefinition-stylesheet")
-        );
-    }
-  },
   addScript: () => {
     const s = document.createElement("script");
     s.src = browser.runtime.getURL("scripts/ytutils.js");
