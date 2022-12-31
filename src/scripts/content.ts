@@ -1,4 +1,4 @@
-var YouTubeHighDefinition = {
+const YouTubeHighDefinition = {
   quality: null,
   size: null,
   requestChange: function(
@@ -304,22 +304,9 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   }
 });
 
-window.addEventListener(
-  "message",
-  function(event) {
-    // We only accept messages from ourselves
-    if (event.source != window) return;
-
-    if (event.data.type && event.data.type == "FROM_PAGE") {
-      //port.postMessage(event.data.text);
-      //window.postMessage({ type: "FROM_CONTENT_SCRIPT", text: "Hello from the content page!" }, "*");
-    }
-    if (
-      event.data.type &&
-      event.data.type == "FROM_PAGE_SCRIPT_REQUEST_CHANGE"
-    ) {
-      YouTubeHighDefinition.requestChange();
-    }
-  },
-  false
-);
+window.onmessage = (ev: MessageEvent) => {
+  if (ev.source !== window) return;
+  if (ev.data?.type === "FROM_PAGE_SCRIPT_REQUEST_CHANGE") {
+    YouTubeHighDefinition.requestChange();
+  }
+};
