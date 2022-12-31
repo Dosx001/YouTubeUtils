@@ -414,15 +414,6 @@ const ytutils = {
       //YouTubeHighDefinition.addOptionButton(dc);
     }
   },
-  handleChannelChange: function(event) {
-    if (event.target.nodeName == "EMBED") {
-      var doc = event.target.ownerDocument;
-
-      window.setTimeout(function() {
-        ytutils.changeVideoQuality(doc);
-      }, 1);
-    }
-  },
   changeVideoSize: function(doc, size, id, isOptionHandle) {
     var dc = doc;
 
