@@ -275,9 +275,9 @@ document.addEventListener(
   false
 );
 
-browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if (request.action == "video_qualitysize_change") {
-    try {
+browser.runtime.onMessage.addListener((request) => {
+  switch (request.action) {
+    case "video_qualitysize_change":
       YouTubeHighDefinition.requestChange(
         request.quality,
         request.size,
@@ -291,16 +291,11 @@ browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         request.autosubtitles,
         request.isOptionHandle
       );
-    } catch (e) {
-      alert(e);
-    }
-  } else if (request.action == "storage_answer") {
-    try {
+      break;
+    case "storage_answer":
       YouTubeHighDefinition.sto = request.sto;
       YouTubeHighDefinition.askQualitySize();
-    } catch (e) {
-      alert(e);
-    }
+      break;
   }
 });
 
