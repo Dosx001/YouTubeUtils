@@ -80,43 +80,48 @@ const Ext = {
 };
 
 browser.runtime.onMessage.addListener((request, sender) => {
-  if (request.action == "qualitysize_ask") {
-    Ext.getStorage().get((items: typeof settings) => {
-      browser.tabs.sendMessage(sender.tab.id, {
-        action: "video_qualitysize_change",
-        quality: items.video_quality,
-        size: items.video_size,
+  switch (request.action) {
+    case "qualitysize_ask":
+      Ext.getStorage().get((items: typeof settings) => {
+        browser.tabs.sendMessage(sender.tab.id, {
+          action: "video_qualitysize_change",
+          quality: items.video_quality,
+          size: items.video_size,
+        });
       });
-    });
-  } else if (request.action == "storage_ask") {
-    Ext.getStorage().get(() => {
-      browser.tabs.sendMessage(sender.tab.id, {
-        action: "storage_answer",
-        sto: Ext.sto,
+      break;
+    case "qualitysize_save":
+      Ext.getStorage().set({
+        video_quality: request.quality,
+        video_size: request.size,
+        video_speed: request.speed,
+        annotationsoff: request.annotationsoff,
+        volume: request.volume,
+        volumelevel: request.volumelevel,
+        youtubevideoautoplaybehavior: request.youtubevideoautoplaybehavior,
+        playlistvideoautoplaybehavior: request.playlistvideoautoplaybehavior,
+        suggestedautoplay: request.suggestedautoplay,
+        embeddedvideoautoplaybehavior: request.embeddedvideoautoplaybehavior,
+        autoexpanddescription: request.autoexpanddescription,
+        autosubtitles: request.autosubtitles,
       });
-    });
-  } else if (request.action == "storage_ask_by_popup") {
-    Ext.getStorage().get(() => {
-      browser.runtime.sendMessage({
-        action: "storage_answer_to_popup",
-        sto: Ext.sto,
+      break;
+    case "storage_ask":
+      Ext.getStorage().get(() => {
+        browser.tabs.sendMessage(sender.tab.id, {
+          action: "storage_answer",
+          sto: Ext.sto,
+        });
       });
-    });
-  } else if (request.action == "qualitysize_save") {
-    Ext.getStorage().set({
-      video_quality: request.quality,
-      video_size: request.size,
-      video_speed: request.speed,
-      annotationsoff: request.annotationsoff,
-      volume: request.volume,
-      volumelevel: request.volumelevel,
-      youtubevideoautoplaybehavior: request.youtubevideoautoplaybehavior,
-      playlistvideoautoplaybehavior: request.playlistvideoautoplaybehavior,
-      suggestedautoplay: request.suggestedautoplay,
-      embeddedvideoautoplaybehavior: request.embeddedvideoautoplaybehavior,
-      autoexpanddescription: request.autoexpanddescription,
-      autosubtitles: request.autosubtitles,
-    });
+      break;
+    case "storage_ask_by_popup":
+      Ext.getStorage().get(() => {
+        browser.runtime.sendMessage({
+          action: "storage_answer_to_popup",
+          sto: Ext.sto,
+        });
+      });
+      break;
   }
 });
 
