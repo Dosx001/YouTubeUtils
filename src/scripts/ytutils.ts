@@ -189,27 +189,6 @@ const ytutils = {
         null
       );
     }, 1000);
-    ytutils.pauseVideo(
-      ytutils.getYoutubeVideoAutoPlayBehavior(
-        ytutils.youtubevideoautoplaybehavior
-      ),
-      ytutils.getPlaylistVideoAutoPlayBehavior(),
-      "onNavigateFinish"
-    );
-  },
-  pauseVideo: function(enableautoplay, enableplaylistautoplay, re) {
-    var player = document.getElementById("movie_player");
-    if (typeof player.getAdState !== "undefined" && player.getAdState() != 1) {
-      if (document.location.search.indexOf("list=") != -1) {
-        if (!enableplaylistautoplay) {
-          //player.pauseVideo();
-        }
-      } else {
-        if (!enableautoplay) {
-          //player.pauseVideo();
-        }
-      }
-    }
   },
   scrollTo: function(document) {
     var dc = document;
@@ -402,7 +381,6 @@ const ytutils = {
               var cTime = player.getCurrentTime();
               //if(isOptionHandle) player.stopVideo();
               //player.seekTo(cTime);
-              //player.pauseVideo();
               //player.setPlaybackQuality("small");
               //player.setPlaybackQuality(currentvideoquality);
               player.setPlaybackQualityRange(
@@ -413,7 +391,6 @@ const ytutils = {
 
               //player.playVideo();
               if (!enableautoplay) {
-                //player.pauseVideo();
               }
             } else {
               if (volumelevel != "default") {
@@ -423,7 +400,6 @@ const ytutils = {
               var cTime = player.getCurrentTime();
               //if(isOptionHandle) player.stopVideo();
               //player.seekTo(cTime);
-              //player.pauseVideo();
               //player.setPlaybackQuality(currentvideoquality);
               player.setPlaybackQualityRange(
                 currentvideoquality,
@@ -433,7 +409,6 @@ const ytutils = {
 
               //player.playVideo();
               if (!enableautoplay) {
-                //player.pauseVideo();
               }
               /*
               if(isOptionHandle) {
@@ -1247,11 +1222,9 @@ try {
       if (player.getCurrentTime() == 0 && newState == 1) {
         if (document.location.search.indexOf("list=") != -1) {
           if (!enableplaylistautoplay) {
-            //player.pauseVideo();
           }
         } else {
           if (!enableautoplay) {
-            //player.pauseVideo();
           }
         }
       }
@@ -1265,11 +1238,9 @@ try {
         ) {
           if (document.location.search.indexOf("list=") != -1) {
             if (!enableplaylistautoplay) {
-              //player.pauseVideo();
             }
           } else {
             if (!enableautoplay) {
-              //player.pauseVideo();
             }
           }
         }
@@ -1282,12 +1253,10 @@ try {
       ) {
         if (document.location.search.indexOf("list=") != -1) {
           if (!enableplaylistautoplay) {
-            //player.pauseVideo();
             window.ythdFlPlayerPaused = true;
           }
         } else {
           if (!enableautoplay) {
-            //player.pauseVideo();
             window.ythdFlPlayerPaused = true;
           }
         }
@@ -1307,11 +1276,9 @@ try {
           ) {
             if (document.location.search.indexOf("list=") != -1) {
               if (!enableplaylistautoplay) {
-                //player.pauseVideo();
               }
             } else {
               if (!enableautoplay) {
-                //player.pauseVideo();
               }
             }
           }
@@ -1331,11 +1298,9 @@ try {
               ) {
                 if (document.location.search.indexOf("list=") != -1) {
                   if (!enableplaylistautoplay) {
-                    //player.pauseVideo();
                   }
                 } else {
                   if (!enableautoplay) {
-                    //player.pauseVideo();
                   }
                 }
               }
@@ -1376,11 +1341,9 @@ try {
       ) {
         if (document.location.search.indexOf("list=") != -1) {
           if (!enableplaylistautoplay) {
-            //player.pauseVideo();
           }
         } else {
           if (!enableautoplay) {
-            //player.pauseVideo();
           }
         }
       }
@@ -1400,11 +1363,9 @@ try {
           ) {
             if (document.location.search.indexOf("list=") != -1) {
               if (!enableplaylistautoplay) {
-                //player.pauseVideo();
               }
             } else {
               if (!enableautoplay) {
-                //player.pauseVideo();
               }
             }
           }
