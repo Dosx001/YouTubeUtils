@@ -98,7 +98,7 @@ const ytworker = {
       ? browser.storage.sync
       : browser.storage.local;
   },
-  changeVideoQuality: function(doc, quality) {
+  changeVideoQuality: function(doc) {
     try {
       var domain = doc.domain;
     } catch (err) {
@@ -112,9 +112,6 @@ const ytworker = {
       var dc = document;
       var player = dc.getElementById("movie_player");
       var channel = dc.getElementById("playnav-player");
-
-      if (quality) ytworker.quality = quality; //for channel event listener
-
       if (channel) {
         //need to remove listener here else it will create an infinite loop.
         channel.removeEventListener(
@@ -123,14 +120,8 @@ const ytworker = {
           true
         );
       }
-
       if (player) {
-        var currentvideoquality = quality
-          ? quality
-          : ytworker.quality; //for channel listener
-
         var flashvars = player.getAttribute("flashvars");
-
         function changeFlashvars(flashvars, option, value) {
           var delimit = "&" + option;
           if (flashvars.indexOf(delimit) == -1) {
@@ -154,7 +145,7 @@ const ytworker = {
 
         player.setAttribute(
           "flashvars",
-          changeFlashvars(flashvars, "vq", currentvideoquality)
+          changeFlashvars(flashvars, "vq", ytworker.quality)
         );
 
         var oldplayer = player;
