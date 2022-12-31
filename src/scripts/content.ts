@@ -1,4 +1,4 @@
-const YouTubeHighDefinition = {
+const ytworker = {
   quality: null,
   size: null,
   requestChange: function(
@@ -15,9 +15,9 @@ const YouTubeHighDefinition = {
     isOptionHandle
   ) {
     if (!quality) {
-      YouTubeHighDefinition.askQualitySize();
+      ytworker.askQualitySize();
     } else {
-      YouTubeHighDefinition.change(
+      ytworker.change(
         quality,
         size,
         speed,
@@ -71,14 +71,14 @@ const YouTubeHighDefinition = {
     );
   },
   askQualitySize: function() {
-    if (!YouTubeHighDefinition.sto) {
+    if (!ytworker.sto) {
       browser.runtime.sendMessage({ action: "storage_ask" }, function(o) {
         //
       });
       return;
     }
-    YouTubeHighDefinition.getStorage().get(null, function(items) {
-      YouTubeHighDefinition.change(
+    ytworker.getStorage().get(null, function(items) {
+      ytworker.change(
         items["video_quality"],
         items["video_size"],
         items["video_speed"],
@@ -94,7 +94,7 @@ const YouTubeHighDefinition = {
   },
   sto: "local",
   getStorage: function() {
-    return YouTubeHighDefinition.sto == "sync"
+    return ytworker.sto == "sync"
       ? browser.storage.sync
       : browser.storage.local;
   },
@@ -113,13 +113,13 @@ const YouTubeHighDefinition = {
       var player = dc.getElementById("movie_player");
       var channel = dc.getElementById("playnav-player");
 
-      if (quality) YouTubeHighDefinition.quality = quality; //for channel event listener
+      if (quality) ytworker.quality = quality; //for channel event listener
 
       if (channel) {
         //need to remove listener here else it will create an infinite loop.
         channel.removeEventListener(
           "DOMNodeInserted",
-          YouTubeHighDefinition.handleChannelChange,
+          ytworker.handleChannelChange,
           true
         );
       }
@@ -127,7 +127,7 @@ const YouTubeHighDefinition = {
       if (player) {
         var currentvideoquality = quality
           ? quality
-          : YouTubeHighDefinition.quality; //for channel listener
+          : ytworker.quality; //for channel listener
 
         var flashvars = player.getAttribute("flashvars");
 
@@ -167,7 +167,7 @@ const YouTubeHighDefinition = {
         if (channel) {
           channel.addEventListener(
             "DOMNodeInserted",
-            YouTubeHighDefinition.handleChannelChange,
+            ytworker.handleChannelChange,
             true
           );
         }
@@ -179,7 +179,7 @@ const YouTubeHighDefinition = {
       var doc = event.target.ownerDocument;
 
       window.setTimeout(function() {
-        YouTubeHighDefinition.changeVideoQuality(doc);
+        ytworker.changeVideoQuality(doc);
       }, 1);
     }
   },
@@ -194,17 +194,17 @@ const YouTubeHighDefinition = {
   },
 };
 
-YouTubeHighDefinition.addScript();
+ytworker.addScript();
 
 //change to mutation event
 if (document.location.pathname.indexOf("/embed") !== 0) {
-  YouTubeHighDefinition.requestChange();
+  ytworker.requestChange();
 }
 
 document.addEventListener(
   "DOMContentLoaded",
   function(event) {
-    YouTubeHighDefinition.requestChange();
+    ytworker.requestChange();
   },
   false
 );
@@ -212,7 +212,7 @@ document.addEventListener(
 browser.runtime.onMessage.addListener((request) => {
   switch (request.action) {
     case "video_qualitysize_change":
-      YouTubeHighDefinition.requestChange(
+      ytworker.requestChange(
         request.quality,
         request.size,
         request.speed,
@@ -227,8 +227,8 @@ browser.runtime.onMessage.addListener((request) => {
       );
       break;
     case "storage_answer":
-      YouTubeHighDefinition.sto = request.sto;
-      YouTubeHighDefinition.askQualitySize();
+      ytworker.sto = request.sto;
+      ytworker.askQualitySize();
       break;
   }
 });
@@ -236,6 +236,6 @@ browser.runtime.onMessage.addListener((request) => {
 window.onmessage = (ev: MessageEvent) => {
   if (ev.source !== window) return;
   if (ev.data?.type === "FROM_PAGE_SCRIPT_REQUEST_CHANGE") {
-    YouTubeHighDefinition.requestChange();
+    ytworker.requestChange();
   }
 };

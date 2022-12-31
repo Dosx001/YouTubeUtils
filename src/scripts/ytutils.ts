@@ -1,4 +1,4 @@
-var YouTubeHighDefinition = {
+var ytutils = {
   quality: null,
   size: null,
   volume: null,
@@ -24,10 +24,10 @@ var YouTubeHighDefinition = {
   ) {
     //YouTubeHighDefinition.askQualitySize();
     //YouTubeHighDefinition.changeVideoQuality(document);
-    YouTubeHighDefinition.changeVideoQuality(
+    ytutils.changeVideoQuality(
       document,
-      YouTubeHighDefinition.quality
-        ? YouTubeHighDefinition.quality
+      ytutils.quality
+        ? ytutils.quality
         : "highress",
       speed,
       volume,
@@ -37,18 +37,18 @@ var YouTubeHighDefinition = {
       autosubtitles,
       isOptionHandle
     );
-    YouTubeHighDefinition.changeVideoSize(
+    ytutils.changeVideoSize(
       document,
-      YouTubeHighDefinition.size ? YouTubeHighDefinition.size : "expand",
+      ytutils.size ? ytutils.size : "expand",
       id,
       isOptionHandle
     );
-    YouTubeHighDefinition.expandVideoDescription(
+    ytutils.expandVideoDescription(
       document,
       autoexpanddescription,
       isOptionHandle
     );
-    YouTubeHighDefinition.enablesuggestedautoplay(document, suggestedautoplay);
+    ytutils.enablesuggestedautoplay(document, suggestedautoplay);
   },
   getIntendedQuality: function(player, currentvideoquality) {
     if (currentvideoquality == "highres")
@@ -68,13 +68,13 @@ var YouTubeHighDefinition = {
     else return currentvideoquality;
   },
   getVideoQuality: function() {
-    var currentvideoquality = YouTubeHighDefinition.quality;
+    var currentvideoquality = ytutils.quality;
     if (currentvideoquality == "4k2160") currentvideoquality = "hd2160";
     return currentvideoquality;
   },
   getPlaylistVideoAutoPlayBehavior: function() {
     var currentplaylistvideoautoplaybehavior =
-      YouTubeHighDefinition.playlistvideoautoplaybehavior;
+      ytutils.playlistvideoautoplaybehavior;
     if (currentplaylistvideoautoplaybehavior == "default") return true;
     else if (currentplaylistvideoautoplaybehavior == "autoplay") return true;
     else if (currentplaylistvideoautoplaybehavior == "autopause") return false;
@@ -141,13 +141,13 @@ var YouTubeHighDefinition = {
   },
   askQualitySize: function() {
     browser.runtime.sendMessage({ action: "qualitysize_ask" }, function(o) {
-      YouTubeHighDefinition.changeVideoQuality(
+      ytutils.changeVideoQuality(
         document,
         o["video_quality"],
         volume,
         volumelevel
       );
-      YouTubeHighDefinition.changeVideoSize(document, o["video_size"]);
+      ytutils.changeVideoSize(document, o["video_size"]);
     });
   },
   getVolumeLevel: function(volume, volumelevel) {
@@ -165,7 +165,7 @@ var YouTubeHighDefinition = {
     playlistvideoautoplaybehavior,
     isOptionHandle
   ) {
-    var player = YouTubeHighDefinition.ytPlayer;
+    var player = ytutils.ytPlayer;
     //player.setPlaybackQuality(quality);
     player.setPlaybackQualityRange(quality, quality);
   },
@@ -179,18 +179,18 @@ var YouTubeHighDefinition = {
   },
   onNavigateFinish: function(event) {
     window.setTimeout(function() {
-      YouTubeHighDefinition.expandVideoDescription(
+      ytutils.expandVideoDescription(
         document,
-        YouTubeHighDefinition.autoexpanddescription,
+        ytutils.autoexpanddescription,
         null
       );
     }, 1000);
     var enableplaylistautoplay =
-      YouTubeHighDefinition.getPlaylistVideoAutoPlayBehavior();
-    var enableautoplay = YouTubeHighDefinition.getYoutubeVideoAutoPlayBehavior(
-      YouTubeHighDefinition.youtubevideoautoplaybehavior
+      ytutils.getPlaylistVideoAutoPlayBehavior();
+    var enableautoplay = ytutils.getYoutubeVideoAutoPlayBehavior(
+      ytutils.youtubevideoautoplaybehavior
     );
-    YouTubeHighDefinition.pauseVideo(
+    ytutils.pauseVideo(
       enableautoplay,
       enableplaylistautoplay,
       "onNavigateFinish"
@@ -220,7 +220,7 @@ var YouTubeHighDefinition = {
         .getPropertyValue("height")
         .replace("px", "")
     );
-    var offsetTop = YouTubeHighDefinition.findPosition(
+    var offsetTop = ytutils.findPosition(
       dc.getElementById("page-manager")
     )[1];
     if (!dc.body.classList.contains("fullytpagesize")) {
@@ -251,7 +251,7 @@ var YouTubeHighDefinition = {
       event.target.id === "progress" &&
       event.target.getAttribute("style") == "transform: scaleX(1);"
     ) {
-      YouTubeHighDefinition.scrollTo(document);
+      ytutils.scrollTo(document);
     }
   },
   changeVideoQuality: function(
@@ -282,18 +282,18 @@ var YouTubeHighDefinition = {
         player.addEventListener("onStateChange", "ythdonPlayerStateChange");
       else {
       }
-      window.addEventListener("spfdone", YouTubeHighDefinition.onSPFDone);
+      window.addEventListener("spfdone", ytutils.onSPFDone);
       window.addEventListener(
         "yt-navigate-start",
-        YouTubeHighDefinition.onSPFDone
+        ytutils.onSPFDone
       );
       window.addEventListener(
         "yt-navigate-finish",
-        YouTubeHighDefinition.onNavigateFinish
+        ytutils.onNavigateFinish
       );
       window.addEventListener(
         "transitionend",
-        YouTubeHighDefinition.Slistener,
+        ytutils.Slistener,
         true
       );
       //window.addEventListener("transitioncancel", YouTubeHighDefinition.Slistener2, true);
@@ -312,7 +312,7 @@ var YouTubeHighDefinition = {
       }*/
 
       if (document.location.pathname.indexOf("/embed") == 0) {
-        YouTubeHighDefinition.checkI(
+        ytutils.checkI(
           doc,
           quality,
           volume,
@@ -329,10 +329,10 @@ var YouTubeHighDefinition = {
         var volumespeed = speed;
         //var enableautoplay = YouTubeHighDefinition.getPrefValue("extensions.youtubehighdefinition.enableautoplay");
         var enableautoplay =
-          YouTubeHighDefinition.getYoutubeVideoAutoPlayBehavior(
+          ytutils.getYoutubeVideoAutoPlayBehavior(
             youtubevideoautoplaybehavior
           );
-        var volumelevel = YouTubeHighDefinition.getVolumeLevel(
+        var volumelevel = ytutils.getVolumeLevel(
           volume,
           volumelevel
         );
@@ -382,7 +382,7 @@ var YouTubeHighDefinition = {
               try {
                 document.getElementById("movie_player").getPlayerState();
                 window.clearTimeout(ythderrinterval);
-                YouTubeHighDefinition.changeVideoQuality(
+                ytutils.changeVideoQuality(
                   doc,
                   quality,
                   speed,
@@ -472,7 +472,7 @@ var YouTubeHighDefinition = {
       var doc = event.target.ownerDocument;
 
       window.setTimeout(function() {
-        YouTubeHighDefinition.changeVideoQuality(doc);
+        ytutils.changeVideoQuality(doc);
       }, 1);
     }
   },
@@ -481,11 +481,11 @@ var YouTubeHighDefinition = {
 
     if (doc.location.pathname.search(/^\/watch/) != 0) return;
 
-    if (size) YouTubeHighDefinition.size = size;
+    if (size) ytutils.size = size;
     var channel = dc.getElementById("playnav-player");
     if (channel) return; //do not let channels have a size because they cant
 
-    var currentvideosize = size ? size : YouTubeHighDefinition.size;
+    var currentvideosize = size ? size : ytutils.size;
 
     if (currentvideosize == "fullpage") {
       if (!dc.getElementById("ythdlink")) {
@@ -602,7 +602,7 @@ var YouTubeHighDefinition = {
           dc.getElementById("masthead-container") &&
           dc.getElementById("page-manager")
         ) {
-          YouTubeHighDefinition.scrollTo(document);
+          ytutils.scrollTo(document);
           var interwal2 = dc.defaultView.setInterval(function() {
             if (
               (dc.querySelector(".ytp-size-button path") &&
@@ -1200,29 +1200,29 @@ window.addEventListener(
       event.data.type &&
       event.data.type == "FROM_CONTENT_SCRIPT_SET_VQ"
     ) {
-      YouTubeHighDefinition.quality = event.data.text;
+      ytutils.quality = event.data.text;
     } else if (
       event.data.type &&
       event.data.type == "FROM_CONTENT_SCRIPT_SET_VS"
     ) {
-      YouTubeHighDefinition.size = event.data.text;
+      ytutils.size = event.data.text;
     } else if (
       event.data.type &&
       event.data.type == "FROM_CONTENT_SCRIPT_REQUEST_CHANGE"
     ) {
-      YouTubeHighDefinition.volume = event.data.volume;
-      YouTubeHighDefinition.speed = event.data.speed;
-      YouTubeHighDefinition.volumelevel = event.data.volumelevel;
-      YouTubeHighDefinition.youtubevideoautoplaybehavior =
+      ytutils.volume = event.data.volume;
+      ytutils.speed = event.data.speed;
+      ytutils.volumelevel = event.data.volumelevel;
+      ytutils.youtubevideoautoplaybehavior =
         event.data.youtubevideoautoplaybehavior;
-      YouTubeHighDefinition.playlistvideoautoplaybehavior =
+      ytutils.playlistvideoautoplaybehavior =
         event.data.playlistvideoautoplaybehavior;
-      YouTubeHighDefinition.suggestedautoplay = event.data.suggestedautoplay;
-      YouTubeHighDefinition.autoexpanddescription =
+      ytutils.suggestedautoplay = event.data.suggestedautoplay;
+      ytutils.autoexpanddescription =
         event.data.autoexpanddescription;
-      YouTubeHighDefinition.autosubtitles = event.data.autosubtitles;
-      YouTubeHighDefinition.isOptionHandle = event.data.isOptionHandle;
-      YouTubeHighDefinition.requestChange(
+      ytutils.autosubtitles = event.data.autosubtitles;
+      ytutils.isOptionHandle = event.data.isOptionHandle;
+      ytutils.requestChange(
         event.data.id,
         event.data.speed,
         event.data.volume,
@@ -1244,8 +1244,8 @@ window.addEventListener(
   YouTubeHighDefinition.changeVideoSize(document,YouTubeHighDefinition.size);
 },false);*/
 
-window.addEventListener("spfdone", YouTubeHighDefinition.onSPFDone);
-window.addEventListener("yt-navigate-start", YouTubeHighDefinition.onSPFDone);
+window.addEventListener("spfdone", ytutils.onSPFDone);
+window.addEventListener("yt-navigate-start", ytutils.onSPFDone);
 
 try {
   if (window.ythdonPlayerStateChange && player.removeEventListener)
@@ -1256,12 +1256,12 @@ try {
       //var window=this;
       //var document=window.document;
       var player = document.getElementById("movie_player");
-      var currentvideoquality = YouTubeHighDefinition.getVideoQuality();
+      var currentvideoquality = ytutils.getVideoQuality();
       var enableplaylistautoplay =
-        YouTubeHighDefinition.getPlaylistVideoAutoPlayBehavior();
+        ytutils.getPlaylistVideoAutoPlayBehavior();
       var enableautoplay =
-        YouTubeHighDefinition.getYoutubeVideoAutoPlayBehavior(
-          YouTubeHighDefinition.youtubevideoautoplaybehavior
+        ytutils.getYoutubeVideoAutoPlayBehavior(
+          ytutils.youtubevideoautoplaybehavior
         );
       if (player.getCurrentTime() == 0 && newState == 1) {
         if (document.location.search.indexOf("list=") != -1) {
@@ -1276,7 +1276,7 @@ try {
       }
       if (
         player.getPlaybackQuality() !=
-        YouTubeHighDefinition.getIntendedQuality(player, currentvideoquality)
+        ytutils.getIntendedQuality(player, currentvideoquality)
       ) {
         if (
           typeof player.getAdState !== "undefined" &&
@@ -1314,11 +1314,11 @@ try {
       if (
         newState === -1 ||
         player.getPlaybackQuality() !=
-        YouTubeHighDefinition.getIntendedQuality(player, currentvideoquality)
+        ytutils.getIntendedQuality(player, currentvideoquality)
       ) {
         if (
           player.getPlaybackQuality() !=
-          YouTubeHighDefinition.getIntendedQuality(player, currentvideoquality)
+          ytutils.getIntendedQuality(player, currentvideoquality)
         ) {
           if (
             typeof player.getAdState !== "undefined" &&
@@ -1342,7 +1342,7 @@ try {
           try {
             if (
               player.getPlaybackQuality() !=
-              YouTubeHighDefinition.getIntendedQuality(
+              ytutils.getIntendedQuality(
                 player,
                 currentvideoquality
               )
@@ -1362,7 +1362,7 @@ try {
                 }
               }
             }
-            var mxx = YouTubeHighDefinition.getSetVideoQuality(
+            var mxx = ytutils.getSetVideoQuality(
               player,
               currentvideoquality
             );
@@ -1370,7 +1370,7 @@ try {
             player.setPlaybackQualityRange(mxx, mxx);
             if (
               player.getPlaybackQuality() ===
-              YouTubeHighDefinition.getIntendedQuality(
+              ytutils.getIntendedQuality(
                 player,
                 currentvideoquality
               )
@@ -1387,17 +1387,17 @@ try {
 
   if (window.onYouTubePlayerReady) window.onYouTubePlayerReady == null;
   var onYouTubePlayerReady = function(player) {
-    YouTubeHighDefinition.ytPlayer = player;
+    ytutils.ytPlayer = player;
     //player.addEventListener('onStateChange','ythdonPlayerStateChange');
-    var currentvideoquality = YouTubeHighDefinition.getVideoQuality();
+    var currentvideoquality = ytutils.getVideoQuality();
     var enableplaylistautoplay =
-      YouTubeHighDefinition.getPlaylistVideoAutoPlayBehavior();
-    var enableautoplay = YouTubeHighDefinition.getYoutubeVideoAutoPlayBehavior(
-      YouTubeHighDefinition.youtubevideoautoplaybehavior
+      ytutils.getPlaylistVideoAutoPlayBehavior();
+    var enableautoplay = ytutils.getYoutubeVideoAutoPlayBehavior(
+      ytutils.youtubevideoautoplaybehavior
     );
     if (
       player.getPlaybackQuality() !=
-      YouTubeHighDefinition.getIntendedQuality(player, currentvideoquality)
+      ytutils.getIntendedQuality(player, currentvideoquality)
     ) {
       if (
         typeof player.getAdState !== "undefined" &&
@@ -1421,7 +1421,7 @@ try {
       try {
         if (
           player.getPlaybackQuality() !==
-          YouTubeHighDefinition.getIntendedQuality(player, currentvideoquality)
+          ytutils.getIntendedQuality(player, currentvideoquality)
         ) {
           if (
             typeof player.getAdState !== "undefined" &&
@@ -1438,7 +1438,7 @@ try {
             }
           }
         }
-        var mxx = YouTubeHighDefinition.getSetVideoQuality(
+        var mxx = ytutils.getSetVideoQuality(
           player,
           currentvideoquality
         );
@@ -1446,7 +1446,7 @@ try {
         player.setPlaybackQualityRange(mxx, mxx);
         if (
           player.getPlaybackQuality() ===
-          YouTubeHighDefinition.getIntendedQuality(player, currentvideoquality)
+          ytutils.getIntendedQuality(player, currentvideoquality)
         ) {
           window.clearInterval(onYouTubePlayerReadyInterval);
         }
