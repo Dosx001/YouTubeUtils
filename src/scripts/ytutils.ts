@@ -148,11 +148,17 @@ const ytutils = {
       ytutils.changeVideoSize(document, o["video_size"]);
     });
   },
-  getVolumeLevel: function(volume, volumelevel) {
-    if (volume == "default") return "default";
-    else if (volume == "mute") return 0;
-    if (volume == "100%") return 100;
-    if (volume == "volumelevel") return volumelevel;
+  getVolumeLevel: (volume: string, volumelevel: number) => {
+    switch (volume) {
+      case "default":
+        return "default";
+      case "mute":
+        return 0;
+      case "100%":
+        return 100;
+      default:
+        return volumelevel;
+    }
   },
   checkI: function(
     doc,
