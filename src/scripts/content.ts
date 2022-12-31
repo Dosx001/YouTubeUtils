@@ -183,53 +183,6 @@ const YouTubeHighDefinition = {
       }, 1);
     }
   },
-  changeVideoSize: function(doc, size) {
-    var dc = doc;
-    if (size) YouTubeHighDefinition.size = size;
-    var channel = dc.getElementById("playnav-player");
-    if (channel) return; //do not let channels have a size because they cant
-
-    var currentvideosize = size ? size : YouTubeHighDefinition.size;
-
-    if (currentvideosize == "expand") {
-      dc.getElementById("watch7-container").classList.add("watch-wide");
-      //dc.getElementById("watch7-container").classList.add('watch-medium');
-      dc.getElementById("player").classList.add("watch-playlist-collapsed");
-      dc.getElementById("player").classList.add("watch-medium");
-
-      //dc.getElementById("watch-video").classList.add("wide");
-      //dc.getElementById("content").classList.add("watch-wide");
-      //browser.cookies.set({"url": ".youtube.com", "name": "wide", "value": 1});
-    } else {
-      dc.getElementById("watch7-container").classList.remove("watch-wide");
-      //dc.getElementById("watch7-container").classList.remove('watch-medium');
-      dc.getElementById("player").classList.remove("watch-playlist-collapsed");
-      dc.getElementById("player").classList.remove("watch-medium");
-
-      //dc.getElementById("content").classList.remove("watch-wide");
-      //dc.getElementById("watch-video").classList.remove("wide");
-      //browser.cookies.set({"url": ".youtube.com", "name": "wide", "value": 0});
-    }
-  },
-  decodeFlashvars: function(passedFlashvar) {
-    var flashVars = {};
-    var flashVarsArray = passedFlashvar.split("&");
-    for (i = 0; i < flashVarsArray.length; i++) {
-      var a = flashVarsArray[i].split("=");
-      flashVars[a[0]] = decodeURIComponent(a[1]).replace(/\+/g, " "); //?------------------ replace may create problems
-    }
-    return flashVars;
-  },
-  encodeFlashvars: function(passedFlashvar) {
-    var newFlashVars = "";
-    for (var prop in passedFlashvar) {
-      if (!/^(?:ad|ctb|rec)_/i.test(prop)) {
-        newFlashVars +=
-          "&" + prop + "=" + encodeURIComponent(passedFlashvar[prop]);
-      }
-    }
-    return newFlashVars;
-  },
   addScript: () => {
     const s = document.createElement("script");
     s.src = browser.runtime.getURL("scripts/ytutils.js");
