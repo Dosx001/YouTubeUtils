@@ -126,15 +126,14 @@ browser.runtime.onMessage.addListener((request, sender) => {
 });
 
 browser.webRequest.onBeforeRequest.addListener(
-  (details) => {
-    if (annotationsoff)
-      return {
+  (details) =>
+    annotationsoff
+      ? {
         cancel:
-          details.url.indexOf("/annotations_invideo") != -1 &&
-          details.url.indexOf("instream_ad") == -1,
-      };
-    else return { cancel: false };
-  },
+          details.url.indexOf("/annotations_invideo") !== -1 &&
+          details.url.indexOf("instream_ad") === -1,
+      }
+      : { cancel: false },
   { urls: ["*://www.youtube.com/*"] },
   ["blocking"]
 );
