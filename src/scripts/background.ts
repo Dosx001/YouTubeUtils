@@ -23,7 +23,7 @@ const Ext = {
   version: null,
   win: "CTRL+SHIFT+Y",
   mac: "CMD+SHIFT+Y",
-  sto: "sync",
+  sto: "local",
   checkStorage: {
     checkHTMLLocalStorage: function() {
       if (typeof localStorage !== "undefined") {
@@ -58,12 +58,13 @@ const Ext = {
   getStorage: () =>
     Ext.sto === "sync" ? browser.storage.sync : browser.storage.local,
   init: () => {
-    Ext.getStorage().get(settings, async (items: typeof settings) => {
+    Ext.getStorage().get(async (items: typeof settings) => {
       const ver = browser.runtime.getManifest().version;
       if (!items.installed) {
         items.installed = true;
         items.version = ver;
         items.transition = true;
+        Ext.getStorage().set(settings);
       } else {
         if (ver != items.version) {
           items.version = ver;
@@ -138,5 +139,4 @@ browser.webRequest.onBeforeRequest.addListener(
   ["blocking"]
 );
 
-Ext.sto = "local";
 Ext.init();

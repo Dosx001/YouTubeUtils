@@ -64,76 +64,83 @@ const requestVideoQualitySizeChange = async () => {
 };
 
 const askQualitySize = () => {
-  if (!ExtPop.sto) {
-    browser.runtime.sendMessage({ action: "storage_ask_by_popup" });
-    return;
-  }
-  ExtPop.getStorage().get(
-    (keys: {
-      annotationsoff: boolean;
-      autoexpanddescription: boolean;
-      autosubtitles: string;
-      embeddedvideoautoplaybehavior: string;
-      playlistvideoautoplaybehavior: string;
-      suggestedautoplay: boolean;
-      video_quality: string;
-      video_size: string;
-      video_speed: string;
-      volume: string;
-      volumelevel: string;
-      youtubevideoautoplaybehavior: string;
-    }) => {
-      const [sel0, sel1, sel2] = document.querySelectorAll("select");
-      sel0.value = keys.video_quality;
-      sel1.value = keys.video_size;
-      sel2.value = keys.video_speed;
-      sel0.onchange = () => requestVideoQualitySizeChange();
-      sel1.onchange = () => requestVideoQualitySizeChange();
-      sel2.onchange = () => requestVideoQualitySizeChange();
-      const anno = document.querySelector<HTMLInputElement>("#annotationsoff");
-      anno.checked = annotationsoff;
-      anno.addEventListener("change", requestVideoQualitySizeChange, true);
-      document
-        .getElementById("volume")
-        .addEventListener("change", requestVideoQualitySizeChange, true);
-      const volLvl = document.querySelector<HTMLInputElement>("#volumelevel");
-      volLvl.value = keys.volumelevel;
-      volLvl.onchange = () => requestVideoQualitySizeChange();
-      volLvl.onfocus = () =>
-        document.querySelector<HTMLInputElement>("#volumelevelinput").click();
-      const sug =
-        document.querySelector<HTMLInputElement>("#suggestedautoplay");
-      sug.checked = keys.suggestedautoplay;
-      sug.addEventListener("change", requestVideoQualitySizeChange, true);
-      const expand =
-        document.querySelector<HTMLInputElement>("#autoexpanddescription");
-      expand.checked = keys.autoexpanddescription;
-      expand.addEventListener("change", requestVideoQualitySizeChange, true);
-      document.querySelector<HTMLSelectElement>("#autosubtitles").onchange =
-        () => requestVideoQualitySizeChange();
-      document
-        .querySelector<HTMLInputElement>(`.subt_${keys.autosubtitles}`)
-        .click();
-      const autoplybehr = document.querySelector<HTMLSelectElement>(
-        "#youtubevideoautoplaybehavior"
-      );
-      autoplybehr.onchange = () => requestVideoQualitySizeChange();
-      autoplybehr.value = keys.youtubevideoautoplaybehavior;
-      const playlist = document.querySelector<HTMLSelectElement>(
-        "#playlistvideoautoplaybehavior"
-      );
-      playlist.onchange = () => requestVideoQualitySizeChange();
-      playlist.value = keys.playlistvideoautoplaybehavior;
-      const embedded = document.querySelector<HTMLSelectElement>(
-        "#embeddedvideoautoplaybehavior"
-      );
-      embedded.onchange = () => requestVideoQualitySizeChange();
-      embedded.value = keys.embeddedvideoautoplaybehavior;
-      document.querySelector<HTMLInputElement>(
-        '#volume input[type="radio"].vol_' + keys.volume + ""
-      ).checked = true;
-    }
-  );
+  ExtPop.sto
+    ? ExtPop.getStorage().get(
+      (keys: {
+        annotationsoff: boolean;
+        autoexpanddescription: boolean;
+        autosubtitles: string;
+        embeddedvideoautoplaybehavior: string;
+        playlistvideoautoplaybehavior: string;
+        suggestedautoplay: boolean;
+        video_quality: string;
+        video_size: string;
+        video_speed: string;
+        volume: string;
+        volumelevel: string;
+        youtubevideoautoplaybehavior: string;
+      }) => {
+        const [sel0, sel1, sel2] = document.querySelectorAll("select");
+        sel0.value = keys.video_quality;
+        sel1.value = keys.video_size;
+        sel2.value = keys.video_speed;
+        sel0.onchange = () => requestVideoQualitySizeChange();
+        sel1.onchange = () => requestVideoQualitySizeChange();
+        sel2.onchange = () => requestVideoQualitySizeChange();
+        const anno =
+          document.querySelector<HTMLInputElement>("#annotationsoff");
+        anno.checked = annotationsoff;
+        anno.addEventListener("change", requestVideoQualitySizeChange, true);
+        document
+          .getElementById("volume")
+          .addEventListener("change", requestVideoQualitySizeChange, true);
+        const volLvl =
+          document.querySelector<HTMLInputElement>("#volumelevel");
+        volLvl.value = keys.volumelevel;
+        volLvl.onchange = () => requestVideoQualitySizeChange();
+        volLvl.onfocus = () =>
+          document
+            .querySelector<HTMLInputElement>("#volumelevelinput")
+            .click();
+        const sug =
+          document.querySelector<HTMLInputElement>("#suggestedautoplay");
+        sug.checked = keys.suggestedautoplay;
+        sug.addEventListener("change", requestVideoQualitySizeChange, true);
+        const expand = document.querySelector<HTMLInputElement>(
+          "#autoexpanddescription"
+        );
+        expand.checked = keys.autoexpanddescription;
+        expand.addEventListener(
+          "change",
+          requestVideoQualitySizeChange,
+          true
+        );
+        document.querySelector<HTMLSelectElement>("#autosubtitles").onchange =
+          () => requestVideoQualitySizeChange();
+        document
+          .querySelector<HTMLInputElement>(`.subt_${keys.autosubtitles}`)
+          .click();
+        const autoplybehr = document.querySelector<HTMLSelectElement>(
+          "#youtubevideoautoplaybehavior"
+        );
+        autoplybehr.onchange = () => requestVideoQualitySizeChange();
+        autoplybehr.value = keys.youtubevideoautoplaybehavior;
+        const playlist = document.querySelector<HTMLSelectElement>(
+          "#playlistvideoautoplaybehavior"
+        );
+        playlist.onchange = () => requestVideoQualitySizeChange();
+        playlist.value = keys.playlistvideoautoplaybehavior;
+        const embedded = document.querySelector<HTMLSelectElement>(
+          "#embeddedvideoautoplaybehavior"
+        );
+        embedded.onchange = () => requestVideoQualitySizeChange();
+        embedded.value = keys.embeddedvideoautoplaybehavior;
+        document.querySelector<HTMLInputElement>(
+          '#volume input[type="radio"].vol_' + keys.volume + ""
+        ).checked = true;
+      }
+    )
+    : browser.runtime.sendMessage({ action: "storage_ask_by_popup" });
 };
 
 browser.runtime.onMessage.addListener((req) => {
