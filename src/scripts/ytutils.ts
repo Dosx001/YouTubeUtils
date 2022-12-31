@@ -181,24 +181,21 @@ const ytutils = {
       "*"
     );
   },
-  onNavigateFinish: function(event) {
-    window.setTimeout(function() {
+  onNavigateFinish: () => {
+    window.setTimeout(() => {
       ytutils.expandVideoDescription(
         document,
         ytutils.autoexpanddescription,
         null
       );
     }, 1000);
-    var enableplaylistautoplay = ytutils.getPlaylistVideoAutoPlayBehavior();
-    var enableautoplay = ytutils.getYoutubeVideoAutoPlayBehavior(
-      ytutils.youtubevideoautoplaybehavior
-    );
     ytutils.pauseVideo(
-      enableautoplay,
-      enableplaylistautoplay,
+      ytutils.getYoutubeVideoAutoPlayBehavior(
+        ytutils.youtubevideoautoplaybehavior
+      ),
+      ytutils.getPlaylistVideoAutoPlayBehavior(),
       "onNavigateFinish"
     );
-    //YouTubeHighDefinition.scrollTo(document);
   },
   pauseVideo: function(enableautoplay, enableplaylistautoplay, re) {
     var player = document.getElementById("movie_player");
