@@ -1065,18 +1065,6 @@ const ytutils = {
 
     if (dc.body) dc.body.classList.add("fullytpagesize");
   },
-  setAutoSubtitles: function() {
-    switch (autosubtitles) {
-      case "default":
-        break;
-      case "on":
-        player.loadModule("captions");
-        break;
-      case "off":
-        player.unloadModule("captions");
-        break;
-    }
-  },
 };
 
 window.addEventListener(
