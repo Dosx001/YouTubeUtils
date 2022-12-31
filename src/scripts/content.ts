@@ -98,11 +98,9 @@ const ytworker = {
       ? browser.storage.sync
       : browser.storage.local;
   },
-  changeVideoQuality: function() {
-    if (location.hostname.search(/youtube.com$/) != -1) {
-      var dc = document;
-      var player = dc.getElementById("movie_player");
-      var channel = dc.getElementById("playnav-player");
+  changeVideoQuality: () => {
+    if (location.hostname.search(/youtube.com$/) !== -1) {
+      const channel = document.getElementById("playnav-player");
       if (channel) {
         //need to remove listener here else it will create an infinite loop.
         channel.removeEventListener(
@@ -111,6 +109,7 @@ const ytworker = {
           true
         );
       }
+      const player = document.getElementById("movie_player");
       if (player) {
         let flashvars = player.getAttribute("flashvars");
         const delimit = "&vq";
@@ -126,13 +125,12 @@ const ytworker = {
               : `${splitarray[0]}${delimit}=${ytworker.quality}`;
         }
         player.setAttribute("flashvars", flashvars);
-        var oldplayer = player;
-        var playerparentnode = oldplayer.parentNode;
-        var playernextsibling = oldplayer.nextSibling;
-        playerparentnode.removeChild(oldplayer);
-        var playerclone = oldplayer.cloneNode(true);
-        playerparentnode.insertBefore(playerclone, playernextsibling);
-
+        const playerparentnode = player.parentNode;
+        playerparentnode.removeChild(player);
+        playerparentnode.insertBefore(
+          player.cloneNode(true),
+          player.nextSibling
+        );
         if (channel) {
           channel.addEventListener(
             "DOMNodeInserted",
