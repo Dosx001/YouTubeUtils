@@ -1,4 +1,4 @@
-var ytutils = {
+const ytutils = {
   quality: null,
   size: null,
   volume: null,
@@ -26,9 +26,7 @@ var ytutils = {
     //YouTubeHighDefinition.changeVideoQuality(document);
     ytutils.changeVideoQuality(
       document,
-      ytutils.quality
-        ? ytutils.quality
-        : "highress",
+      ytutils.quality ? ytutils.quality : "highress",
       speed,
       volume,
       volumelevel,
@@ -185,8 +183,7 @@ var ytutils = {
         null
       );
     }, 1000);
-    var enableplaylistautoplay =
-      ytutils.getPlaylistVideoAutoPlayBehavior();
+    var enableplaylistautoplay = ytutils.getPlaylistVideoAutoPlayBehavior();
     var enableautoplay = ytutils.getYoutubeVideoAutoPlayBehavior(
       ytutils.youtubevideoautoplaybehavior
     );
@@ -220,9 +217,7 @@ var ytutils = {
         .getPropertyValue("height")
         .replace("px", "")
     );
-    var offsetTop = ytutils.findPosition(
-      dc.getElementById("page-manager")
-    )[1];
+    var offsetTop = ytutils.findPosition(dc.getElementById("page-manager"))[1];
     if (!dc.body.classList.contains("fullytpagesize")) {
       if (spf) {
         dc.defaultView.scrollTo(xpos, offsetTop / 2);
@@ -283,19 +278,9 @@ var ytutils = {
       else {
       }
       window.addEventListener("spfdone", ytutils.onSPFDone);
-      window.addEventListener(
-        "yt-navigate-start",
-        ytutils.onSPFDone
-      );
-      window.addEventListener(
-        "yt-navigate-finish",
-        ytutils.onNavigateFinish
-      );
-      window.addEventListener(
-        "transitionend",
-        ytutils.Slistener,
-        true
-      );
+      window.addEventListener("yt-navigate-start", ytutils.onSPFDone);
+      window.addEventListener("yt-navigate-finish", ytutils.onNavigateFinish);
+      window.addEventListener("transitionend", ytutils.Slistener, true);
       //window.addEventListener("transitioncancel", YouTubeHighDefinition.Slistener2, true);
       //document.getElementById("progress").addEventListener("transitionend", YouTubeHighDefinition.Slistener, true);
       //document.body.addEventListener("transitionend", YouTubeHighDefinition.Slistener, true);
@@ -328,14 +313,10 @@ var ytutils = {
         var currentvideoquality = quality;
         var volumespeed = speed;
         //var enableautoplay = YouTubeHighDefinition.getPrefValue("extensions.youtubehighdefinition.enableautoplay");
-        var enableautoplay =
-          ytutils.getYoutubeVideoAutoPlayBehavior(
-            youtubevideoautoplaybehavior
-          );
-        var volumelevel = ytutils.getVolumeLevel(
-          volume,
-          volumelevel
+        var enableautoplay = ytutils.getYoutubeVideoAutoPlayBehavior(
+          youtubevideoautoplaybehavior
         );
+        var volumelevel = ytutils.getVolumeLevel(volume, volumelevel);
 
         /*player.setAttribute("wmode", "opaque");
 
@@ -1218,8 +1199,7 @@ window.addEventListener(
       ytutils.playlistvideoautoplaybehavior =
         event.data.playlistvideoautoplaybehavior;
       ytutils.suggestedautoplay = event.data.suggestedautoplay;
-      ytutils.autoexpanddescription =
-        event.data.autoexpanddescription;
+      ytutils.autoexpanddescription = event.data.autoexpanddescription;
       ytutils.autosubtitles = event.data.autosubtitles;
       ytutils.isOptionHandle = event.data.isOptionHandle;
       ytutils.requestChange(
@@ -1257,12 +1237,10 @@ try {
       //var document=window.document;
       var player = document.getElementById("movie_player");
       var currentvideoquality = ytutils.getVideoQuality();
-      var enableplaylistautoplay =
-        ytutils.getPlaylistVideoAutoPlayBehavior();
-      var enableautoplay =
-        ytutils.getYoutubeVideoAutoPlayBehavior(
-          ytutils.youtubevideoautoplaybehavior
-        );
+      var enableplaylistautoplay = ytutils.getPlaylistVideoAutoPlayBehavior();
+      var enableautoplay = ytutils.getYoutubeVideoAutoPlayBehavior(
+        ytutils.youtubevideoautoplaybehavior
+      );
       if (player.getCurrentTime() == 0 && newState == 1) {
         if (document.location.search.indexOf("list=") != -1) {
           if (!enableplaylistautoplay) {
@@ -1342,10 +1320,7 @@ try {
           try {
             if (
               player.getPlaybackQuality() !=
-              ytutils.getIntendedQuality(
-                player,
-                currentvideoquality
-              )
+              ytutils.getIntendedQuality(player, currentvideoquality)
             ) {
               if (
                 typeof player.getAdState !== "undefined" &&
@@ -1362,18 +1337,12 @@ try {
                 }
               }
             }
-            var mxx = ytutils.getSetVideoQuality(
-              player,
-              currentvideoquality
-            );
+            var mxx = ytutils.getSetVideoQuality(player, currentvideoquality);
             //player.setPlaybackQuality(mxx);
             player.setPlaybackQualityRange(mxx, mxx);
             if (
               player.getPlaybackQuality() ===
-              ytutils.getIntendedQuality(
-                player,
-                currentvideoquality
-              )
+              ytutils.getIntendedQuality(player, currentvideoquality)
             ) {
               window.clearInterval(ythdonPlayerStateChangeInterval);
             }
@@ -1390,8 +1359,7 @@ try {
     ytutils.ytPlayer = player;
     //player.addEventListener('onStateChange','ythdonPlayerStateChange');
     var currentvideoquality = ytutils.getVideoQuality();
-    var enableplaylistautoplay =
-      ytutils.getPlaylistVideoAutoPlayBehavior();
+    var enableplaylistautoplay = ytutils.getPlaylistVideoAutoPlayBehavior();
     var enableautoplay = ytutils.getYoutubeVideoAutoPlayBehavior(
       ytutils.youtubevideoautoplaybehavior
     );
@@ -1438,10 +1406,7 @@ try {
             }
           }
         }
-        var mxx = ytutils.getSetVideoQuality(
-          player,
-          currentvideoquality
-        );
+        var mxx = ytutils.getSetVideoQuality(player, currentvideoquality);
         //player.setPlaybackQuality(mxx);
         player.setPlaybackQualityRange(mxx, mxx);
         if (
