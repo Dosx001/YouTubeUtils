@@ -1065,15 +1065,6 @@ const ytutils = {
 
     if (dc.body) dc.body.classList.add("fullytpagesize");
   },
-  decodeFlashvars: function(passedFlashvar) {
-    var flashVars = {};
-    var flashVarsArray = passedFlashvar.split("&");
-    for (i = 0; i < flashVarsArray.length; i++) {
-      var a = flashVarsArray[i].split("=");
-      flashVars[a[0]] = decodeURIComponent(a[1]).replace(/\+/g, " "); //?------------------ replace may create problems
-    }
-    return flashVars;
-  },
   encodeFlashvars: function(passedFlashvar) {
     var newFlashVars = "";
     for (var prop in passedFlashvar) {
