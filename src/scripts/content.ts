@@ -248,11 +248,12 @@ const YouTubeHighDefinition = {
         );
     }
   },
-  addScript: function(css) {
-    var s = document.createElement("script");
-    s.src = browser.extension.getURL("scripts/ytutils.js");
-    s.onload = function() {
-      this.parentNode.removeChild(this);
+  addScript: () => {
+    const s = document.createElement("script");
+    s.src = browser.runtime.getURL("scripts/ytutils.js");
+    s.id = "ytutils";
+    s.onload = () => {
+      document.getElementById("ytutils").remove();
     };
     (document.head || document.documentElement).appendChild(s);
   },
