@@ -156,12 +156,11 @@ const ytworker = {
       }
     }
   },
-  handleChannelChange: function(event) {
-    if (event.target.nodeName == "EMBED") {
+  handleChannelChange: (ev: Event) => {
+    if ((ev.target as HTMLElement).nodeName == "EMBED")
       window.setTimeout(() => {
         ytworker.changeVideoQuality();
       }, 1);
-    }
   },
   addScript: () => {
     const s = document.createElement("script");
