@@ -80,10 +80,8 @@ const Ext = {
 };
 
 browser.runtime.onMessage.addListener((request, sender) => {
-  if (request.action == "video_quality_change") {
-    changeVideoQuality(request.quality);
-  } else if (request.action == "qualitysize_ask") {
-    Ext.getStorage().get((items) => {
+  if (request.action == "qualitysize_ask") {
+    Ext.getStorage().get((items: typeof settings) => {
       browser.tabs.sendMessage(sender.tab.id, {
         action: "video_qualitysize_change",
         quality: items.video_quality,
@@ -105,25 +103,20 @@ browser.runtime.onMessage.addListener((request, sender) => {
       });
     });
   } else if (request.action == "qualitysize_save") {
-    Ext.getStorage().set(
-      {
-        video_quality: request.quality,
-        video_size: request.size,
-        video_speed: request.speed,
-        annotationsoff: request.annotationsoff,
-        volume: request.volume,
-        volumelevel: request.volumelevel,
-        youtubevideoautoplaybehavior: request.youtubevideoautoplaybehavior,
-        playlistvideoautoplaybehavior: request.playlistvideoautoplaybehavior,
-        suggestedautoplay: request.suggestedautoplay,
-        embeddedvideoautoplaybehavior: request.embeddedvideoautoplaybehavior,
-        autoexpanddescription: request.autoexpanddescription,
-        autosubtitles: request.autosubtitles,
-      },
-      function() {
-        annotationsoff = request.annotationsoff;
-      }
-    );
+    Ext.getStorage().set({
+      video_quality: request.quality,
+      video_size: request.size,
+      video_speed: request.speed,
+      annotationsoff: request.annotationsoff,
+      volume: request.volume,
+      volumelevel: request.volumelevel,
+      youtubevideoautoplaybehavior: request.youtubevideoautoplaybehavior,
+      playlistvideoautoplaybehavior: request.playlistvideoautoplaybehavior,
+      suggestedautoplay: request.suggestedautoplay,
+      embeddedvideoautoplaybehavior: request.embeddedvideoautoplaybehavior,
+      autoexpanddescription: request.autoexpanddescription,
+      autosubtitles: request.autosubtitles,
+    });
   }
 });
 
