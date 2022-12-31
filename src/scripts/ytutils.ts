@@ -1065,16 +1065,6 @@ const ytutils = {
 
     if (dc.body) dc.body.classList.add("fullytpagesize");
   },
-  encodeFlashvars: function(passedFlashvar) {
-    var newFlashVars = "";
-    for (var prop in passedFlashvar) {
-      if (!/^(?:ad|ctb|rec)_/i.test(prop)) {
-        newFlashVars +=
-          "&" + prop + "=" + encodeURIComponent(passedFlashvar[prop]);
-      }
-    }
-    return newFlashVars;
-  },
   addStyle: function(css) {
     if (document.getElementById("youtubehighdefinition-stylesheet") == null) {
       var link = document.createElement("link");
