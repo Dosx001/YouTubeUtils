@@ -1065,16 +1065,6 @@ const ytutils = {
 
     if (dc.body) dc.body.classList.add("fullytpagesize");
   },
-  setPSpeed: function() {
-    var ythdinterval = window.setInterval(function() {
-      var player = document.getElementById("movie_player");
-      if (checkPlayerReady(player)) {
-        player.setPlaybackRate(videoplayerspeed);
-        window.clearInterval(ythdinterval);
-        //YTVideoPlayerSpeed.changeVideoSize(doc,YTVideoPlayerSpeed.size);
-      }
-    }, 50);
-  },
   setAutoSubtitles: function() {
     switch (autosubtitles) {
       case "default":
