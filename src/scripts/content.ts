@@ -98,17 +98,8 @@ const ytworker = {
       ? browser.storage.sync
       : browser.storage.local;
   },
-  changeVideoQuality: function(doc) {
-    try {
-      var domain = doc.domain;
-    } catch (err) {
-      return;
-    }
-    if (!domain) {
-      return;
-    }
-
-    if (domain.search(/youtube.com$/) != -1) {
+  changeVideoQuality: function() {
+    if (location.hostname.search(/youtube.com$/) != -1) {
       var dc = document;
       var player = dc.getElementById("movie_player");
       var channel = dc.getElementById("playnav-player");
@@ -167,10 +158,8 @@ const ytworker = {
   },
   handleChannelChange: function(event) {
     if (event.target.nodeName == "EMBED") {
-      var doc = event.target.ownerDocument;
-
-      window.setTimeout(function() {
-        ytworker.changeVideoQuality(doc);
+      window.setTimeout(() => {
+        ytworker.changeVideoQuality();
       }, 1);
     }
   },
