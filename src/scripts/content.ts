@@ -261,9 +261,7 @@ const YouTubeHighDefinition = {
 YouTubeHighDefinition.addScript();
 
 //change to mutation event
-if (document.location.pathname.indexOf("/embed") == 0) {
-  //
-} else {
+if (document.location.pathname.indexOf("/embed") !== 0) {
   YouTubeHighDefinition.requestChange();
 }
 
