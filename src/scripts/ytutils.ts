@@ -170,16 +170,7 @@ const ytutils = {
     autosubtitles,
     isOptionHandle
   ) {
-    try {
-      var domain = doc.domain;
-    } catch (err) {
-      return;
-    }
-    if (!domain) {
-      return;
-    }
-
-    if (domain.search(/youtube.com$/) != -1) {
+    if (location.hostname.search(/youtube.com$/) != -1) {
       var dc = document;
       var player = document.getElementById("movie_player");
 
