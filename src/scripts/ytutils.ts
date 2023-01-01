@@ -177,7 +177,7 @@ const ytutils = {
     autosubtitles,
     isOptionHandle
   ) {
-    if (location.hostname.search(/youtube.com$/) != -1) {
+    if (location.hostname.search(/youtube.com$/) !== -1) {
       const player = document.getElementById("movie_player");
       if (player)
         player.addEventListener("onStateChange", "ythdonPlayerStateChange");
@@ -186,14 +186,13 @@ const ytutils = {
       window.addEventListener("yt-navigate-finish", ytutils.onNavigateFinish);
       window.addEventListener("transitionend", ytutils.Slistener, true);
 
-      if (document.location.pathname.indexOf("/embed") == 0) {
+      if (document.location.pathname.indexOf("/embed") === 0) {
         ytutils.checkI(quality);
       }
 
-      if (doc.location.pathname == "/watch") {
+      if (doc.location.pathname === "/watch") {
         const currentvideoquality = quality;
         const volumespeed = speed;
-        const enableautoplay = ytutils.getYoutubeVideoAutoPlayBehavior();
         volumelevel = ytutils.getVolumeLevel(volume, volumelevel);
         try {
           player.getPlayerState();
@@ -217,37 +216,29 @@ const ytutils = {
           }, 25);
           return;
         }
-        var ythdinterval = window.setInterval(function() {
-          var player = document.getElementById("movie_player");
+        const ythdinterval = window.setInterval(() => {
+          const player = document.getElementById("movie_player");
           if (ytutils.checkPlayerReady(player)) {
-            if (currentvideoquality == "default") {
-              if (volumelevel != "default") {
+            if (currentvideoquality === "default") {
+              if (volumelevel !== "default") {
                 player.unMute();
                 player.setVolume(volumelevel);
               }
-              var cTime = player.getCurrentTime();
               player.setPlaybackQualityRange(
                 currentvideoquality,
                 currentvideoquality
               );
               player.setPlaybackRate(parseFloat(volumespeed));
-
-              if (!enableautoplay) {
-              }
             } else {
-              if (volumelevel != "default") {
+              if (volumelevel !== "default") {
                 player.unMute();
                 player.setVolume(volumelevel);
               }
-              var cTime = player.getCurrentTime();
               player.setPlaybackQualityRange(
                 currentvideoquality,
                 currentvideoquality
               );
               player.setPlaybackRate(parseFloat(volumespeed));
-
-              if (!enableautoplay) {
-              }
             }
             window.clearInterval(ythdinterval);
           }
