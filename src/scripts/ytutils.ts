@@ -44,7 +44,7 @@ const ytutils = {
       autoexpanddescription,
       isOptionHandle
     );
-    ytutils.enablesuggestedautoplay(document, suggestedautoplay);
+    ytutils.enablesuggestedautoplay(suggestedautoplay);
   },
   getIntendedQuality: function(player, currentvideoquality) {
     ytutils.quality;
@@ -83,23 +83,19 @@ const ytutils = {
         return false;
     }
   },
-  enablesuggestedautoplay: function(document, checked) {
+  enablesuggestedautoplay: (checked: boolean) => {
     if (document.location.pathname.search(/^\/watch/) == 0) {
-      if (document.getElementById("autoplay-checkbox"))
-        document.getElementById("autoplay-checkbox").click();
-      if (document.getElementById("autoplay-checkbox"))
-        document.getElementById("autoplay-checkbox").checked = checked;
-      if (
-        document.querySelector(
-          "paper-toggle-button#toggle[aria-pressed*=" + !checked + "]"
-        )
-      ) {
-        document
-          .querySelector(
-            "paper-toggle-button#toggle[aria-pressed*=" + !checked + "]"
-          )
-          .click();
+      const check =
+        document.querySelector<HTMLInputElement>("#autoplay-checkbox");
+      if (check) {
+        check.click();
+        check.checked = checked;
       }
+      document
+        .querySelector<HTMLInputElement>(
+          `paper-toggle-button#toggle[aria-pressed*=${!checked}]`
+        )
+        ?.click();
     }
   },
   expandVideoDescription: function(
