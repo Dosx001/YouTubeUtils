@@ -157,8 +157,7 @@ const ytutils = {
     var player = ytutils.ytPlayer;
     player.setPlaybackQualityRange(quality, quality);
   },
-  onSPFDone: function(event) {
-    var doc = event.currentTarget.document;
+  onSPFDone: () => {
     window.postMessage(
       { type: "FROM_PAGE_SCRIPT_REQUEST_CHANGE", text: "NULL" },
       "*"
