@@ -47,6 +47,7 @@ const ytutils = {
     ytutils.enablesuggestedautoplay(document, suggestedautoplay);
   },
   getIntendedQuality: function(player, currentvideoquality) {
+    ytutils.quality;
     if (currentvideoquality == "highres")
       return player.getAvailableQualityLevels()[0];
     else if (
@@ -63,11 +64,8 @@ const ytutils = {
       return player.getAvailableQualityLevels()[0];
     else return currentvideoquality;
   },
-  getVideoQuality: function() {
-    var currentvideoquality = ytutils.quality;
-    if (currentvideoquality == "4k2160") currentvideoquality = "hd2160";
-    return currentvideoquality;
-  },
+  getVideoQuality: () =>
+    ytutils.quality === "4k2160" ? "hd2160" : ytutils.quality,
   getPlaylistVideoAutoPlayBehavior: function() {
     var currentplaylistvideoautoplaybehavior =
       ytutils.playlistvideoautoplaybehavior;
