@@ -18,7 +18,7 @@ const ytutils = {
   autoexpanddescription: null,
   autosubtitles: null,
   isOptionHandle: null,
-  ytPlayer: null,
+  player: document.querySelector<player>("#movie_player"),
   requestChange: function(
     id,
     speed,
@@ -46,19 +46,25 @@ const ytutils = {
     ytutils.expandVideoDescription(autoexpanddescription, isOptionHandle);
     ytutils.enablesuggestedautoplay(suggestedautoplay);
   },
-  getIntendedQuality: (player: player) => {
+  getIntendedQuality: () => {
     const currentvideoquality = ytutils.getVideoQuality();
     if (currentvideoquality === "highres")
-      return player.getAvailableQualityLevels()[0];
-    if (player.getAvailableQualityLevels().indexOf(currentvideoquality) === -1)
-      return player.getAvailableQualityLevels()[0];
+      return ytutils.player.getAvailableQualityLevels()[0];
+    if (
+      ytutils.player
+        .getAvailableQualityLevels()
+        .indexOf(currentvideoquality) === -1
+    )
+      return ytutils.player.getAvailableQualityLevels()[0];
     return currentvideoquality;
   },
-  getSetVideoQuality: (player: player) => {
+  getSetVideoQuality: () => {
     const currentvideoquality = ytutils.getVideoQuality();
     return currentvideoquality === "hd2160" &&
-      player.getAvailableQualityLevels().indexOf(currentvideoquality) === -1
-      ? player.getAvailableQualityLevels()[0]
+      ytutils.player
+        .getAvailableQualityLevels()
+        .indexOf(currentvideoquality) === -1
+      ? ytutils.player.getAvailableQualityLevels()[0]
       : currentvideoquality;
   },
   getVideoQuality: () =>
@@ -133,7 +139,7 @@ const ytutils = {
     }
   },
   checkI: (quality: string) => {
-    ytutils.ytPlayer.setPlaybackQualityRange(quality, quality);
+    ytutils.player.setPlaybackQualityRange(quality, quality);
   },
   onSPFDone: () => {
     window.postMessage(
@@ -163,9 +169,9 @@ const ytutils = {
     )
       ytutils.scrollTo();
   },
-  checkPlayerReady: (player: player) => {
+  checkPlayerReady: () => {
     try {
-      return player.getPlayerState() !== -1;
+      return ytutils.player.getPlayerState() !== -1;
     } catch (e) {
       return false;
     }
@@ -182,14 +188,14 @@ const ytutils = {
     isOptionHandle
   ) {
     if (location.hostname.search(/youtube.com$/) !== -1) {
-      const player = document.querySelector<player>("#movie_player");
-      if (player)
-        player.addEventListener("onStateChange", "ythdonPlayerStateChange");
+      ytutils.player?.addEventListener(
+        "onStateChange",
+        "ythdonPlayerStateChange"
+      );
       window.addEventListener("spfdone", ytutils.onSPFDone);
       window.addEventListener("yt-navigate-start", ytutils.onSPFDone);
       window.addEventListener("yt-navigate-finish", ytutils.onNavigateFinish);
       window.addEventListener("transitionend", ytutils.Slistener, true);
-
       if (document.location.pathname.indexOf("/embed") === 0) {
         ytutils.checkI(quality);
       }
@@ -199,11 +205,11 @@ const ytutils = {
         const volumespeed = speed;
         volumelevel = ytutils.getVolumeLevel(volume, volumelevel);
         try {
-          player.getPlayerState();
+          ytutils.player.getPlayerState();
         } catch (e) {
           const ythderrinterval = window.setInterval(() => {
             try {
-              player.getPlayerState();
+              ytutils.player.getPlayerState();
               window.clearTimeout(ythderrinterval);
               ytutils.changeVideoQuality(
                 doc,
@@ -221,27 +227,27 @@ const ytutils = {
           return;
         }
         const ythdinterval = window.setInterval(() => {
-          if (ytutils.checkPlayerReady(player)) {
+          if (ytutils.checkPlayerReady()) {
             if (currentvideoquality === "default") {
               if (volumelevel !== "default") {
-                player.unMute();
-                player.setVolume(volumelevel);
+                ytutils.player.unMute();
+                ytutils.player.setVolume(volumelevel);
               }
-              player.setPlaybackQualityRange(
+              ytutils.player.setPlaybackQualityRange(
                 currentvideoquality,
                 currentvideoquality
               );
-              player.setPlaybackRate(parseFloat(volumespeed));
+              ytutils.player.setPlaybackRate(parseFloat(volumespeed));
             } else {
               if (volumelevel !== "default") {
-                player.unMute();
-                player.setVolume(volumelevel);
+                ytutils.player.unMute();
+                ytutils.player.setVolume(volumelevel);
               }
-              player.setPlaybackQualityRange(
+              ytutils.player.setPlaybackQualityRange(
                 currentvideoquality,
                 currentvideoquality
               );
-              player.setPlaybackRate(parseFloat(volumespeed));
+              ytutils.player.setPlaybackRate(parseFloat(volumespeed));
             }
             window.clearInterval(ythdinterval);
           }
@@ -417,7 +423,7 @@ const ytutils = {
 
       if (
         document.getElementsByClassName("html5-video-container")[0] &&
-        document.getElementById("movie_player")
+        ytutils.player
       ) {
         document
           .getElementsByClassName("html5-video-container")[0]
@@ -426,8 +432,7 @@ const ytutils = {
             "width:" +
             document.body.clientWidth +
             "px !important;margin-left:-" +
-            document.getElementById("movie_player").getBoundingClientRect()
-              .x +
+            ytutils.player.getBoundingClientRect().x +
             "px !important;"
           );
       }
@@ -884,15 +889,17 @@ window.addEventListener("spfdone", ytutils.onSPFDone);
 window.addEventListener("yt-navigate-start", ytutils.onSPFDone);
 
 try {
-  if (window.ythdonPlayerStateChange && player.removeEventListener)
-    player.removeEventListener("onStateChange", "ythdonPlayerStateChange");
+  if (window.ythdonPlayerStateChange && ytutils.player.removeEventListener)
+    ytutils.player.removeEventListener(
+      "onStateChange",
+      ythdonPlayerStateChange
+    );
   var ythdonPlayerStateChange = function(newState) {
     try {
-      var player = document.getElementById("movie_player");
       var currentvideoquality = ytutils.getVideoQuality();
       var enableplaylistautoplay = ytutils.getPlaylistVideoAutoPlayBehavior();
       var enableautoplay = ytutils.getYoutubeVideoAutoPlayBehavior();
-      if (player.getCurrentTime() == 0 && newState == 1) {
+      if (ytutils.player.getCurrentTime() == 0 && newState == 1) {
         if (document.location.search.indexOf("list=") != -1) {
           if (!enableplaylistautoplay) {
           }
@@ -901,10 +908,13 @@ try {
           }
         }
       }
-      if (player.getPlaybackQuality() != ytutils.getIntendedQuality(player)) {
+      if (
+        ytutils.player.getPlaybackQuality() !=
+        ytutils.getIntendedQuality(ytutils.player)
+      ) {
         if (
-          typeof player.getAdState !== "undefined" &&
-          player.getAdState() != 1
+          typeof ytutils.player.getAdState !== "undefined" &&
+          ytutils.player.getAdState() != 1
         ) {
           if (document.location.search.indexOf("list=") != -1) {
             if (!enableplaylistautoplay) {
@@ -918,7 +928,7 @@ try {
       if (
         document.getElementsByTagName("video").length == 0 &&
         newState == 1 &&
-        player.getCurrentTime() < 1 &&
+        ytutils.player.getCurrentTime() < 1 &&
         window.ythdFlPlayerPaused == false
       ) {
         if (document.location.search.indexOf("list=") != -1) {
@@ -933,12 +943,16 @@ try {
       }
       if (
         newState === -1 ||
-        player.getPlaybackQuality() != ytutils.getIntendedQuality(player)
+        ytutils.player.getPlaybackQuality() !=
+        ytutils.getIntendedQuality(ytutils.player)
       ) {
-        if (player.getPlaybackQuality() != ytutils.getIntendedQuality(player)) {
+        if (
+          ytutils.player.getPlaybackQuality() !=
+          ytutils.getIntendedQuality(ytutils.player)
+        ) {
           if (
-            typeof player.getAdState !== "undefined" &&
-            player.getAdState() != 1
+            typeof ytutils.player.getAdState !== "undefined" &&
+            ytutils.player.getAdState() != 1
           ) {
             if (document.location.search.indexOf("list=") != -1) {
               if (!enableplaylistautoplay) {
@@ -955,11 +969,12 @@ try {
           }
           try {
             if (
-              player.getPlaybackQuality() != ytutils.getIntendedQuality(player)
+              ytutils.player.getPlaybackQuality() !=
+              ytutils.getIntendedQuality(ytutils.player)
             ) {
               if (
-                typeof player.getAdState !== "undefined" &&
-                player.getAdState() != 1
+                typeof ytutils.player.getAdState !== "undefined" &&
+                ytutils.player.getAdState() != 1
               ) {
                 if (document.location.search.indexOf("list=") != -1) {
                   if (!enableplaylistautoplay) {
@@ -970,10 +985,11 @@ try {
                 }
               }
             }
-            var mxx = ytutils.getSetVideoQuality(player);
-            player.setPlaybackQualityRange(mxx, mxx);
+            var mxx = ytutils.getSetVideoQuality(ytutils.player);
+            ytutils.player.setPlaybackQualityRange(mxx, mxx);
             if (
-              player.getPlaybackQuality() === ytutils.getIntendedQuality(player)
+              ytutils.player.getPlaybackQuality() ===
+              ytutils.getIntendedQuality(ytutils.player)
             ) {
               window.clearInterval(ythdonPlayerStateChangeInterval);
             }
@@ -987,7 +1003,7 @@ try {
 
   if (window.onYouTubePlayerReady) window.onYouTubePlayerReady == null;
   var onYouTubePlayerReady = function(player) {
-    ytutils.ytPlayer = player;
+    ytutils.player = player;
     var currentvideoquality = ytutils.getVideoQuality();
     var enableplaylistautoplay = ytutils.getPlaylistVideoAutoPlayBehavior();
     var enableautoplay = ytutils.getYoutubeVideoAutoPlayBehavior();
