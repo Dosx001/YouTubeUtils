@@ -171,13 +171,9 @@ const ytutils = {
     isOptionHandle
   ) {
     if (location.hostname.search(/youtube.com$/) != -1) {
-      var dc = document;
-      var player = document.getElementById("movie_player");
-
+      const player = document.getElementById("movie_player");
       if (player)
         player.addEventListener("onStateChange", "ythdonPlayerStateChange");
-      else {
-      }
       window.addEventListener("spfdone", ytutils.onSPFDone);
       window.addEventListener("yt-navigate-start", ytutils.onSPFDone);
       window.addEventListener("yt-navigate-finish", ytutils.onNavigateFinish);
@@ -188,38 +184,31 @@ const ytutils = {
       }
 
       if (doc.location.pathname == "/watch") {
-        var currentvideoquality = quality;
-        var volumespeed = speed;
-        var enableautoplay = ytutils.getYoutubeVideoAutoPlayBehavior();
-        var volumelevel = ytutils.getVolumeLevel(volume, volumelevel);
-
-        var prelogs_enabled = true;
-        if (prelogs_enabled) {
-          try {
+        const currentvideoquality = quality;
+        const volumespeed = speed;
+        const enableautoplay = ytutils.getYoutubeVideoAutoPlayBehavior();
+        volumelevel = ytutils.getVolumeLevel(volume, volumelevel);
+        try {
+          player.getPlayerState();
+        } catch (e) {
+          const ythderrinterval = window.setInterval(() => {
             try {
-              player.getPlayerState();
-            } catch (e) {
-              throw e;
-            }
-          } catch (e) {
-            var ythderrinterval = window.setInterval(function() {
-              try {
-                document.getElementById("movie_player").getPlayerState();
-                window.clearTimeout(ythderrinterval);
-                ytutils.changeVideoQuality(
-                  doc,
-                  quality,
-                  speed,
-                  volume,
-                  volumelevel,
-                  youtubevideoautoplaybehavior,
-                  playlistvideoautoplaybehavior,
-                  isOptionHandle
-                );
-              } catch (e) { }
-            }, 25);
-            return;
-          }
+              document.getElementById("movie_player").getPlayerState();
+              window.clearTimeout(ythderrinterval);
+              ytutils.changeVideoQuality(
+                doc,
+                quality,
+                speed,
+                volume,
+                volumelevel,
+                youtubevideoautoplaybehavior,
+                playlistvideoautoplaybehavior,
+                autosubtitles,
+                isOptionHandle
+              );
+            } catch (e) { }
+          }, 25);
+          return;
         }
 
         function checkPlayerReady(player) {
