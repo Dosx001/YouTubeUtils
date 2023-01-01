@@ -1,3 +1,8 @@
+interface player extends HTMLElement {
+  getPlayerState: () => number;
+  getAvailableQualityLevels: () => string[];
+}
+
 const ytutils = {
   quality: null,
   size: null,
@@ -42,7 +47,7 @@ const ytutils = {
     ytutils.expandVideoDescription(autoexpanddescription, isOptionHandle);
     ytutils.enablesuggestedautoplay(suggestedautoplay);
   },
-  getIntendedQuality: (player) => {
+  getIntendedQuality: (player: player) => {
     const currentvideoquality = ytutils.getVideoQuality();
     if (currentvideoquality === "highres")
       return player.getAvailableQualityLevels()[0];
@@ -50,7 +55,7 @@ const ytutils = {
       return player.getAvailableQualityLevels()[0];
     return currentvideoquality;
   },
-  getSetVideoQuality: (player) => {
+  getSetVideoQuality: (player: player) => {
     const currentvideoquality = ytutils.getVideoQuality();
     return currentvideoquality === "hd2160" &&
       player.getAvailableQualityLevels().indexOf(currentvideoquality) === -1
@@ -159,7 +164,7 @@ const ytutils = {
     )
       ytutils.scrollTo();
   },
-  checkPlayerReady: (player) => {
+  checkPlayerReady: (player: player) => {
     try {
       return player.getPlayerState() !== -1;
     } catch (e) {
@@ -178,7 +183,7 @@ const ytutils = {
     isOptionHandle
   ) {
     if (location.hostname.search(/youtube.com$/) !== -1) {
-      const player = document.getElementById("movie_player");
+      const player = document.querySelector<player>("#movie_player");
       if (player)
         player.addEventListener("onStateChange", "ythdonPlayerStateChange");
       window.addEventListener("spfdone", ytutils.onSPFDone);
