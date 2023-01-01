@@ -94,6 +94,9 @@ const askQualitySize = () => {
         document
           .getElementById("volume")
           .addEventListener("change", requestVideoQualitySizeChange, true);
+        document.querySelector<HTMLInputElement>(
+          `.vol_${keys.volume}`
+        ).checked = true;
         const volLvl =
           document.querySelector<HTMLInputElement>("#volumelevel");
         volLvl.value = keys.volumelevel;
@@ -135,9 +138,6 @@ const askQualitySize = () => {
         );
         embedded.onchange = () => requestVideoQualitySizeChange();
         embedded.value = keys.embeddedvideoautoplaybehavior;
-        document.querySelector<HTMLInputElement>(
-          '#volume input[type="radio"].vol_' + keys.volume + ""
-        ).checked = true;
       }
     )
     : browser.runtime.sendMessage({ action: "storage_ask_by_popup" });
