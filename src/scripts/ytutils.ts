@@ -43,7 +43,6 @@ const ytutils = {
       isOptionHandle
     );
     ytutils.changeVideoSize(
-      document,
       ytutils.size ? ytutils.size : "expand",
       id,
       isOptionHandle
@@ -254,140 +253,150 @@ const ytutils = {
       }
     }
   },
-  changeVideoSize: function(doc, size, id, isOptionHandle) {
-    var dc = doc;
-
-    if (doc.location.pathname.search(/^\/watch/) != 0) return;
-
+  changeVideoSize: (size, id, isOptionHandle) => {
+    if (document.location.pathname.search(/^\/watch/) != 0) return;
     if (size) ytutils.size = size;
-    var channel = dc.getElementById("playnav-player");
+    var channel = document.getElementById("playnav-player");
     if (channel) return; //do not let channels have a size because they cant
 
     var currentvideosize = size ? size : ytutils.size;
 
     if (currentvideosize == "fullpage") {
-      if (!dc.getElementById("ythdlink")) {
-        var link = dc.createElement("link");
+      if (!document.getElementById("ythdlink")) {
+        var link = document.createElement("link");
         link.setAttribute("rel", "stylesheet");
         link.setAttribute("type", "text/css");
         link.setAttribute("id", "ythdlink");
         link.setAttribute("href", id + "style/style.css");
-        dc.head.appendChild(link);
+        document.head.appendChild(link);
       }
 
-      if (dc.getElementById("player")) {
-        dc.getElementById("player").removeAttribute("style");
+      if (document.getElementById("player")) {
+        document.getElementById("player").removeAttribute("style");
       }
-      if (dc.getElementsByClassName("html5-video-container")[0]) {
-        dc.getElementsByClassName("html5-video-container")[0].removeAttribute(
-          "style"
-        );
+      if (document.getElementsByClassName("html5-video-container")[0]) {
+        document
+          .getElementsByClassName("html5-video-container")[0]
+          .removeAttribute("style");
       }
-      if (dc.getElementById("player-api")) {
-        dc.getElementById("player-api").style.removeProperty("margin-left");
+      if (document.getElementById("player-api")) {
+        document
+          .getElementById("player-api")
+          .style.removeProperty("margin-left");
       }
-      if (dc.getElementById("watch-appbar-playlist")) {
-        dc.getElementById("watch-appbar-playlist").style.removeProperty("left");
+      if (document.getElementById("watch-appbar-playlist")) {
+        document
+          .getElementById("watch-appbar-playlist")
+          .style.removeProperty("left");
       }
-      if (dc.getElementById("watch-appbar-playlist")) {
-        dc.getElementById("watch-appbar-playlist").style.removeProperty(
-          "margin-top"
-        );
+      if (document.getElementById("watch-appbar-playlist")) {
+        document
+          .getElementById("watch-appbar-playlist")
+          .style.removeProperty("margin-top");
       }
 
       if (
-        (dc.querySelector(".ytp-size-button path") &&
-          dc
+        (document.querySelector(".ytp-size-button path") &&
+          document
             .querySelector(".ytp-size-button path")
             .getAttribute("d")
             .indexOf("m 28,") == 0) ||
-        !dc.querySelector("ytd-watch[theater]")
+        !document.querySelector("ytd-watch[theater]")
       ) {
         if (
-          dc.querySelector(".ytp-size-button path") &&
-          dc
+          document.querySelector(".ytp-size-button path") &&
+          document
             .querySelector(".ytp-size-button path")
             .getAttribute("d")
             .indexOf("m 28,") == 0 &&
-          dc.querySelector(".ytp-size-button path").parentNode.parentNode
+          document.querySelector(".ytp-size-button path").parentNode.parentNode
         ) {
-          dc.querySelector(
-            ".ytp-size-button path"
-          ).parentNode.parentNode.click();
+          document
+            .querySelector(".ytp-size-button path")
+            .parentNode.parentNode.click();
         }
       }
 
       if (
-        dc.getElementById("watch7-container") &&
-        dc.getElementById("watch7-container").classList.contains("watch-wide")
+        document.getElementById("watch7-container") &&
+        document
+          .getElementById("watch7-container")
+          .classList.contains("watch-wide")
       ) {
-        dc.getElementById("watch7-container").classList.remove("watch-wide");
+        document
+          .getElementById("watch7-container")
+          .classList.remove("watch-wide");
       }
       if (
-        dc.getElementById("player") &&
-        dc
+        document.getElementById("player") &&
+        document
           .getElementById("player")
           .classList.contains("watch-playlist-collapsed")
       ) {
-        dc.getElementById("player").classList.remove(
-          "watch-playlist-collapsed"
-        );
+        document
+          .getElementById("player")
+          .classList.remove("watch-playlist-collapsed");
       }
       if (
-        dc.getElementById("player") &&
-        dc.getElementById("player").classList.contains("watch-medium")
+        document.getElementById("player") &&
+        document.getElementById("player").classList.contains("watch-medium")
       ) {
-        dc.getElementById("player").classList.remove("watch-medium");
+        document.getElementById("player").classList.remove("watch-medium");
       }
       if (
-        dc.getElementById("player") &&
-        dc.getElementById("player").classList.contains("watch-small")
+        document.getElementById("player") &&
+        document.getElementById("player").classList.contains("watch-small")
       ) {
-        dc.getElementById("player").classList.remove("watch-small");
+        document.getElementById("player").classList.remove("watch-small");
       }
       if (
-        dc.getElementById("page") &&
-        dc.getElementById("page").classList.contains("watch-non-stage-mode")
+        document.getElementById("page") &&
+        document
+          .getElementById("page")
+          .classList.contains("watch-non-stage-mode")
       ) {
-        dc.getElementById("page").classList.remove("watch-non-stage-mode");
+        document
+          .getElementById("page")
+          .classList.remove("watch-non-stage-mode");
       }
-      if (dc.getElementById("page")) {
-        dc.getElementById("page").classList.add("watch-stage-mode");
+      if (document.getElementById("page")) {
+        document.getElementById("page").classList.add("watch-stage-mode");
       }
-      if (dc.getElementById("page")) {
-        dc.getElementById("page").classList.add("watch-wide");
+      if (document.getElementById("page")) {
+        document.getElementById("page").classList.add("watch-wide");
       }
 
       function doTheRest() {
         if (
-          dc.getElementById("masthead-container") &&
-          dc.getElementById("page-manager")
+          document.getElementById("masthead-container") &&
+          document.getElementById("page-manager")
         ) {
           ytutils.scrollTo();
-          var interwal2 = dc.defaultView.setInterval(function() {
+          var interwal2 = document.defaultView.setInterval(function() {
             if (
-              (dc.querySelector(".ytp-size-button path") &&
-                dc
+              (document.querySelector(".ytp-size-button path") &&
+                document
                   .querySelector(".ytp-size-button path")
                   .getAttribute("d")
                   .indexOf("m 28,") == 0) ||
-              !dc.querySelector("ytd-watch[theater]")
+              !document.querySelector("ytd-watch[theater]")
             ) {
               if (
-                dc.querySelector(".ytp-size-button path") &&
-                dc
+                document.querySelector(".ytp-size-button path") &&
+                document
                   .querySelector(".ytp-size-button path")
                   .getAttribute("d")
                   .indexOf("m 28,") == 0 &&
-                dc.querySelector(".ytp-size-button path").parentNode.parentNode
+                document.querySelector(".ytp-size-button path").parentNode
+                  .parentNode
               ) {
-                dc.querySelector(
-                  ".ytp-size-button path"
-                ).parentNode.parentNode.click();
-                dc.defaultView.clearInterval(interwal2);
+                document
+                  .querySelector(".ytp-size-button path")
+                  .parentNode.parentNode.click();
+                document.defaultView.clearInterval(interwal2);
               }
             } else {
-              dc.defaultView.clearInterval(interwal2);
+              document.defaultView.clearInterval(interwal2);
             }
           }, 1000);
         }
@@ -396,416 +405,454 @@ const ytutils = {
       var interwal;
       var it = 0;
 
-      if (dc.querySelector("#player.ytd-watch")) {
-        dc.querySelector("#player.ytd-watch").setAttribute(
-          "style",
-          "height:" + dc.defaultView.innerHeight + "px !important"
-        );
+      if (document.querySelector("#player.ytd-watch")) {
+        document
+          .querySelector("#player.ytd-watch")
+          .setAttribute(
+            "style",
+            "height:" + document.defaultView.innerHeight + "px !important"
+          );
       } else {
-        interwal = dc.defaultView.setInterval(function() {
-          if (!dc.querySelector("#player.ytd-watch")) {
+        interwal = document.defaultView.setInterval(function() {
+          if (!document.querySelector("#player.ytd-watch")) {
             it++;
             return;
           } else {
-            dc.defaultView.clearInterval(interwal);
+            document.defaultView.clearInterval(interwal);
           }
-          dc.querySelector("#player.ytd-watch").setAttribute(
-            "style",
-            "height:" + dc.defaultView.innerHeight + "px !important"
-          );
+          document
+            .querySelector("#player.ytd-watch")
+            .setAttribute(
+              "style",
+              "height:" + document.defaultView.innerHeight + "px !important"
+            );
           doTheRest();
         }, 100);
       }
 
       if (
-        dc.getElementsByClassName("html5-video-container")[0] &&
-        dc.getElementById("movie_player")
+        document.getElementsByClassName("html5-video-container")[0] &&
+        document.getElementById("movie_player")
       ) {
-        dc.getElementsByClassName("html5-video-container")[0].setAttribute(
-          "style",
-          "width:" +
-          dc.body.clientWidth +
-          "px !important;margin-left:-" +
-          dc.getElementById("movie_player").getBoundingClientRect().x +
-          "px !important;"
-        );
+        document
+          .getElementsByClassName("html5-video-container")[0]
+          .setAttribute(
+            "style",
+            "width:" +
+            document.body.clientWidth +
+            "px !important;margin-left:-" +
+            document.getElementById("movie_player").getBoundingClientRect()
+              .x +
+            "px !important;"
+          );
       }
 
       if (
-        dc.getElementById("placeholder-playlist") &&
-        dc.getElementById("watch-appbar-playlist")
+        document.getElementById("placeholder-playlist") &&
+        document.getElementById("watch-appbar-playlist")
       ) {
-        var element = dc.getElementById("placeholder-playlist");
+        var element = document.getElementById("placeholder-playlist");
         var rect = element.getBoundingClientRect();
-        var element2 = dc.getElementById("watch-appbar-playlist");
+        var element2 = document.getElementById("watch-appbar-playlist");
         var rect2 = element2.getBoundingClientRect();
         if (rect.y != rect2.y) {
-          if (dc.getElementById("watch-appbar-playlist")) {
-            dc.getElementById("watch-appbar-playlist").style.setProperty(
-              "margin-top",
-              rect.y - rect2.y + "px",
-              "important"
-            );
+          if (document.getElementById("watch-appbar-playlist")) {
+            document
+              .getElementById("watch-appbar-playlist")
+              .style.setProperty(
+                "margin-top",
+                rect.y - rect2.y + "px",
+                "important"
+              );
           }
         }
       }
 
       doTheRest();
     } else if (currentvideosize == "expand") {
-      if (dc.getElementById("ythdlink"))
-        dc.getElementById("ythdlink").parentNode.removeChild(
-          dc.getElementById("ythdlink")
-        );
+      if (document.getElementById("ythdlink"))
+        document
+          .getElementById("ythdlink")
+          .parentNode.removeChild(document.getElementById("ythdlink"));
 
       if (
-        (dc.querySelector(".ytp-size-button path") &&
-          dc
+        (document.querySelector(".ytp-size-button path") &&
+          document
             .querySelector(".ytp-size-button path")
             .getAttribute("d")
             .indexOf("m 28,") == 0) ||
-        !dc.querySelector("ytd-watch[theater]")
+        !document.querySelector("ytd-watch[theater]")
       ) {
         if (
-          dc.querySelector(".ytp-size-button path") &&
-          dc
+          document.querySelector(".ytp-size-button path") &&
+          document
             .querySelector(".ytp-size-button path")
             .getAttribute("d")
             .indexOf("m 28,") == 0 &&
-          dc.querySelector(".ytp-size-button path").parentNode.parentNode
+          document.querySelector(".ytp-size-button path").parentNode.parentNode
         ) {
-          dc.querySelector(
-            ".ytp-size-button path"
-          ).parentNode.parentNode.click();
+          document
+            .querySelector(".ytp-size-button path")
+            .parentNode.parentNode.click();
         }
       }
 
-      if (dc.querySelector("#player.ytd-watch")) {
-        dc.querySelector("#player.ytd-watch").removeAttribute("style");
+      if (document.querySelector("#player.ytd-watch")) {
+        document.querySelector("#player.ytd-watch").removeAttribute("style");
       }
-      if (dc.getElementsByClassName("html5-video-container")[0]) {
-        dc.getElementsByClassName("html5-video-container")[0].removeAttribute(
-          "style"
-        );
+      if (document.getElementsByClassName("html5-video-container")[0]) {
+        document
+          .getElementsByClassName("html5-video-container")[0]
+          .removeAttribute("style");
       }
-      if (dc.getElementById("player-api")) {
-        dc.getElementById("player-api").style.removeProperty("margin-left");
+      if (document.getElementById("player-api")) {
+        document
+          .getElementById("player-api")
+          .style.removeProperty("margin-left");
       }
-      if (dc.getElementById("watch-appbar-playlist")) {
-        dc.getElementById("watch-appbar-playlist").style.removeProperty("left");
+      if (document.getElementById("watch-appbar-playlist")) {
+        document
+          .getElementById("watch-appbar-playlist")
+          .style.removeProperty("left");
       }
-      if (dc.getElementById("watch-appbar-playlist")) {
-        dc.getElementById("watch-appbar-playlist").style.removeProperty(
-          "margin-top"
-        );
+      if (document.getElementById("watch-appbar-playlist")) {
+        document
+          .getElementById("watch-appbar-playlist")
+          .style.removeProperty("margin-top");
       }
 
-      if (dc.getElementById("watch7-container")) {
-        dc.getElementById("watch7-container").classList.add("watch-wide");
+      if (document.getElementById("watch7-container")) {
+        document.getElementById("watch7-container").classList.add("watch-wide");
       }
-      if (dc.getElementById("player")) {
-        dc.getElementById("player").classList.add("watch-playlist-collapsed");
+      if (document.getElementById("player")) {
+        document
+          .getElementById("player")
+          .classList.add("watch-playlist-collapsed");
       }
-      if (dc.getElementById("player")) {
-        dc.getElementById("player").classList.add("watch-medium");
+      if (document.getElementById("player")) {
+        document.getElementById("player").classList.add("watch-medium");
       }
-      if (dc.getElementById("page")) {
-        dc.getElementById("page").classList.add("watch-stage-mode");
+      if (document.getElementById("page")) {
+        document.getElementById("page").classList.add("watch-stage-mode");
       }
-      if (dc.getElementById("page")) {
-        dc.getElementById("page").classList.add("watch-wide");
-      }
-      if (
-        dc.getElementById("player") &&
-        dc.getElementById("player").classList.contains("watch-small")
-      ) {
-        dc.getElementById("player").classList.remove("watch-small");
+      if (document.getElementById("page")) {
+        document.getElementById("page").classList.add("watch-wide");
       }
       if (
-        dc.getElementById("page") &&
-        dc.getElementById("page").classList.contains("watch-non-stage-mode")
+        document.getElementById("player") &&
+        document.getElementById("player").classList.contains("watch-small")
       ) {
-        dc.getElementById("page").classList.remove("watch-non-stage-mode");
+        document.getElementById("player").classList.remove("watch-small");
+      }
+      if (
+        document.getElementById("page") &&
+        document
+          .getElementById("page")
+          .classList.contains("watch-non-stage-mode")
+      ) {
+        document
+          .getElementById("page")
+          .classList.remove("watch-non-stage-mode");
       }
 
       if (isOptionHandle) {
-        dc.defaultView.scrollTo(0, 0);
+        document.defaultView.scrollTo(0, 0);
       }
 
-      if (dc.getElementsByClassName("html5-main-video")[0]) {
-        dc.getElementsByClassName("html5-main-video")[0].style.top = "0px";
+      if (document.getElementsByClassName("html5-main-video")[0]) {
+        document.getElementsByClassName("html5-main-video")[0].style.top =
+          "0px";
       }
 
-      var interwal = dc.defaultView.setInterval(function() {
+      var interwal = document.defaultView.setInterval(function() {
         if (
-          (dc.querySelector(".ytp-size-button path") &&
-            dc
+          (document.querySelector(".ytp-size-button path") &&
+            document
               .querySelector(".ytp-size-button path")
               .getAttribute("d")
               .indexOf("m 28,") == 0) ||
-          !dc.querySelector("ytd-watch[theater]")
+          !document.querySelector("ytd-watch[theater]")
         ) {
           if (
-            dc.querySelector(".ytp-size-button path") &&
-            dc
+            document.querySelector(".ytp-size-button path") &&
+            document
               .querySelector(".ytp-size-button path")
               .getAttribute("d")
               .indexOf("m 28,") == 0 &&
-            dc.querySelector(".ytp-size-button path").parentNode.parentNode
+            document.querySelector(".ytp-size-button path").parentNode
+              .parentNode
           ) {
-            dc.querySelector(
-              ".ytp-size-button path"
-            ).parentNode.parentNode.click();
-            dc.defaultView.clearInterval(interwal);
+            document
+              .querySelector(".ytp-size-button path")
+              .parentNode.parentNode.click();
+            document.defaultView.clearInterval(interwal);
           }
         } else {
-          dc.defaultView.clearInterval(interwal);
+          document.defaultView.clearInterval(interwal);
         }
       }, 1000);
     } else if (currentvideosize == "shrink") {
-      if (dc.getElementById("ythdlink"))
-        dc.getElementById("ythdlink").parentNode.removeChild(
-          dc.getElementById("ythdlink")
-        );
+      if (document.getElementById("ythdlink"))
+        document
+          .getElementById("ythdlink")
+          .parentNode.removeChild(document.getElementById("ythdlink"));
 
-      if (dc.querySelector("#player.ytd-watch")) {
-        dc.querySelector("#player.ytd-watch").removeAttribute("style");
+      if (document.querySelector("#player.ytd-watch")) {
+        document.querySelector("#player.ytd-watch").removeAttribute("style");
       }
-      if (dc.getElementsByClassName("html5-video-container")[0]) {
-        dc.getElementsByClassName("html5-video-container")[0].removeAttribute(
-          "style"
-        );
+      if (document.getElementsByClassName("html5-video-container")[0]) {
+        document
+          .getElementsByClassName("html5-video-container")[0]
+          .removeAttribute("style");
       }
-      if (dc.getElementById("player-api")) {
-        dc.getElementById("player-api").style.removeProperty("margin-left");
+      if (document.getElementById("player-api")) {
+        document
+          .getElementById("player-api")
+          .style.removeProperty("margin-left");
       }
-      if (dc.getElementById("watch-appbar-playlist")) {
-        dc.getElementById("watch-appbar-playlist").style.removeProperty("left");
+      if (document.getElementById("watch-appbar-playlist")) {
+        document
+          .getElementById("watch-appbar-playlist")
+          .style.removeProperty("left");
       }
-      if (dc.getElementById("watch-appbar-playlist")) {
-        dc.getElementById("watch-appbar-playlist").style.removeProperty(
-          "margin-top"
-        );
+      if (document.getElementById("watch-appbar-playlist")) {
+        document
+          .getElementById("watch-appbar-playlist")
+          .style.removeProperty("margin-top");
       }
 
       if (
-        (dc.querySelector(".ytp-size-button path") &&
-          dc
+        (document.querySelector(".ytp-size-button path") &&
+          document
             .querySelector(".ytp-size-button path")
             .getAttribute("d")
             .indexOf("m 26,") == 0) ||
-        dc.querySelector("ytd-watch[theater]")
+        document.querySelector("ytd-watch[theater]")
       ) {
         if (
-          dc.querySelector(".ytp-size-button path") &&
-          dc
+          document.querySelector(".ytp-size-button path") &&
+          document
             .querySelector(".ytp-size-button path")
             .getAttribute("d")
             .indexOf("m 26,") == 0 &&
-          dc.querySelector(".ytp-size-button path").parentNode.parentNode
+          document.querySelector(".ytp-size-button path").parentNode.parentNode
         ) {
-          dc.querySelector(
-            ".ytp-size-button path"
-          ).parentNode.parentNode.click();
+          document
+            .querySelector(".ytp-size-button path")
+            .parentNode.parentNode.click();
         }
       }
 
       if (
-        dc.getElementById("watch7-container") &&
-        dc.getElementById("watch7-container").classList.contains("watch-wide")
+        document.getElementById("watch7-container") &&
+        document
+          .getElementById("watch7-container")
+          .classList.contains("watch-wide")
       ) {
-        dc.getElementById("watch7-container").classList.remove("watch-wide");
+        document
+          .getElementById("watch7-container")
+          .classList.remove("watch-wide");
       }
       if (
-        dc.getElementById("player") &&
-        dc
+        document.getElementById("player") &&
+        document
           .getElementById("player")
           .classList.contains("watch-playlist-collapsed")
       ) {
-        dc.getElementById("player").classList.remove(
-          "watch-playlist-collapsed"
-        );
+        document
+          .getElementById("player")
+          .classList.remove("watch-playlist-collapsed");
       }
       if (
-        dc.getElementById("player") &&
-        dc.getElementById("player").classList.contains("watch-medium")
+        document.getElementById("player") &&
+        document.getElementById("player").classList.contains("watch-medium")
       ) {
-        dc.getElementById("player").classList.remove("watch-medium");
+        document.getElementById("player").classList.remove("watch-medium");
       }
-      if (dc.getElementById("player")) {
-        dc.getElementById("player").classList.add("watch-small");
+      if (document.getElementById("player")) {
+        document.getElementById("player").classList.add("watch-small");
       }
-      if (dc.getElementById("page")) {
-        dc.getElementById("page").classList.add("watch-non-stage-mode");
+      if (document.getElementById("page")) {
+        document.getElementById("page").classList.add("watch-non-stage-mode");
       }
       if (
-        dc.getElementById("player") &&
-        dc.getElementById("player").classList.contains("watch-wide")
+        document.getElementById("player") &&
+        document.getElementById("player").classList.contains("watch-wide")
       ) {
-        dc.getElementById("player").classList.remove("watch-wide");
+        document.getElementById("player").classList.remove("watch-wide");
       }
       if (
-        dc.getElementById("page") &&
-        dc.getElementById("page").classList.contains("watch-stage-mode")
+        document.getElementById("page") &&
+        document.getElementById("page").classList.contains("watch-stage-mode")
       ) {
-        dc.getElementById("page").classList.remove("watch-stage-mode");
+        document.getElementById("page").classList.remove("watch-stage-mode");
       }
       if (
-        dc.getElementById("page") &&
-        dc.getElementById("page").classList.contains("watch-wide")
+        document.getElementById("page") &&
+        document.getElementById("page").classList.contains("watch-wide")
       ) {
-        dc.getElementById("page").classList.remove("watch-wide");
+        document.getElementById("page").classList.remove("watch-wide");
       }
 
       if (isOptionHandle) {
-        dc.defaultView.scrollTo(0, 0);
+        document.defaultView.scrollTo(0, 0);
       }
 
-      var interwal = dc.defaultView.setInterval(function() {
+      var interwal = document.defaultView.setInterval(function() {
         if (
-          (dc.querySelector(".ytp-size-button path") &&
-            dc
+          (document.querySelector(".ytp-size-button path") &&
+            document
               .querySelector(".ytp-size-button path")
               .getAttribute("d")
               .indexOf("m 26,") == 0) ||
-          dc.querySelector("ytd-watch[theater]")
+          document.querySelector("ytd-watch[theater]")
         ) {
           if (
-            dc.querySelector(".ytp-size-button path") &&
-            dc
+            document.querySelector(".ytp-size-button path") &&
+            document
               .querySelector(".ytp-size-button path")
               .getAttribute("d")
               .indexOf("m 26,") == 0 &&
-            dc.querySelector(".ytp-size-button path").parentNode.parentNode
+            document.querySelector(".ytp-size-button path").parentNode
+              .parentNode
           ) {
-            dc.querySelector(
-              ".ytp-size-button path"
-            ).parentNode.parentNode.click();
-            dc.defaultView.clearInterval(interwal);
+            document
+              .querySelector(".ytp-size-button path")
+              .parentNode.parentNode.click();
+            document.defaultView.clearInterval(interwal);
           }
         } else {
-          dc.defaultView.clearInterval(interwal);
+          document.defaultView.clearInterval(interwal);
         }
       }, 1000);
     } else if (currentvideosize == "default") {
       if (isOptionHandle) {
-        if (dc.querySelector("#player.ytd-watch")) {
-          dc.querySelector("#player.ytd-watch").removeAttribute("style");
+        if (document.querySelector("#player.ytd-watch")) {
+          document.querySelector("#player.ytd-watch").removeAttribute("style");
         }
-        if (dc.getElementsByClassName("html5-video-container")[0]) {
-          dc.getElementsByClassName("html5-video-container")[0].removeAttribute(
-            "style"
-          );
+        if (document.getElementsByClassName("html5-video-container")[0]) {
+          document
+            .getElementsByClassName("html5-video-container")[0]
+            .removeAttribute("style");
         }
-        if (dc.getElementById("player-api")) {
-          dc.getElementById("player-api").style.removeProperty("margin-left");
+        if (document.getElementById("player-api")) {
+          document
+            .getElementById("player-api")
+            .style.removeProperty("margin-left");
         }
-        if (dc.getElementById("watch-appbar-playlist")) {
-          dc.getElementById("watch-appbar-playlist").style.removeProperty(
-            "left"
-          );
+        if (document.getElementById("watch-appbar-playlist")) {
+          document
+            .getElementById("watch-appbar-playlist")
+            .style.removeProperty("left");
         }
-        if (dc.getElementById("watch-appbar-playlist")) {
-          dc.getElementById("watch-appbar-playlist").style.removeProperty(
-            "margin-top"
-          );
+        if (document.getElementById("watch-appbar-playlist")) {
+          document
+            .getElementById("watch-appbar-playlist")
+            .style.removeProperty("margin-top");
         }
 
         if (
-          (dc.querySelector(".ytp-size-button path") &&
-            dc
+          (document.querySelector(".ytp-size-button path") &&
+            document
               .querySelector(".ytp-size-button path")
               .getAttribute("d")
               .indexOf("m 26,") == 0) ||
-          dc.querySelector("ytd-watch[theater]")
+          document.querySelector("ytd-watch[theater]")
         ) {
           if (
-            dc.querySelector(".ytp-size-button path") &&
-            dc
+            document.querySelector(".ytp-size-button path") &&
+            document
               .querySelector(".ytp-size-button path")
               .getAttribute("d")
               .indexOf("m 26,") == 0 &&
-            dc.querySelector(".ytp-size-button path").parentNode.parentNode
+            document.querySelector(".ytp-size-button path").parentNode
+              .parentNode
           ) {
-            dc.querySelector(
-              ".ytp-size-button path"
-            ).parentNode.parentNode.click();
+            document
+              .querySelector(".ytp-size-button path")
+              .parentNode.parentNode.click();
           }
         }
 
         if (
-          dc.getElementById("watch7-container") &&
-          dc.getElementById("watch7-container").classList.contains("watch-wide")
+          document.getElementById("watch7-container") &&
+          document
+            .getElementById("watch7-container")
+            .classList.contains("watch-wide")
         ) {
-          dc.getElementById("watch7-container").classList.remove("watch-wide");
+          document
+            .getElementById("watch7-container")
+            .classList.remove("watch-wide");
         }
         if (
-          dc.getElementById("player") &&
-          dc
+          document.getElementById("player") &&
+          document
             .getElementById("player")
             .classList.contains("watch-playlist-collapsed")
         ) {
-          dc.getElementById("player").classList.remove(
-            "watch-playlist-collapsed"
-          );
+          document
+            .getElementById("player")
+            .classList.remove("watch-playlist-collapsed");
         }
         if (
-          dc.getElementById("player") &&
-          dc.getElementById("player").classList.contains("watch-medium")
+          document.getElementById("player") &&
+          document.getElementById("player").classList.contains("watch-medium")
         ) {
-          dc.getElementById("player").classList.remove("watch-medium");
+          document.getElementById("player").classList.remove("watch-medium");
         }
-        if (dc.getElementById("player")) {
-          dc.getElementById("player").classList.add("watch-small");
+        if (document.getElementById("player")) {
+          document.getElementById("player").classList.add("watch-small");
         }
-        if (dc.getElementById("page")) {
-          dc.getElementById("page").classList.add("watch-non-stage-mode");
+        if (document.getElementById("page")) {
+          document.getElementById("page").classList.add("watch-non-stage-mode");
         }
         if (
-          dc.getElementById("player") &&
-          dc.getElementById("player").classList.contains("watch-wide")
+          document.getElementById("player") &&
+          document.getElementById("player").classList.contains("watch-wide")
         ) {
-          dc.getElementById("player").classList.remove("watch-wide");
+          document.getElementById("player").classList.remove("watch-wide");
         }
         if (
-          dc.getElementById("page") &&
-          dc.getElementById("page").classList.contains("watch-stage-mode")
+          document.getElementById("page") &&
+          document.getElementById("page").classList.contains("watch-stage-mode")
         ) {
-          dc.getElementById("page").classList.remove("watch-stage-mode");
+          document.getElementById("page").classList.remove("watch-stage-mode");
         }
 
         if (isOptionHandle) {
-          dc.defaultView.scrollTo(0, 0);
+          document.defaultView.scrollTo(0, 0);
         }
 
-        var interwal = dc.defaultView.setInterval(function() {
+        var interwal = document.defaultView.setInterval(function() {
           if (
-            (dc.querySelector(".ytp-size-button path") &&
-              dc
+            (document.querySelector(".ytp-size-button path") &&
+              document
                 .querySelector(".ytp-size-button path")
                 .getAttribute("d")
                 .indexOf("m 26,") == 0) ||
-            dc.querySelector("ytd-watch[theater]")
+            document.querySelector("ytd-watch[theater]")
           ) {
             if (
-              dc.querySelector(".ytp-size-button path") &&
-              dc
+              document.querySelector(".ytp-size-button path") &&
+              document
                 .querySelector(".ytp-size-button path")
                 .getAttribute("d")
                 .indexOf("m 26,") == 0 &&
-              dc.querySelector(".ytp-size-button path").parentNode.parentNode
+              document.querySelector(".ytp-size-button path").parentNode
+                .parentNode
             ) {
-              dc.querySelector(
-                ".ytp-size-button path"
-              ).parentNode.parentNode.click();
+              document
+                .querySelector(".ytp-size-button path")
+                .parentNode.parentNode.click();
             }
           } else {
-            dc.defaultView.clearInterval(interwal);
+            document.defaultView.clearInterval(interwal);
           }
         }, 1000);
       }
     }
 
-    if (dc.body) dc.body.classList.add("fullytpagesize");
+    if (document.body) document.body.classList.add("fullytpagesize");
   },
 };
 
