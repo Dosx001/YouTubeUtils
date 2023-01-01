@@ -39,11 +39,7 @@ const ytutils = {
       id,
       isOptionHandle
     );
-    ytutils.expandVideoDescription(
-      document,
-      autoexpanddescription,
-      isOptionHandle
-    );
+    ytutils.expandVideoDescription(autoexpanddescription, isOptionHandle);
     ytutils.enablesuggestedautoplay(suggestedautoplay);
   },
   getIntendedQuality: function(player, currentvideoquality) {
@@ -98,37 +94,28 @@ const ytutils = {
         ?.click();
     }
   },
-  expandVideoDescription: function(
-    doc,
-    autoexpanddescription,
-    isOptionHandle
-  ) {
-    if (document.location.pathname.search(/^\/watch/) != 0) return;
+  expandVideoDescription: (
+    autoexpanddescription: boolean,
+    isOptionHandle: boolean
+  ) => {
+    if (document.location.pathname.search(/^\/watch/) !== 0) return;
     if (autoexpanddescription) {
-      if (doc.getElementById("action-panel-details")) {
-        doc
+      if (document.getElementById("action-panel-details")) {
+        document
           .getElementById("action-panel-details")
           .classList.remove("yt-uix-expander-collapsed");
       }
-      var interwal;
-      var it = 0;
-      if (doc.querySelector("paper-button#more")) {
-        doc.querySelector("paper-button#more").click();
+      if (document.querySelector("paper-button#more")) {
+        document.querySelector<HTMLElement>("paper-button#more").click();
       } else {
-        interwal = doc.defaultView.setInterval(function() {
-          if (!doc.querySelector("paper-button#more")) {
-            it++;
-            return;
-          } else {
-            doc.defaultView.clearInterval(interwal);
-          }
-          doc.querySelector("paper-button#more").click();
+        const interwal = document.defaultView.setInterval(() => {
+          if (!document.querySelector("paper-button#more")) return;
+          document.defaultView.clearInterval(interwal);
+          document.querySelector<HTMLElement>("paper-button#more").click();
         }, 100);
       }
-    } else {
-      if (isOptionHandle) {
-        doc.querySelector("paper-button#less").click();
-      }
+    } else if (isOptionHandle) {
+      document.querySelector<HTMLElement>("paper-button#less").click();
     }
   },
   getVolumeLevel: (volume: string, volumelevel: number) => {
@@ -163,11 +150,7 @@ const ytutils = {
   },
   onNavigateFinish: () => {
     window.setTimeout(() => {
-      ytutils.expandVideoDescription(
-        document,
-        ytutils.autoexpanddescription,
-        null
-      );
+      ytutils.expandVideoDescription(ytutils.autoexpanddescription, null);
     }, 1000);
   },
   scrollTo: () => {
