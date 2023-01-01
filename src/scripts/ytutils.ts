@@ -187,15 +187,13 @@ const ytutils = {
     if (!document.body.classList.contains("fullytpagesize")) top /= 2;
     document.defaultView.scrollTo(0, top);
   },
-  Slistener: function(event) {
-    var doc = event.currentTarget.ownerDocument;
+  Slistener: (ev: TransitionEvent) => {
     if (
-      event.propertyName === "transform" &&
-      event.target.id === "progress" &&
-      event.target.getAttribute("style") == "transform: scaleX(1);"
-    ) {
+      ev.propertyName === "transform" &&
+      (ev.target as HTMLElement).id === "progress" &&
+      (ev.target as HTMLElement).style.transform === "scaleX(1)"
+    )
       ytutils.scrollTo();
-    }
   },
   changeVideoQuality: function(
     doc,
