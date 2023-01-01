@@ -56,13 +56,12 @@ const ytutils = {
       return player.getAvailableQualityLevels()[0];
     } else return currentvideoquality;
   },
-  getSetVideoQuality: function(player, currentvideoquality) {
-    if (
-      currentvideoquality == "hd2160" &&
-      player.getAvailableQualityLevels().indexOf(currentvideoquality) == -1
-    )
-      return player.getAvailableQualityLevels()[0];
-    else return currentvideoquality;
+  getSetVideoQuality: (player) => {
+    const currentvideoquality = ytutils.getVideoQuality();
+    return currentvideoquality === "hd2160" &&
+      player.getAvailableQualityLevels().indexOf(currentvideoquality) === -1
+      ? player.getAvailableQualityLevels()[0]
+      : currentvideoquality;
   },
   getVideoQuality: () =>
     ytutils.quality === "4k2160" ? "hd2160" : ytutils.quality,
@@ -1022,7 +1021,7 @@ try {
                 }
               }
             }
-            var mxx = ytutils.getSetVideoQuality(player, currentvideoquality);
+            var mxx = ytutils.getSetVideoQuality(player);
             player.setPlaybackQualityRange(mxx, mxx);
             if (
               player.getPlaybackQuality() ===
@@ -1085,7 +1084,7 @@ try {
             }
           }
         }
-        var mxx = ytutils.getSetVideoQuality(player, currentvideoquality);
+        var mxx = ytutils.getSetVideoQuality(player);
         player.setPlaybackQualityRange(mxx, mxx);
         if (
           player.getPlaybackQuality() ===
