@@ -178,26 +178,12 @@ const ytutils = {
       );
     }, 1000);
   },
-  scrollTo: function(document) {
-    var dc = document;
-    var xpos = 0;
-    var ypos = parseInt(
-      dc.defaultView
-        .getComputedStyle(dc.getElementById("masthead-container"), null)
-        .getPropertyValue("height")
-        .replace("px", "")
-    );
-    var offsetTop = ytutils.findPosition(dc.getElementById("page-manager"))[1];
-    if (!dc.body.classList.contains("fullytpagesize")) {
-      if (spf) {
-        dc.defaultView.scrollTo(xpos, offsetTop / 2);
-      } else {
-        dc.defaultView.scrollTo(xpos, offsetTop / 2); // requires half somehow.
-      }
-      //dc.getElementById("movie_player").scrollIntoView(false);
-    } else {
-      dc.defaultView.scrollTo(xpos, offsetTop); // requires whole for secondary requests
-    }
+  scrollTo: () => {
+    let offsetTop = ytutils.findPosition(
+      document.getElementById("page-manager")
+    )[1];
+    if (!document.body.classList.contains("fullytpagesize")) offsetTop /= 2;
+    document.defaultView.scrollTo(0, offsetTop);
   },
   findPosition: function(node) {
     var left_pos = (top_pos = 0);
@@ -216,7 +202,7 @@ const ytutils = {
       event.target.id === "progress" &&
       event.target.getAttribute("style") == "transform: scaleX(1);"
     ) {
-      ytutils.scrollTo(document);
+      ytutils.scrollTo();
     }
   },
   changeVideoQuality: function(
@@ -540,7 +526,7 @@ const ytutils = {
           dc.getElementById("masthead-container") &&
           dc.getElementById("page-manager")
         ) {
-          ytutils.scrollTo(document);
+          ytutils.scrollTo();
           var interwal2 = dc.defaultView.setInterval(function() {
             if (
               (dc.querySelector(".ytp-size-button path") &&
