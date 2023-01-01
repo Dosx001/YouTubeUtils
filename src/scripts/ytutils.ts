@@ -159,6 +159,13 @@ const ytutils = {
     )
       ytutils.scrollTo();
   },
+  checkPlayerReady: (player) => {
+    try {
+      return player.getPlayerState() !== -1;
+    } catch (e) {
+      return false;
+    }
+  },
   changeVideoQuality: function(
     doc,
     quality,
@@ -210,19 +217,9 @@ const ytutils = {
           }, 25);
           return;
         }
-
-        function checkPlayerReady(player) {
-          try {
-            if (player.getPlayerState() != -1) return true;
-            else return false;
-          } catch (e) {
-            return false;
-          }
-        }
-
         var ythdinterval = window.setInterval(function() {
           var player = document.getElementById("movie_player");
-          if (checkPlayerReady(player)) {
+          if (ytutils.checkPlayerReady(player)) {
             if (currentvideoquality == "default") {
               if (volumelevel != "default") {
                 player.unMute();
@@ -252,7 +249,6 @@ const ytutils = {
               if (!enableautoplay) {
               }
             }
-
             window.clearInterval(ythdinterval);
           }
         }, 50);
