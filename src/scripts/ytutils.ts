@@ -74,11 +74,14 @@ const ytutils = {
         return false;
     }
   },
-  getYoutubeVideoAutoPlayBehavior: function(youtubevideoautoplaybehavior) {
-    var currentyoutubevideoautoplaybehavior = youtubevideoautoplaybehavior;
-    if (currentyoutubevideoautoplaybehavior == "default") return true;
-    else if (currentyoutubevideoautoplaybehavior == "autoplay") return true;
-    else if (currentyoutubevideoautoplaybehavior == "autopause") return false;
+  getYoutubeVideoAutoPlayBehavior: () => {
+    switch (ytutils.youtubevideoautoplaybehavior) {
+      case "default":
+      case "autosubtitles":
+        return true;
+      case "autopause":
+        return false;
+    }
   },
   enablesuggestedautoplay: function(document, checked) {
     if (document.location.pathname.search(/^\/watch/) == 0) {
@@ -237,9 +240,7 @@ const ytutils = {
       if (doc.location.pathname == "/watch") {
         var currentvideoquality = quality;
         var volumespeed = speed;
-        var enableautoplay = ytutils.getYoutubeVideoAutoPlayBehavior(
-          youtubevideoautoplaybehavior
-        );
+        var enableautoplay = ytutils.getYoutubeVideoAutoPlayBehavior();
         var volumelevel = ytutils.getVolumeLevel(volume, volumelevel);
 
         var prelogs_enabled = true;
@@ -934,9 +935,7 @@ try {
       var player = document.getElementById("movie_player");
       var currentvideoquality = ytutils.getVideoQuality();
       var enableplaylistautoplay = ytutils.getPlaylistVideoAutoPlayBehavior();
-      var enableautoplay = ytutils.getYoutubeVideoAutoPlayBehavior(
-        ytutils.youtubevideoautoplaybehavior
-      );
+      var enableautoplay = ytutils.getYoutubeVideoAutoPlayBehavior();
       if (player.getCurrentTime() == 0 && newState == 1) {
         if (document.location.search.indexOf("list=") != -1) {
           if (!enableplaylistautoplay) {
@@ -1044,9 +1043,7 @@ try {
     ytutils.ytPlayer = player;
     var currentvideoquality = ytutils.getVideoQuality();
     var enableplaylistautoplay = ytutils.getPlaylistVideoAutoPlayBehavior();
-    var enableautoplay = ytutils.getYoutubeVideoAutoPlayBehavior(
-      ytutils.youtubevideoautoplaybehavior
-    );
+    var enableautoplay = ytutils.getYoutubeVideoAutoPlayBehavior();
     if (
       player.getPlaybackQuality() !=
       ytutils.getIntendedQuality(player, currentvideoquality)
