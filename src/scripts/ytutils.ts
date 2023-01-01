@@ -256,15 +256,6 @@ const ytutils = {
     )
       return;
     if (ytutils.size === "fullpage") {
-      if (!document.getElementById("ythdlink")) {
-        var link = document.createElement("link");
-        link.setAttribute("rel", "stylesheet");
-        link.setAttribute("type", "text/css");
-        link.setAttribute("id", "ythdlink");
-        link.setAttribute("href", id + "style/style.css");
-        document.head.appendChild(link);
-      }
-
       if (document.getElementById("player")) {
         document.getElementById("player").removeAttribute("style");
       }
@@ -464,11 +455,6 @@ const ytutils = {
 
       doTheRest();
     } else if (ytutils.size === "expand") {
-      if (document.getElementById("ythdlink"))
-        document
-          .getElementById("ythdlink")
-          .parentNode.removeChild(document.getElementById("ythdlink"));
-
       if (
         (document.querySelector(".ytp-size-button path") &&
           document
@@ -586,11 +572,6 @@ const ytutils = {
         }
       }, 1000);
     } else if (ytutils.size === "shrink") {
-      if (document.getElementById("ythdlink"))
-        document
-          .getElementById("ythdlink")
-          .parentNode.removeChild(document.getElementById("ythdlink"));
-
       if (document.querySelector("#player.ytd-watch")) {
         document.querySelector("#player.ytd-watch").removeAttribute("style");
       }
