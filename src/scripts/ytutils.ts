@@ -250,9 +250,11 @@ const ytutils = {
     }
   },
   changeVideoSize: (id, isOptionHandle) => {
-    if (document.location.pathname.search(/^\/watch/) != 0) return;
-    var channel = document.getElementById("playnav-player");
-    if (channel) return; //do not let channels have a size because they cant
+    if (
+      document.getElementById("playnav-player") ||
+      document.location.pathname.search(/^\/watch/) !== 0
+    )
+      return;
     if (ytutils.size === "fullpage") {
       if (!document.getElementById("ythdlink")) {
         var link = document.createElement("link");
