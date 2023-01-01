@@ -179,21 +179,13 @@ const ytutils = {
     }, 1000);
   },
   scrollTo: () => {
-    let offsetTop = ytutils.findPosition(
-      document.getElementById("page-manager")
-    )[1];
-    if (!document.body.classList.contains("fullytpagesize")) offsetTop /= 2;
-    document.defaultView.scrollTo(0, offsetTop);
-  },
-  findPosition: function(node) {
-    var left_pos = (top_pos = 0);
-    if (node.offsetParent) {
-      do {
-        left_pos += node.offsetLeft;
-        top_pos += node.offsetTop;
-      } while ((node = node.offsetParent));
-    }
-    return [left_pos, top_pos];
+    let top = 0;
+    let node = document.querySelector<HTMLElement>("#page-manager");
+    do {
+      top += node.offsetTop;
+    } while ((node = node.offsetParent as HTMLElement));
+    if (!document.body.classList.contains("fullytpagesize")) top /= 2;
+    document.defaultView.scrollTo(0, top);
   },
   Slistener: function(event) {
     var doc = event.currentTarget.ownerDocument;
