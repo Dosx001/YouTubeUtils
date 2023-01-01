@@ -130,17 +130,8 @@ const ytutils = {
         return volumelevel;
     }
   },
-  checkI: function(
-    doc,
-    quality,
-    volume,
-    volumelevel,
-    youtubevideoautoplaybehavior,
-    playlistvideoautoplaybehavior,
-    isOptionHandle
-  ) {
-    var player = ytutils.ytPlayer;
-    player.setPlaybackQualityRange(quality, quality);
+  checkI: (quality: string) => {
+    ytutils.ytPlayer.setPlaybackQualityRange(quality, quality);
   },
   onSPFDone: () => {
     window.postMessage(
@@ -204,16 +195,7 @@ const ytutils = {
       window.addEventListener("transitionend", ytutils.Slistener, true);
 
       if (document.location.pathname.indexOf("/embed") == 0) {
-        ytutils.checkI(
-          doc,
-          quality,
-          volume,
-          volumelevel,
-          youtubevideoautoplaybehavior,
-          playlistvideoautoplaybehavior,
-          autosubtitles,
-          isOptionHandle
-        );
+        ytutils.checkI(quality);
       }
 
       if (doc.location.pathname == "/watch") {
