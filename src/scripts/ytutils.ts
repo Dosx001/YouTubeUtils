@@ -42,11 +42,7 @@ const ytutils = {
       autosubtitles,
       isOptionHandle
     );
-    ytutils.changeVideoSize(
-      ytutils.size ? ytutils.size : "expand",
-      id,
-      isOptionHandle
-    );
+    ytutils.changeVideoSize(id, isOptionHandle);
     ytutils.expandVideoDescription(autoexpanddescription, isOptionHandle);
     ytutils.enablesuggestedautoplay(suggestedautoplay);
   },
@@ -253,15 +249,11 @@ const ytutils = {
       }
     }
   },
-  changeVideoSize: (size, id, isOptionHandle) => {
+  changeVideoSize: (id, isOptionHandle) => {
     if (document.location.pathname.search(/^\/watch/) != 0) return;
-    if (size) ytutils.size = size;
     var channel = document.getElementById("playnav-player");
     if (channel) return; //do not let channels have a size because they cant
-
-    var currentvideosize = size ? size : ytutils.size;
-
-    if (currentvideosize == "fullpage") {
+    if (ytutils.size === "fullpage") {
       if (!document.getElementById("ythdlink")) {
         var link = document.createElement("link");
         link.setAttribute("rel", "stylesheet");
@@ -469,7 +461,7 @@ const ytutils = {
       }
 
       doTheRest();
-    } else if (currentvideosize == "expand") {
+    } else if (ytutils.size === "expand") {
       if (document.getElementById("ythdlink"))
         document
           .getElementById("ythdlink")
@@ -591,7 +583,7 @@ const ytutils = {
           document.defaultView.clearInterval(interwal);
         }
       }, 1000);
-    } else if (currentvideosize == "shrink") {
+    } else if (ytutils.size === "shrink") {
       if (document.getElementById("ythdlink"))
         document
           .getElementById("ythdlink")
@@ -725,7 +717,7 @@ const ytutils = {
           document.defaultView.clearInterval(interwal);
         }
       }, 1000);
-    } else if (currentvideosize == "default") {
+    } else if (ytutils.size === "default") {
       if (isOptionHandle) {
         if (document.querySelector("#player.ytd-watch")) {
           document.querySelector("#player.ytd-watch").removeAttribute("style");
