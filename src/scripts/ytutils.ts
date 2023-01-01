@@ -65,12 +65,14 @@ const ytutils = {
   },
   getVideoQuality: () =>
     ytutils.quality === "4k2160" ? "hd2160" : ytutils.quality,
-  getPlaylistVideoAutoPlayBehavior: function() {
-    var currentplaylistvideoautoplaybehavior =
-      ytutils.playlistvideoautoplaybehavior;
-    if (currentplaylistvideoautoplaybehavior == "default") return true;
-    else if (currentplaylistvideoautoplaybehavior == "autoplay") return true;
-    else if (currentplaylistvideoautoplaybehavior == "autopause") return false;
+  getPlaylistVideoAutoPlayBehavior: () => {
+    switch (ytutils.playlistvideoautoplaybehavior) {
+      case "default":
+      case "autoplay":
+        return true;
+      case "autopause":
+        return false;
+    }
   },
   getYoutubeVideoAutoPlayBehavior: function(youtubevideoautoplaybehavior) {
     var currentyoutubevideoautoplaybehavior = youtubevideoautoplaybehavior;
