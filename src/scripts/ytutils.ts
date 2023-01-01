@@ -42,15 +42,13 @@ const ytutils = {
     ytutils.expandVideoDescription(autoexpanddescription, isOptionHandle);
     ytutils.enablesuggestedautoplay(suggestedautoplay);
   },
-  getIntendedQuality: function(player, currentvideoquality) {
-    ytutils.quality;
-    if (currentvideoquality == "highres")
+  getIntendedQuality: (player) => {
+    const currentvideoquality = ytutils.getVideoQuality();
+    if (currentvideoquality === "highres")
       return player.getAvailableQualityLevels()[0];
-    else if (
-      player.getAvailableQualityLevels().indexOf(currentvideoquality) == -1
-    ) {
+    if (player.getAvailableQualityLevels().indexOf(currentvideoquality) === -1)
       return player.getAvailableQualityLevels()[0];
-    } else return currentvideoquality;
+    return currentvideoquality;
   },
   getSetVideoQuality: (player) => {
     const currentvideoquality = ytutils.getVideoQuality();
@@ -906,10 +904,7 @@ try {
           }
         }
       }
-      if (
-        player.getPlaybackQuality() !=
-        ytutils.getIntendedQuality(player, currentvideoquality)
-      ) {
+      if (player.getPlaybackQuality() != ytutils.getIntendedQuality(player)) {
         if (
           typeof player.getAdState !== "undefined" &&
           player.getAdState() != 1
@@ -941,13 +936,9 @@ try {
       }
       if (
         newState === -1 ||
-        player.getPlaybackQuality() !=
-        ytutils.getIntendedQuality(player, currentvideoquality)
+        player.getPlaybackQuality() != ytutils.getIntendedQuality(player)
       ) {
-        if (
-          player.getPlaybackQuality() !=
-          ytutils.getIntendedQuality(player, currentvideoquality)
-        ) {
+        if (player.getPlaybackQuality() != ytutils.getIntendedQuality(player)) {
           if (
             typeof player.getAdState !== "undefined" &&
             player.getAdState() != 1
@@ -967,8 +958,7 @@ try {
           }
           try {
             if (
-              player.getPlaybackQuality() !=
-              ytutils.getIntendedQuality(player, currentvideoquality)
+              player.getPlaybackQuality() != ytutils.getIntendedQuality(player)
             ) {
               if (
                 typeof player.getAdState !== "undefined" &&
@@ -986,8 +976,7 @@ try {
             var mxx = ytutils.getSetVideoQuality(player);
             player.setPlaybackQualityRange(mxx, mxx);
             if (
-              player.getPlaybackQuality() ===
-              ytutils.getIntendedQuality(player, currentvideoquality)
+              player.getPlaybackQuality() === ytutils.getIntendedQuality(player)
             ) {
               window.clearInterval(ythdonPlayerStateChangeInterval);
             }
@@ -1005,10 +994,7 @@ try {
     var currentvideoquality = ytutils.getVideoQuality();
     var enableplaylistautoplay = ytutils.getPlaylistVideoAutoPlayBehavior();
     var enableautoplay = ytutils.getYoutubeVideoAutoPlayBehavior();
-    if (
-      player.getPlaybackQuality() !=
-      ytutils.getIntendedQuality(player, currentvideoquality)
-    ) {
+    if (player.getPlaybackQuality() != ytutils.getIntendedQuality(player)) {
       if (
         typeof player.getAdState !== "undefined" &&
         player.getAdState() != 1
@@ -1028,8 +1014,7 @@ try {
       }
       try {
         if (
-          player.getPlaybackQuality() !==
-          ytutils.getIntendedQuality(player, currentvideoquality)
+          player.getPlaybackQuality() !== ytutils.getIntendedQuality(player)
         ) {
           if (
             typeof player.getAdState !== "undefined" &&
@@ -1047,8 +1032,7 @@ try {
         var mxx = ytutils.getSetVideoQuality(player);
         player.setPlaybackQualityRange(mxx, mxx);
         if (
-          player.getPlaybackQuality() ===
-          ytutils.getIntendedQuality(player, currentvideoquality)
+          player.getPlaybackQuality() === ytutils.getIntendedQuality(player)
         ) {
           window.clearInterval(onYouTubePlayerReadyInterval);
         }
