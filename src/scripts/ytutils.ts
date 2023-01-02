@@ -32,7 +32,6 @@ const ytutils = {
     isOptionHandle
   ) {
     ytutils.changeVideoQuality(
-      document,
       ytutils.quality ? ytutils.quality : "highress",
       speed,
       volume,
@@ -177,7 +176,6 @@ const ytutils = {
     }
   },
   changeVideoQuality: function(
-    doc,
     quality,
     speed,
     volume,
@@ -200,7 +198,7 @@ const ytutils = {
         ytutils.checkI(quality);
       }
 
-      if (doc.location.pathname === "/watch") {
+      if (document.location.pathname === "/watch") {
         const currentvideoquality = quality;
         const volumespeed = speed;
         volumelevel = ytutils.getVolumeLevel(volume, volumelevel);
@@ -212,7 +210,6 @@ const ytutils = {
               ytutils.player.getPlayerState();
               window.clearTimeout(ythderrinterval);
               ytutils.changeVideoQuality(
-                doc,
                 quality,
                 speed,
                 volume,
