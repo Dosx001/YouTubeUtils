@@ -280,7 +280,7 @@ const ytutils = {
       }
     }
   },
-  doTheRest: () => {
+  doTheRest: (size: HTMLElement) => {
     if (
       document.getElementById("masthead-container") &&
       document.getElementById("page-manager")
@@ -288,25 +288,15 @@ const ytutils = {
       ytutils.scrollTo();
       var interwal2 = document.defaultView.setInterval(function() {
         if (
-          (document.querySelector(".ytp-size-button path") &&
-            document
-              .querySelector(".ytp-size-button path")
-              .getAttribute("d")
-              .indexOf("m 28,") == 0) ||
+          (size && size.getAttribute("d").indexOf("m 28,") == 0) ||
           !document.querySelector("ytd-watch[theater]")
         ) {
           if (
-            document.querySelector(".ytp-size-button path") &&
-            document
-              .querySelector(".ytp-size-button path")
-              .getAttribute("d")
-              .indexOf("m 28,") == 0 &&
-            document.querySelector(".ytp-size-button path").parentNode
-              .parentNode
+            size &&
+            size.getAttribute("d").indexOf("m 28,") == 0 &&
+            size.parentNode.parentNode
           ) {
-            document
-              .querySelector(".ytp-size-button path")
-              .parentNode.parentNode.click();
+            size.parentNode.parentNode.click();
             document.defaultView.clearInterval(interwal2);
           }
         } else {
@@ -324,6 +314,7 @@ const ytutils = {
     const player = document.querySelector("#player");
     const container = document.querySelector(".html5-video-container");
     const api = document.querySelector<HTMLElement>("#player-api");
+    const size = document.querySelector<HTMLElement>(".ytp-size-button path");
     const appbar = document.querySelector<HTMLElement>(
       "#watch-appbar-playlist"
     );
@@ -345,24 +336,15 @@ const ytutils = {
       }
 
       if (
-        (document.querySelector(".ytp-size-button path") &&
-          document
-            .querySelector(".ytp-size-button path")
-            .getAttribute("d")
-            .indexOf("m 28,") == 0) ||
+        (size && size.getAttribute("d").indexOf("m 28,") == 0) ||
         !document.querySelector("ytd-watch[theater]")
       ) {
         if (
-          document.querySelector(".ytp-size-button path") &&
-          document
-            .querySelector(".ytp-size-button path")
-            .getAttribute("d")
-            .indexOf("m 28,") == 0 &&
-          document.querySelector(".ytp-size-button path").parentNode.parentNode
+          size &&
+          size.getAttribute("d").indexOf("m 28,") == 0 &&
+          size.parentNode.parentNode
         ) {
-          document
-            .querySelector(".ytp-size-button path")
-            .parentNode.parentNode.click();
+          size.parentNode.parentNode.click();
         }
       }
 
@@ -425,7 +407,7 @@ const ytutils = {
               "style",
               "height:" + document.defaultView.innerHeight + "px !important"
             );
-          ytutils.doTheRest();
+          ytutils.doTheRest(size);
         }, 100);
       }
 
@@ -455,28 +437,18 @@ const ytutils = {
           }
         }
       }
-
-      ytutils.doTheRest();
+      ytutils.doTheRest(size);
     } else if (ytutils.size === "expand") {
       if (
-        (document.querySelector(".ytp-size-button path") &&
-          document
-            .querySelector(".ytp-size-button path")
-            .getAttribute("d")
-            .indexOf("m 28,") == 0) ||
+        (size && size.getAttribute("d").indexOf("m 28,") == 0) ||
         !document.querySelector("ytd-watch[theater]")
       ) {
         if (
-          document.querySelector(".ytp-size-button path") &&
-          document
-            .querySelector(".ytp-size-button path")
-            .getAttribute("d")
-            .indexOf("m 28,") == 0 &&
-          document.querySelector(".ytp-size-button path").parentNode.parentNode
+          size &&
+          size.getAttribute("d").indexOf("m 28,") == 0 &&
+          size.parentNode.parentNode
         ) {
-          document
-            .querySelector(".ytp-size-button path")
-            .parentNode.parentNode.click();
+          size.parentNode.parentNode.click();
         }
       }
 
@@ -536,25 +508,15 @@ const ytutils = {
 
       var interwal = document.defaultView.setInterval(function() {
         if (
-          (document.querySelector(".ytp-size-button path") &&
-            document
-              .querySelector(".ytp-size-button path")
-              .getAttribute("d")
-              .indexOf("m 28,") == 0) ||
+          (size && size.getAttribute("d").indexOf("m 28,") == 0) ||
           !document.querySelector("ytd-watch[theater]")
         ) {
           if (
-            document.querySelector(".ytp-size-button path") &&
-            document
-              .querySelector(".ytp-size-button path")
-              .getAttribute("d")
-              .indexOf("m 28,") == 0 &&
-            document.querySelector(".ytp-size-button path").parentNode
-              .parentNode
+            size &&
+            size.getAttribute("d").indexOf("m 28,") == 0 &&
+            size.parentNode.parentNode
           ) {
-            document
-              .querySelector(".ytp-size-button path")
-              .parentNode.parentNode.click();
+            size.parentNode.parentNode.click();
             document.defaultView.clearInterval(interwal);
           }
         } else {
@@ -579,24 +541,15 @@ const ytutils = {
       }
 
       if (
-        (document.querySelector(".ytp-size-button path") &&
-          document
-            .querySelector(".ytp-size-button path")
-            .getAttribute("d")
-            .indexOf("m 26,") == 0) ||
+        (size && size.getAttribute("d").indexOf("m 26,") == 0) ||
         document.querySelector("ytd-watch[theater]")
       ) {
         if (
-          document.querySelector(".ytp-size-button path") &&
-          document
-            .querySelector(".ytp-size-button path")
-            .getAttribute("d")
-            .indexOf("m 26,") == 0 &&
-          document.querySelector(".ytp-size-button path").parentNode.parentNode
+          size &&
+          size.getAttribute("d").indexOf("m 26,") == 0 &&
+          size.parentNode.parentNode
         ) {
-          document
-            .querySelector(".ytp-size-button path")
-            .parentNode.parentNode.click();
+          size.parentNode.parentNode.click();
         }
       }
 
@@ -644,25 +597,15 @@ const ytutils = {
 
       var interwal = document.defaultView.setInterval(function() {
         if (
-          (document.querySelector(".ytp-size-button path") &&
-            document
-              .querySelector(".ytp-size-button path")
-              .getAttribute("d")
-              .indexOf("m 26,") == 0) ||
+          (size && size.getAttribute("d").indexOf("m 26,") == 0) ||
           document.querySelector("ytd-watch[theater]")
         ) {
           if (
-            document.querySelector(".ytp-size-button path") &&
-            document
-              .querySelector(".ytp-size-button path")
-              .getAttribute("d")
-              .indexOf("m 26,") == 0 &&
-            document.querySelector(".ytp-size-button path").parentNode
-              .parentNode
+            size &&
+            size.getAttribute("d").indexOf("m 26,") == 0 &&
+            size.parentNode.parentNode
           ) {
-            document
-              .querySelector(".ytp-size-button path")
-              .parentNode.parentNode.click();
+            size.parentNode.parentNode.click();
             document.defaultView.clearInterval(interwal);
           }
         } else {
@@ -688,25 +631,15 @@ const ytutils = {
         }
 
         if (
-          (document.querySelector(".ytp-size-button path") &&
-            document
-              .querySelector(".ytp-size-button path")
-              .getAttribute("d")
-              .indexOf("m 26,") == 0) ||
+          (size && size.getAttribute("d").indexOf("m 26,") == 0) ||
           document.querySelector("ytd-watch[theater]")
         ) {
           if (
-            document.querySelector(".ytp-size-button path") &&
-            document
-              .querySelector(".ytp-size-button path")
-              .getAttribute("d")
-              .indexOf("m 26,") == 0 &&
-            document.querySelector(".ytp-size-button path").parentNode
-              .parentNode
+            size &&
+            size.getAttribute("d").indexOf("m 26,") == 0 &&
+            size.parentNode.parentNode
           ) {
-            document
-              .querySelector(".ytp-size-button path")
-              .parentNode.parentNode.click();
+            size.parentNode.parentNode.click();
           }
         }
 
@@ -748,25 +681,15 @@ const ytutils = {
 
         var interwal = document.defaultView.setInterval(function() {
           if (
-            (document.querySelector(".ytp-size-button path") &&
-              document
-                .querySelector(".ytp-size-button path")
-                .getAttribute("d")
-                .indexOf("m 26,") == 0) ||
+            (size && size.getAttribute("d").indexOf("m 26,") == 0) ||
             document.querySelector("ytd-watch[theater]")
           ) {
             if (
-              document.querySelector(".ytp-size-button path") &&
-              document
-                .querySelector(".ytp-size-button path")
-                .getAttribute("d")
-                .indexOf("m 26,") == 0 &&
-              document.querySelector(".ytp-size-button path").parentNode
-                .parentNode
+              size &&
+              size.getAttribute("d").indexOf("m 26,") == 0 &&
+              size.parentNode.parentNode
             ) {
-              document
-                .querySelector(".ytp-size-button path")
-                .parentNode.parentNode.click();
+              size.parentNode.parentNode.click();
             }
           } else {
             document.defaultView.clearInterval(interwal);
