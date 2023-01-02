@@ -280,17 +280,14 @@ const ytutils = {
       }
     }
   },
-  doTheRest: (size: HTMLElement) => {
+  doTheRest: (size: HTMLElement, watch: HTMLElement) => {
     if (
       document.getElementById("masthead-container") &&
       document.getElementById("page-manager")
     ) {
       ytutils.scrollTo();
       var interwal2 = document.defaultView.setInterval(function() {
-        if (
-          (size && size.getAttribute("d").indexOf("m 28,") == 0) ||
-          !document.querySelector("ytd-watch[theater]")
-        ) {
+        if ((size && size.getAttribute("d").indexOf("m 28,") == 0) || !watch) {
           if (
             size &&
             size.getAttribute("d").indexOf("m 28,") == 0 &&
@@ -315,6 +312,7 @@ const ytutils = {
     const container = document.querySelector(".html5-video-container");
     const api = document.querySelector<HTMLElement>("#player-api");
     const size = document.querySelector<HTMLElement>(".ytp-size-button path");
+    const watch = document.querySelector<HTMLElement>("ytd-watch[theater]");
     const appbar = document.querySelector<HTMLElement>(
       "#watch-appbar-playlist"
     );
@@ -335,10 +333,7 @@ const ytutils = {
         appbar.style.removeProperty("margin-top");
       }
 
-      if (
-        (size && size.getAttribute("d").indexOf("m 28,") == 0) ||
-        !document.querySelector("ytd-watch[theater]")
-      ) {
+      if ((size && size.getAttribute("d").indexOf("m 28,") == 0) || !watch) {
         if (
           size &&
           size.getAttribute("d").indexOf("m 28,") == 0 &&
@@ -439,10 +434,7 @@ const ytutils = {
       }
       ytutils.doTheRest(size);
     } else if (ytutils.size === "expand") {
-      if (
-        (size && size.getAttribute("d").indexOf("m 28,") == 0) ||
-        !document.querySelector("ytd-watch[theater]")
-      ) {
+      if ((size && size.getAttribute("d").indexOf("m 28,") == 0) || !watch) {
         if (
           size &&
           size.getAttribute("d").indexOf("m 28,") == 0 &&
@@ -507,10 +499,7 @@ const ytutils = {
       }
 
       var interwal = document.defaultView.setInterval(function() {
-        if (
-          (size && size.getAttribute("d").indexOf("m 28,") == 0) ||
-          !document.querySelector("ytd-watch[theater]")
-        ) {
+        if ((size && size.getAttribute("d").indexOf("m 28,") == 0) || !watch) {
           if (
             size &&
             size.getAttribute("d").indexOf("m 28,") == 0 &&
@@ -540,10 +529,7 @@ const ytutils = {
         appbar.style.removeProperty("margin-top");
       }
 
-      if (
-        (size && size.getAttribute("d").indexOf("m 26,") == 0) ||
-        document.querySelector("ytd-watch[theater]")
-      ) {
+      if ((size && size.getAttribute("d").indexOf("m 26,") == 0) || watch) {
         if (
           size &&
           size.getAttribute("d").indexOf("m 26,") == 0 &&
@@ -596,10 +582,7 @@ const ytutils = {
       }
 
       var interwal = document.defaultView.setInterval(function() {
-        if (
-          (size && size.getAttribute("d").indexOf("m 26,") == 0) ||
-          document.querySelector("ytd-watch[theater]")
-        ) {
+        if ((size && size.getAttribute("d").indexOf("m 26,") == 0) || watch) {
           if (
             size &&
             size.getAttribute("d").indexOf("m 26,") == 0 &&
@@ -630,10 +613,7 @@ const ytutils = {
           appbar.style.removeProperty("margin-top");
         }
 
-        if (
-          (size && size.getAttribute("d").indexOf("m 26,") == 0) ||
-          document.querySelector("ytd-watch[theater]")
-        ) {
+        if ((size && size.getAttribute("d").indexOf("m 26,") == 0) || watch) {
           if (
             size &&
             size.getAttribute("d").indexOf("m 26,") == 0 &&
@@ -680,10 +660,7 @@ const ytutils = {
         }
 
         var interwal = document.defaultView.setInterval(function() {
-          if (
-            (size && size.getAttribute("d").indexOf("m 26,") == 0) ||
-            document.querySelector("ytd-watch[theater]")
-          ) {
+          if ((size && size.getAttribute("d").indexOf("m 26,") == 0) || watch) {
             if (
               size &&
               size.getAttribute("d").indexOf("m 26,") == 0 &&
