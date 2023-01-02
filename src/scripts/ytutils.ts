@@ -280,6 +280,41 @@ const ytutils = {
       }
     }
   },
+  doTheRest: () => {
+    if (
+      document.getElementById("masthead-container") &&
+      document.getElementById("page-manager")
+    ) {
+      ytutils.scrollTo();
+      var interwal2 = document.defaultView.setInterval(function() {
+        if (
+          (document.querySelector(".ytp-size-button path") &&
+            document
+              .querySelector(".ytp-size-button path")
+              .getAttribute("d")
+              .indexOf("m 28,") == 0) ||
+          !document.querySelector("ytd-watch[theater]")
+        ) {
+          if (
+            document.querySelector(".ytp-size-button path") &&
+            document
+              .querySelector(".ytp-size-button path")
+              .getAttribute("d")
+              .indexOf("m 28,") == 0 &&
+            document.querySelector(".ytp-size-button path").parentNode
+              .parentNode
+          ) {
+            document
+              .querySelector(".ytp-size-button path")
+              .parentNode.parentNode.click();
+            document.defaultView.clearInterval(interwal2);
+          }
+        } else {
+          document.defaultView.clearInterval(interwal2);
+        }
+      }, 1000);
+    }
+  },
   changeVideoSize: (id, isOptionHandle) => {
     if (
       document.getElementById("playnav-player") ||
@@ -366,43 +401,6 @@ const ytutils = {
       if (document.getElementById("page")) {
         document.getElementById("page").classList.add("watch-wide");
       }
-
-      function doTheRest() {
-        if (
-          document.getElementById("masthead-container") &&
-          document.getElementById("page-manager")
-        ) {
-          ytutils.scrollTo();
-          var interwal2 = document.defaultView.setInterval(function() {
-            if (
-              (document.querySelector(".ytp-size-button path") &&
-                document
-                  .querySelector(".ytp-size-button path")
-                  .getAttribute("d")
-                  .indexOf("m 28,") == 0) ||
-              !document.querySelector("ytd-watch[theater]")
-            ) {
-              if (
-                document.querySelector(".ytp-size-button path") &&
-                document
-                  .querySelector(".ytp-size-button path")
-                  .getAttribute("d")
-                  .indexOf("m 28,") == 0 &&
-                document.querySelector(".ytp-size-button path").parentNode
-                  .parentNode
-              ) {
-                document
-                  .querySelector(".ytp-size-button path")
-                  .parentNode.parentNode.click();
-                document.defaultView.clearInterval(interwal2);
-              }
-            } else {
-              document.defaultView.clearInterval(interwal2);
-            }
-          }, 1000);
-        }
-      }
-
       var interwal;
       var it = 0;
 
@@ -427,7 +425,7 @@ const ytutils = {
               "style",
               "height:" + document.defaultView.innerHeight + "px !important"
             );
-          doTheRest();
+          ytutils.doTheRest();
         }, 100);
       }
 
@@ -458,7 +456,7 @@ const ytutils = {
         }
       }
 
-      doTheRest();
+      ytutils.doTheRest();
     } else if (ytutils.size === "expand") {
       if (
         (document.querySelector(".ytp-size-button path") &&
