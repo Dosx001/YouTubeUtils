@@ -1,6 +1,10 @@
 interface player extends HTMLElement {
-  getPlayerState: () => number;
   getAvailableQualityLevels: () => string[];
+  getPlayerState: () => number;
+  setPlaybackQualityRange: (min: string, max: string) => void;
+  setPlaybackRate: (rate: number) => void;
+  setVolume: (number: string) => void;
+  unMute: () => void;
 }
 
 const ytutils = {
@@ -204,7 +208,7 @@ const ytutils = {
         } catch (e) {
           const ythderrinterval = window.setInterval(() => {
             try {
-              document.getElementById("movie_player").getPlayerState();
+              player.getPlayerState();
               window.clearTimeout(ythderrinterval);
               ytutils.changeVideoQuality(
                 doc,
@@ -222,7 +226,6 @@ const ytutils = {
           return;
         }
         const ythdinterval = window.setInterval(() => {
-          const player = document.getElementById("movie_player");
           if (ytutils.checkPlayerReady(player)) {
             if (currentvideoquality === "default") {
               if (volumelevel !== "default") {
