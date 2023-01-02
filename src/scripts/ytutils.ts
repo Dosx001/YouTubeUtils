@@ -1,5 +1,7 @@
 interface player extends HTMLElement {
   getAvailableQualityLevels: () => string[];
+  getCurrentTime: () => number;
+  getPlaybackQuality: () => string;
   getPlayerState: () => number;
   setPlaybackQualityRange: (min: string, max: string) => void;
   setPlaybackRate: (rate: number) => void;
