@@ -12,6 +12,7 @@ interface player extends HTMLElement {
 const ytutils = {
   quality: null,
   size: null,
+  speed: null,
   volume: null,
   volumelevel: null,
   youtubevideoautoplaybehavior: null,
@@ -675,54 +676,42 @@ const ytutils = {
   },
 };
 
-window.addEventListener(
-  "message",
-  function(event) {
-    // We only accept messages from ourselves
-    if (event.source != window) return;
-
-    if (event.data.type && event.data.type == "FROM_CONTENT_SCRIPT") {
-    } else if (
-      event.data.type &&
-      event.data.type == "FROM_CONTENT_SCRIPT_SET_VQ"
-    ) {
-      ytutils.quality = event.data.text;
-    } else if (
-      event.data.type &&
-      event.data.type == "FROM_CONTENT_SCRIPT_SET_VS"
-    ) {
-      ytutils.size = event.data.text;
-    } else if (
-      event.data.type &&
-      event.data.type == "FROM_CONTENT_SCRIPT_REQUEST_CHANGE"
-    ) {
-      ytutils.volume = event.data.volume;
-      ytutils.speed = event.data.speed;
-      ytutils.volumelevel = event.data.volumelevel;
+window.onmessage = (ev: MessageEvent) => {
+  if (ev.source !== window && ev.data.type) return;
+  switch (ev.data.type) {
+    case "FROM_CONTENT_SCRIPT_SET_VQ":
+      ytutils.quality = ev.data.text;
+      break;
+    case "FROM_CONTENT_SCRIPT_SET_VS":
+      ytutils.size = ev.data.text;
+      break;
+    case "FROM_CONTENT_SCRIPT_REQUEST_CHANGE":
+      ytutils.volume = ev.data.volume;
+      ytutils.speed = ev.data.speed;
+      ytutils.volumelevel = ev.data.volumelevel;
       ytutils.youtubevideoautoplaybehavior =
-        event.data.youtubevideoautoplaybehavior;
+        ev.data.youtubevideoautoplaybehavior;
       ytutils.playlistvideoautoplaybehavior =
-        event.data.playlistvideoautoplaybehavior;
-      ytutils.suggestedautoplay = event.data.suggestedautoplay;
-      ytutils.autoexpanddescription = event.data.autoexpanddescription;
-      ytutils.autosubtitles = event.data.autosubtitles;
-      ytutils.isOptionHandle = event.data.isOptionHandle;
+        ev.data.playlistvideoautoplaybehavior;
+      ytutils.suggestedautoplay = ev.data.suggestedautoplay;
+      ytutils.autoexpanddescription = ev.data.autoexpanddescription;
+      ytutils.autosubtitles = ev.data.autosubtitles;
+      ytutils.isOptionHandle = ev.data.isOptionHandle;
       ytutils.requestChange(
-        event.data.id,
-        event.data.speed,
-        event.data.volume,
-        event.data.volumelevel,
-        event.data.youtubevideoautoplaybehavior,
-        event.data.playlistvideoautoplaybehavior,
-        event.data.suggestedautoplay,
-        event.data.autoexpanddescription,
-        event.data.autosubtitles,
-        event.data.isOptionHandle
+        ev.data.id,
+        ev.data.speed,
+        ev.data.volume,
+        ev.data.volumelevel,
+        ev.data.youtubevideoautoplaybehavior,
+        ev.data.playlistvideoautoplaybehavior,
+        ev.data.suggestedautoplay,
+        ev.data.autoexpanddescription,
+        ev.data.autosubtitles,
+        ev.data.isOptionHandle
       );
-    }
-  },
-  false
-);
+      break;
+  }
+};
 
 window.addEventListener("spfdone", ytutils.onSPFDone);
 window.addEventListener("yt-navigate-start", ytutils.onSPFDone);
