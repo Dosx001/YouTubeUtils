@@ -286,18 +286,14 @@ const ytutils = {
       document.getElementById("page-manager")
     ) {
       ytutils.scrollTo();
-      var interwal2 = document.defaultView.setInterval(function() {
-        if ((size && size.getAttribute("d").indexOf("m 28,") == 0) || !watch) {
-          if (
-            size &&
-            size.getAttribute("d").indexOf("m 28,") == 0 &&
-            size.parentNode.parentNode
-          ) {
-            size.parentNode.parentNode.click();
-            document.defaultView.clearInterval(interwal2);
+      const interval = document.defaultView.setInterval(() => {
+        if (size?.getAttribute("d").indexOf("m 28,") === 0 || !watch) {
+          if (size.parentNode.parentNode) {
+            (size.parentNode.parentNode as HTMLElement).click();
+            document.defaultView.clearInterval(interval);
           }
         } else {
-          document.defaultView.clearInterval(interwal2);
+          document.defaultView.clearInterval(interval);
         }
       }, 1000);
     }
