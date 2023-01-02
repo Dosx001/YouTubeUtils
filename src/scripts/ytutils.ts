@@ -177,9 +177,8 @@ const ytutils = {
   },
   ythdonPlayerStateChange: (newState) => {
     try {
-      var currentvideoquality = ytutils.getVideoQuality();
-      var enableplaylistautoplay = ytutils.getPlaylistVideoAutoPlayBehavior();
-      var enableautoplay = ytutils.getYoutubeVideoAutoPlayBehavior();
+      const enableplaylistautoplay = ytutils.getPlaylistVideoAutoPlayBehavior();
+      const enableautoplay = ytutils.getYoutubeVideoAutoPlayBehavior();
       if (ytutils.player.getCurrentTime() == 0 && newState == 1) {
         if (document.location.search.indexOf("list=") != -1) {
           if (!enableplaylistautoplay) {
@@ -244,7 +243,7 @@ const ytutils = {
             }
           }
         }
-        var ythdonPlayerStateChangeInterval = window.setInterval(function() {
+        const ythdonPlayerStateChangeInterval = window.setInterval(function() {
           if (document.location.pathname != "/watch") {
             window.clearInterval(ythdonPlayerStateChangeInterval);
           }
@@ -266,7 +265,7 @@ const ytutils = {
                 }
               }
             }
-            var mxx = ytutils.getSetVideoQuality(ytutils.player);
+            const mxx = ytutils.getSetVideoQuality(ytutils.player);
             ytutils.player.setPlaybackQualityRange(mxx, mxx);
             if (
               ytutils.player.getPlaybackQuality() ===
