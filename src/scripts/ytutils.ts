@@ -264,6 +264,9 @@ const ytutils = {
     const player = document.querySelector("#player");
     const container = document.querySelector(".html5-video-container");
     const api = document.querySelector<HTMLElement>("#player-api");
+    const appbar = document.querySelector<HTMLElement>(
+      "#watch-appbar-playlist"
+    );
     if (ytutils.size === "fullpage") {
       if (player) {
         player.removeAttribute("style");
@@ -274,15 +277,11 @@ const ytutils = {
       if (api) {
         api.style.removeProperty("margin-left");
       }
-      if (document.getElementById("watch-appbar-playlist")) {
-        document
-          .getElementById("watch-appbar-playlist")
-          .style.removeProperty("left");
+      if (appbar) {
+        appbar.style.removeProperty("left");
       }
-      if (document.getElementById("watch-appbar-playlist")) {
-        document
-          .getElementById("watch-appbar-playlist")
-          .style.removeProperty("margin-top");
+      if (appbar) {
+        appbar.style.removeProperty("margin-top");
       }
 
       if (
@@ -418,23 +417,18 @@ const ytutils = {
         );
       }
 
-      if (
-        document.getElementById("placeholder-playlist") &&
-        document.getElementById("watch-appbar-playlist")
-      ) {
+      if (document.getElementById("placeholder-playlist") && appbar) {
         var element = document.getElementById("placeholder-playlist");
         var rect = element.getBoundingClientRect();
-        var element2 = document.getElementById("watch-appbar-playlist");
+        var element2 = appbar;
         var rect2 = element2.getBoundingClientRect();
         if (rect.y != rect2.y) {
-          if (document.getElementById("watch-appbar-playlist")) {
-            document
-              .getElementById("watch-appbar-playlist")
-              .style.setProperty(
-                "margin-top",
-                rect.y - rect2.y + "px",
-                "important"
-              );
+          if (appbar) {
+            appbar.style.setProperty(
+              "margin-top",
+              rect.y - rect2.y + "px",
+              "important"
+            );
           }
         }
       }
@@ -472,15 +466,11 @@ const ytutils = {
       if (api) {
         api.style.removeProperty("margin-left");
       }
-      if (document.getElementById("watch-appbar-playlist")) {
-        document
-          .getElementById("watch-appbar-playlist")
-          .style.removeProperty("left");
+      if (appbar) {
+        appbar.style.removeProperty("left");
       }
-      if (document.getElementById("watch-appbar-playlist")) {
-        document
-          .getElementById("watch-appbar-playlist")
-          .style.removeProperty("margin-top");
+      if (appbar) {
+        appbar.style.removeProperty("margin-top");
       }
 
       if (document.getElementById("watch7-container")) {
@@ -558,15 +548,11 @@ const ytutils = {
       if (api) {
         api.style.removeProperty("margin-left");
       }
-      if (document.getElementById("watch-appbar-playlist")) {
-        document
-          .getElementById("watch-appbar-playlist")
-          .style.removeProperty("left");
+      if (appbar) {
+        appbar.style.removeProperty("left");
       }
-      if (document.getElementById("watch-appbar-playlist")) {
-        document
-          .getElementById("watch-appbar-playlist")
-          .style.removeProperty("margin-top");
+      if (appbar) {
+        appbar.style.removeProperty("margin-top");
       }
 
       if (
@@ -671,15 +657,11 @@ const ytutils = {
         if (api) {
           api.style.removeProperty("margin-left");
         }
-        if (document.getElementById("watch-appbar-playlist")) {
-          document
-            .getElementById("watch-appbar-playlist")
-            .style.removeProperty("left");
+        if (appbar) {
+          appbar.style.removeProperty("left");
         }
-        if (document.getElementById("watch-appbar-playlist")) {
-          document
-            .getElementById("watch-appbar-playlist")
-            .style.removeProperty("margin-top");
+        if (appbar) {
+          appbar.style.removeProperty("margin-top");
         }
 
         if (
