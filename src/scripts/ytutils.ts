@@ -262,14 +262,13 @@ const ytutils = {
     )
       return;
     const player = document.querySelector("#player");
+    const container = document.querySelector(".html5-video-container");
     if (ytutils.size === "fullpage") {
       if (player) {
         player.removeAttribute("style");
       }
-      if (document.getElementsByClassName("html5-video-container")[0]) {
-        document
-          .getElementsByClassName("html5-video-container")[0]
-          .removeAttribute("style");
+      if (container) {
+        container.removeAttribute("style");
       }
       if (document.getElementById("player-api")) {
         document
@@ -409,20 +408,15 @@ const ytutils = {
         }, 100);
       }
 
-      if (
-        document.getElementsByClassName("html5-video-container")[0] &&
-        ytutils.player
-      ) {
-        document
-          .getElementsByClassName("html5-video-container")[0]
-          .setAttribute(
-            "style",
-            "width:" +
-            document.body.clientWidth +
-            "px !important;margin-left:-" +
-            ytutils.player.getBoundingClientRect().x +
-            "px !important;"
-          );
+      if (container && ytutils.player) {
+        container.setAttribute(
+          "style",
+          "width:" +
+          document.body.clientWidth +
+          "px !important;margin-left:-" +
+          ytutils.player.getBoundingClientRect().x +
+          "px !important;"
+        );
       }
 
       if (
@@ -473,10 +467,8 @@ const ytutils = {
       if (document.querySelector("#player.ytd-watch")) {
         document.querySelector("#player.ytd-watch").removeAttribute("style");
       }
-      if (document.getElementsByClassName("html5-video-container")[0]) {
-        document
-          .getElementsByClassName("html5-video-container")[0]
-          .removeAttribute("style");
+      if (container) {
+        container.removeAttribute("style");
       }
       if (document.getElementById("player-api")) {
         document
@@ -563,10 +555,8 @@ const ytutils = {
       if (document.querySelector("#player.ytd-watch")) {
         document.querySelector("#player.ytd-watch").removeAttribute("style");
       }
-      if (document.getElementsByClassName("html5-video-container")[0]) {
-        document
-          .getElementsByClassName("html5-video-container")[0]
-          .removeAttribute("style");
+      if (container) {
+        container.removeAttribute("style");
       }
       if (document.getElementById("player-api")) {
         document
@@ -680,10 +670,8 @@ const ytutils = {
         if (document.querySelector("#player.ytd-watch")) {
           document.querySelector("#player.ytd-watch").removeAttribute("style");
         }
-        if (document.getElementsByClassName("html5-video-container")[0]) {
-          document
-            .getElementsByClassName("html5-video-container")[0]
-            .removeAttribute("style");
+        if (container) {
+          container.removeAttribute("style");
         }
         if (document.getElementById("player-api")) {
           document
