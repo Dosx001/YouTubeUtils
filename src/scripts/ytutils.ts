@@ -179,32 +179,6 @@ const ytutils = {
     try {
       const enableplaylistautoplay = ytutils.getPlaylistVideoAutoPlayBehavior();
       const enableautoplay = ytutils.getYoutubeVideoAutoPlayBehavior();
-      if (ytutils.player.getCurrentTime() == 0 && newState == 1) {
-        if (document.location.search.indexOf("list=") != -1) {
-          if (!enableplaylistautoplay) {
-          }
-        } else {
-          if (!enableautoplay) {
-          }
-        }
-      }
-      if (
-        ytutils.player.getPlaybackQuality() !=
-        ytutils.getIntendedQuality(ytutils.player)
-      ) {
-        if (
-          typeof ytutils.player.getAdState !== "undefined" &&
-          ytutils.player.getAdState() != 1
-        ) {
-          if (document.location.search.indexOf("list=") != -1) {
-            if (!enableplaylistautoplay) {
-            }
-          } else {
-            if (!enableautoplay) {
-            }
-          }
-        }
-      }
       if (
         document.getElementsByTagName("video").length == 0 &&
         newState == 1 &&
@@ -226,45 +200,11 @@ const ytutils = {
         ytutils.player.getPlaybackQuality() !=
         ytutils.getIntendedQuality(ytutils.player)
       ) {
-        if (
-          ytutils.player.getPlaybackQuality() !=
-          ytutils.getIntendedQuality(ytutils.player)
-        ) {
-          if (
-            typeof ytutils.player.getAdState !== "undefined" &&
-            ytutils.player.getAdState() != 1
-          ) {
-            if (document.location.search.indexOf("list=") != -1) {
-              if (!enableplaylistautoplay) {
-              }
-            } else {
-              if (!enableautoplay) {
-              }
-            }
-          }
-        }
         const ythdonPlayerStateChangeInterval = window.setInterval(function() {
           if (document.location.pathname != "/watch") {
             window.clearInterval(ythdonPlayerStateChangeInterval);
           }
           try {
-            if (
-              ytutils.player.getPlaybackQuality() !=
-              ytutils.getIntendedQuality(ytutils.player)
-            ) {
-              if (
-                typeof ytutils.player.getAdState !== "undefined" &&
-                ytutils.player.getAdState() != 1
-              ) {
-                if (document.location.search.indexOf("list=") != -1) {
-                  if (!enableplaylistautoplay) {
-                  }
-                } else {
-                  if (!enableautoplay) {
-                  }
-                }
-              }
-            }
             const mxx = ytutils.getSetVideoQuality(ytutils.player);
             ytutils.player.setPlaybackQualityRange(mxx, mxx);
             if (
