@@ -177,28 +177,27 @@ const ytutils = {
       return false;
     }
   },
-  ythdonPlayerStateChange: (newState) => {
+  ythdonPlayerStateChange: (newState: number) => {
     try {
       if (
         newState === -1 ||
-        ytutils.player.getPlaybackQuality() !=
-        ytutils.getIntendedQuality(ytutils.player)
+        ytutils.player.getPlaybackQuality() !== ytutils.getIntendedQuality()
       ) {
-        const ythdonPlayerStateChangeInterval = window.setInterval(function() {
-          if (document.location.pathname != "/watch") {
-            window.clearInterval(ythdonPlayerStateChangeInterval);
+        const interval = window.setInterval(() => {
+          if (document.location.pathname !== "/watch") {
+            window.clearInterval(interval);
           }
           try {
-            const mxx = ytutils.getSetVideoQuality(ytutils.player);
+            const mxx = ytutils.getSetVideoQuality();
             ytutils.player.setPlaybackQualityRange(mxx, mxx);
             if (
               ytutils.player.getPlaybackQuality() ===
-              ytutils.getIntendedQuality(ytutils.player)
+              ytutils.getIntendedQuality()
             ) {
-              window.clearInterval(ythdonPlayerStateChangeInterval);
+              window.clearInterval(interval);
             }
           } catch (e) {
-            window.clearInterval(ythdonPlayerStateChangeInterval);
+            window.clearInterval(interval);
           }
         }, 25);
       }
