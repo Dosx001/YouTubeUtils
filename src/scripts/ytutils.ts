@@ -179,24 +179,6 @@ const ytutils = {
   },
   ythdonPlayerStateChange: (newState) => {
     try {
-      const enableplaylistautoplay = ytutils.getPlaylistVideoAutoPlayBehavior();
-      const enableautoplay = ytutils.getYoutubeVideoAutoPlayBehavior();
-      if (
-        document.getElementsByTagName("video").length == 0 &&
-        newState == 1 &&
-        ytutils.player.getCurrentTime() < 1 &&
-        window.ythdFlPlayerPaused == false
-      ) {
-        if (document.location.search.indexOf("list=") != -1) {
-          if (!enableplaylistautoplay) {
-            window.ythdFlPlayerPaused = true;
-          }
-        } else {
-          if (!enableautoplay) {
-            window.ythdFlPlayerPaused = true;
-          }
-        }
-      }
       if (
         newState === -1 ||
         ytutils.player.getPlaybackQuality() !=
