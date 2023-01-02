@@ -261,9 +261,10 @@ const ytutils = {
       document.location.pathname.search(/^\/watch/) !== 0
     )
       return;
+    const player = document.querySelector("#player");
     if (ytutils.size === "fullpage") {
-      if (document.getElementById("player")) {
-        document.getElementById("player").removeAttribute("style");
+      if (player) {
+        player.removeAttribute("style");
       }
       if (document.getElementsByClassName("html5-video-container")[0]) {
         document
@@ -318,27 +319,14 @@ const ytutils = {
           .getElementById("watch7-container")
           .classList.remove("watch-wide");
       }
-      if (
-        document.getElementById("player") &&
-        document
-          .getElementById("player")
-          .classList.contains("watch-playlist-collapsed")
-      ) {
-        document
-          .getElementById("player")
-          .classList.remove("watch-playlist-collapsed");
+      if (player && player.classList.contains("watch-playlist-collapsed")) {
+        player.classList.remove("watch-playlist-collapsed");
       }
-      if (
-        document.getElementById("player") &&
-        document.getElementById("player").classList.contains("watch-medium")
-      ) {
-        document.getElementById("player").classList.remove("watch-medium");
+      if (player && player.classList.contains("watch-medium")) {
+        player.classList.remove("watch-medium");
       }
-      if (
-        document.getElementById("player") &&
-        document.getElementById("player").classList.contains("watch-small")
-      ) {
-        document.getElementById("player").classList.remove("watch-small");
+      if (player && player.classList.contains("watch-small")) {
+        player.classList.remove("watch-small");
       }
       if (
         document.getElementById("page") &&
@@ -509,13 +497,11 @@ const ytutils = {
       if (document.getElementById("watch7-container")) {
         document.getElementById("watch7-container").classList.add("watch-wide");
       }
-      if (document.getElementById("player")) {
-        document
-          .getElementById("player")
-          .classList.add("watch-playlist-collapsed");
+      if (player) {
+        player.classList.add("watch-playlist-collapsed");
       }
-      if (document.getElementById("player")) {
-        document.getElementById("player").classList.add("watch-medium");
+      if (player) {
+        player.classList.add("watch-medium");
       }
       if (document.getElementById("page")) {
         document.getElementById("page").classList.add("watch-stage-mode");
@@ -523,11 +509,8 @@ const ytutils = {
       if (document.getElementById("page")) {
         document.getElementById("page").classList.add("watch-wide");
       }
-      if (
-        document.getElementById("player") &&
-        document.getElementById("player").classList.contains("watch-small")
-      ) {
-        document.getElementById("player").classList.remove("watch-small");
+      if (player && player.classList.contains("watch-small")) {
+        player.classList.remove("watch-small");
       }
       if (
         document.getElementById("page") &&
@@ -633,33 +616,20 @@ const ytutils = {
           .getElementById("watch7-container")
           .classList.remove("watch-wide");
       }
-      if (
-        document.getElementById("player") &&
-        document
-          .getElementById("player")
-          .classList.contains("watch-playlist-collapsed")
-      ) {
-        document
-          .getElementById("player")
-          .classList.remove("watch-playlist-collapsed");
+      if (player && player.classList.contains("watch-playlist-collapsed")) {
+        player.classList.remove("watch-playlist-collapsed");
       }
-      if (
-        document.getElementById("player") &&
-        document.getElementById("player").classList.contains("watch-medium")
-      ) {
-        document.getElementById("player").classList.remove("watch-medium");
+      if (player && player.classList.contains("watch-medium")) {
+        player.classList.remove("watch-medium");
       }
-      if (document.getElementById("player")) {
-        document.getElementById("player").classList.add("watch-small");
+      if (player) {
+        player.classList.add("watch-small");
       }
       if (document.getElementById("page")) {
         document.getElementById("page").classList.add("watch-non-stage-mode");
       }
-      if (
-        document.getElementById("player") &&
-        document.getElementById("player").classList.contains("watch-wide")
-      ) {
-        document.getElementById("player").classList.remove("watch-wide");
+      if (player && player.classList.contains("watch-wide")) {
+        player.classList.remove("watch-wide");
       }
       if (
         document.getElementById("page") &&
@@ -764,33 +734,20 @@ const ytutils = {
             .getElementById("watch7-container")
             .classList.remove("watch-wide");
         }
-        if (
-          document.getElementById("player") &&
-          document
-            .getElementById("player")
-            .classList.contains("watch-playlist-collapsed")
-        ) {
-          document
-            .getElementById("player")
-            .classList.remove("watch-playlist-collapsed");
+        if (player && player.classList.contains("watch-playlist-collapsed")) {
+          player.classList.remove("watch-playlist-collapsed");
         }
-        if (
-          document.getElementById("player") &&
-          document.getElementById("player").classList.contains("watch-medium")
-        ) {
-          document.getElementById("player").classList.remove("watch-medium");
+        if (player && player.classList.contains("watch-medium")) {
+          player.classList.remove("watch-medium");
         }
-        if (document.getElementById("player")) {
-          document.getElementById("player").classList.add("watch-small");
+        if (player) {
+          player.classList.add("watch-small");
         }
         if (document.getElementById("page")) {
           document.getElementById("page").classList.add("watch-non-stage-mode");
         }
-        if (
-          document.getElementById("player") &&
-          document.getElementById("player").classList.contains("watch-wide")
-        ) {
-          document.getElementById("player").classList.remove("watch-wide");
+        if (player && player.classList.contains("watch-wide")) {
+          player.classList.remove("watch-wide");
         }
         if (
           document.getElementById("page") &&
