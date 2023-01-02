@@ -263,6 +263,7 @@ const ytutils = {
       return;
     const player = document.querySelector("#player");
     const container = document.querySelector(".html5-video-container");
+    const api = document.querySelector<HTMLElement>("#player-api");
     if (ytutils.size === "fullpage") {
       if (player) {
         player.removeAttribute("style");
@@ -270,10 +271,8 @@ const ytutils = {
       if (container) {
         container.removeAttribute("style");
       }
-      if (document.getElementById("player-api")) {
-        document
-          .getElementById("player-api")
-          .style.removeProperty("margin-left");
+      if (api) {
+        api.style.removeProperty("margin-left");
       }
       if (document.getElementById("watch-appbar-playlist")) {
         document
@@ -470,10 +469,8 @@ const ytutils = {
       if (container) {
         container.removeAttribute("style");
       }
-      if (document.getElementById("player-api")) {
-        document
-          .getElementById("player-api")
-          .style.removeProperty("margin-left");
+      if (api) {
+        api.style.removeProperty("margin-left");
       }
       if (document.getElementById("watch-appbar-playlist")) {
         document
@@ -558,10 +555,8 @@ const ytutils = {
       if (container) {
         container.removeAttribute("style");
       }
-      if (document.getElementById("player-api")) {
-        document
-          .getElementById("player-api")
-          .style.removeProperty("margin-left");
+      if (api) {
+        api.style.removeProperty("margin-left");
       }
       if (document.getElementById("watch-appbar-playlist")) {
         document
@@ -673,10 +668,8 @@ const ytutils = {
         if (container) {
           container.removeAttribute("style");
         }
-        if (document.getElementById("player-api")) {
-          document
-            .getElementById("player-api")
-            .style.removeProperty("margin-left");
+        if (api) {
+          api.style.removeProperty("margin-left");
         }
         if (document.getElementById("watch-appbar-playlist")) {
           document
