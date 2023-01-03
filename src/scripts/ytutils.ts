@@ -117,9 +117,6 @@ const ytutils = {
         return ytutils.volumelevel;
     }
   },
-  checkI: (quality: string) => {
-    ytutils.player.setPlaybackQualityRange(quality, quality);
-  },
   onSPFDone: () => {
     window.postMessage(
       { type: "FROM_PAGE_SCRIPT_REQUEST_CHANGE", text: "NULL" },
@@ -192,9 +189,11 @@ const ytutils = {
       window.addEventListener("yt-navigate-finish", ytutils.onNavigateFinish);
       window.addEventListener("transitionend", ytutils.Slistener, true);
       if (document.location.pathname.indexOf("/embed") === 0) {
-        ytutils.checkI(ytutils.quality);
+        ytutils.player.setPlaybackQualityRange(
+          ytutils.quality,
+          ytutils.quality
+        );
       }
-
       if (document.location.pathname === "/watch") {
         const currentvideoquality = ytutils.quality;
         const volumespeed = ytutils.speed;
