@@ -47,19 +47,9 @@ const ytworker = {
     );
   },
   askQualitySize: () => {
-    if (!ytworker.sto) {
-      browser.runtime.sendMessage({ action: "storage_ask" });
-      return;
-    }
-    ytworker.getStorage().get((data: data) => {
+    browser.storage.sync.get((data: data) => {
       ytworker.change(data);
     });
-  },
-  sto: "local",
-  getStorage: function() {
-    return ytworker.sto == "sync"
-      ? browser.storage.sync
-      : browser.storage.local;
   },
   changeVideoQuality: () => {
     if (location.hostname.search(/youtube.com$/) !== -1) {
@@ -142,7 +132,6 @@ browser.runtime.onMessage.addListener((request) => {
       ytworker.change(request);
       break;
     case "storage_answer":
-      ytworker.sto = request.sto;
       ytworker.askQualitySize();
       break;
   }
