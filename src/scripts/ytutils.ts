@@ -9,6 +9,10 @@ interface player extends HTMLElement {
   unMute: () => void;
 }
 
+interface flexy extends HTMLElement {
+  theaterModeChanged_: (state: boolean) => void;
+}
+
 const ytutils = {
   autoexpanddescription: null,
   autosubtitles: null,
@@ -248,7 +252,7 @@ const ytutils = {
     switch (ytutils.size) {
       case "expand": {
         const id = setInterval(() => {
-          const flexy = document.querySelector("ytd-watch-flexy");
+          const flexy = document.querySelector<flexy>("ytd-watch-flexy");
           if (flexy) {
             flexy.theaterModeChanged_(true);
             clearInterval(id);
@@ -278,7 +282,7 @@ const ytutils = {
       // }
       default: {
         const id = setInterval(() => {
-          const flexy = document.querySelector("ytd-watch-flexy");
+          const flexy = document.querySelector<flexy>("ytd-watch-flexy");
           if (flexy) {
             flexy.theaterModeChanged_(false);
             clearInterval(id);
