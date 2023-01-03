@@ -1,39 +1,47 @@
+interface data {
+  annotationsoff: boolean;
+  autoexpanddescription: boolean;
+  autosubtitles: string;
+  embeddedvideoautoplaybehavior: string;
+  installed: boolean;
+  playlistvideoautoplaybehavior: string;
+  quality: string;
+  size: string;
+  speed: string;
+  suggestedautoplay: boolean;
+  transition: boolean;
+  version: string;
+  volume: string;
+  volumelevel: string;
+  youtubevideoautoplaybehavior: string;
+  isOptionHandle?: boolean;
+}
+
 const ytworker = {
   quality: null,
   size: null,
-  change: function(
-    quality,
-    size,
-    speed,
-    volume,
-    volumelevel,
-    youtubevideoautoplaybehavior,
-    playlistvideoautoplaybehavior,
-    suggestedautoplay,
-    autoexpanddescription,
-    autosubtitles,
-    isOptionHandle?
-  ) {
-    //YouTubeHighDefinition.changeVideoQuality(document,o['video_quality']);
-    //YouTubeHighDefinition.changeVideoSize(document,o['video_size']);
+  change: (data: data) => {
     window.postMessage(
-      { type: "FROM_CONTENT_SCRIPT_SET_VQ", text: quality },
+      { type: "FROM_CONTENT_SCRIPT_SET_VQ", text: data.quality },
       "*"
     );
-    window.postMessage({ type: "FROM_CONTENT_SCRIPT_SET_VS", text: size }, "*");
+    window.postMessage(
+      { type: "FROM_CONTENT_SCRIPT_SET_VS", text: data.size },
+      "*"
+    );
     window.postMessage(
       {
         type: "FROM_CONTENT_SCRIPT_REQUEST_CHANGE",
         id: browser.extension.getURL(""),
-        speed: speed,
-        volume: volume,
-        volumelevel: volumelevel,
-        youtubevideoautoplaybehavior: youtubevideoautoplaybehavior,
-        playlistvideoautoplaybehavior: playlistvideoautoplaybehavior,
-        suggestedautoplay: suggestedautoplay,
-        autoexpanddescription: autoexpanddescription,
-        autosubtitles: autosubtitles,
-        isOptionHandle: isOptionHandle,
+        speed: data.speed,
+        volume: data.volume,
+        volumelevel: data.volumelevel,
+        youtubevideoautoplaybehavior: data.youtubevideoautoplaybehavior,
+        playlistvideoautoplaybehavior: data.playlistvideoautoplaybehavior,
+        suggestedautoplay: data.suggestedautoplay,
+        autoexpanddescription: data.autoexpanddescription,
+        autosubtitles: data.autosubtitles,
+        isOptionHandle: data.isOptionHandle,
       },
       "*"
     );
@@ -43,19 +51,8 @@ const ytworker = {
       browser.runtime.sendMessage({ action: "storage_ask" });
       return;
     }
-    ytworker.getStorage().get((items) => {
-      ytworker.change(
-        items["video_quality"],
-        items["video_size"],
-        items["video_speed"],
-        items["volume"],
-        items["volumelevel"],
-        items["youtubevideoautoplaybehavior"],
-        items["playlistvideoautoplaybehavior"],
-        items["suggestedautoplay"],
-        items["autoexpanddescription"],
-        items["autosubtitles"]
-      );
+    ytworker.getStorage().get((data: data) => {
+      ytworker.change(data);
     });
   },
   sto: "local",
@@ -142,19 +139,7 @@ document.addEventListener(
 browser.runtime.onMessage.addListener((request) => {
   switch (request.action) {
     case "video_qualitysize_change":
-      ytworker.change(
-        request.quality,
-        request.size,
-        request.speed,
-        request.volume,
-        request.volumelevel,
-        request.youtubevideoautoplaybehavior,
-        request.playlistvideoautoplaybehavior,
-        request.suggestedautoplay,
-        request.autoexpanddescription,
-        request.autosubtitles,
-        request.isOptionHandle
-      );
+      ytworker.change(request);
       break;
     case "storage_answer":
       ytworker.sto = request.sto;

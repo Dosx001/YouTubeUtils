@@ -10,16 +10,16 @@ interface player extends HTMLElement {
 }
 
 const ytutils = {
+  autoexpanddescription: null,
+  autosubtitles: null,
+  playlistvideoautoplaybehavior: null,
   quality: null,
   size: null,
   speed: null,
+  suggestedautoplay: null,
   volume: null,
   volumelevel: null,
   youtubevideoautoplaybehavior: null,
-  playlistvideoautoplaybehavior: null,
-  suggestedautoplay: null,
-  autoexpanddescription: null,
-  autosubtitles: null,
   isOptionHandle: null,
   player: document.querySelector<player>("#movie_player"),
   requestChange: () => {

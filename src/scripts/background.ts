@@ -1,21 +1,21 @@
 let annotationsoff = false;
 
 const settings = {
-  installed: false,
-  version: "",
-  video_quality: "highres",
-  video_size: "expand",
-  video_speed: "1",
   annotationsoff: false,
+  autoexpanddescription: true,
+  autosubtitles: "default",
+  embeddedvideoautoplaybehavior: "default",
+  installed: false,
+  playlistvideoautoplaybehavior: "default",
+  quality: "highres",
+  size: "expand",
+  speed: "1",
+  suggestedautoplay: true,
+  transition: false,
+  version: "",
   volume: "default",
   volumelevel: 100,
   youtubevideoautoplaybehavior: "default",
-  playlistvideoautoplaybehavior: "default",
-  suggestedautoplay: true,
-  embeddedvideoautoplaybehavior: "default",
-  autoexpanddescription: true,
-  autosubtitles: "default",
-  transition: false,
 };
 
 const Ext = {
@@ -86,8 +86,8 @@ browser.runtime.onMessage.addListener((request, sender) => {
       Ext.getStorage().get((items: typeof settings) => {
         browser.tabs.sendMessage(sender.tab.id, {
           action: "video_qualitysize_change",
-          quality: items.video_quality,
-          size: items.video_size,
+          quality: items.quality,
+          size: items.size,
         });
       });
       break;

@@ -72,18 +72,18 @@ const askQualitySize = () => {
         autosubtitles: string;
         embeddedvideoautoplaybehavior: string;
         playlistvideoautoplaybehavior: string;
+        quality: string;
+        size: string;
+        speed: string;
         suggestedautoplay: boolean;
-        video_quality: string;
-        video_size: string;
-        video_speed: string;
         volume: string;
         volumelevel: string;
         youtubevideoautoplaybehavior: string;
       }) => {
         const [sel0, sel1, sel2] = document.querySelectorAll("select");
-        sel0.value = keys.video_quality;
-        sel1.value = keys.video_size;
-        sel2.value = keys.video_speed;
+        sel0.value = keys.quality;
+        sel1.value = keys.size;
+        sel2.value = keys.speed;
         sel0.onchange = () => requestVideoQualitySizeChange();
         sel1.onchange = () => requestVideoQualitySizeChange();
         sel2.onchange = () => requestVideoQualitySizeChange();
