@@ -22,31 +22,23 @@ const ytutils = {
   autosubtitles: null,
   isOptionHandle: null,
   player: document.querySelector<player>("#movie_player"),
-  requestChange: function(
-    id,
-    speed,
-    volume,
-    volumelevel,
-    youtubevideoautoplaybehavior,
-    playlistvideoautoplaybehavior,
-    suggestedautoplay,
-    autoexpanddescription,
-    autosubtitles,
-    isOptionHandle
-  ) {
+  requestChange: () => {
     ytutils.changeVideoQuality(
       ytutils.quality ? ytutils.quality : "highress",
-      speed,
-      volume,
-      volumelevel,
-      youtubevideoautoplaybehavior,
-      playlistvideoautoplaybehavior,
-      autosubtitles,
-      isOptionHandle
+      ytutils.speed,
+      ytutils.volume,
+      ytutils.volumelevel,
+      ytutils.youtubevideoautoplaybehavior,
+      ytutils.playlistvideoautoplaybehavior,
+      ytutils.autosubtitles,
+      ytutils.isOptionHandle
     );
-    ytutils.changeVideoSize(id, isOptionHandle);
-    ytutils.expandVideoDescription(autoexpanddescription, isOptionHandle);
-    ytutils.enablesuggestedautoplay(suggestedautoplay);
+    ytutils.changeVideoSize(ytutils.isOptionHandle);
+    ytutils.expandVideoDescription(
+      ytutils.autoexpanddescription,
+      ytutils.isOptionHandle
+    );
+    ytutils.enablesuggestedautoplay(ytutils.suggestedautoplay);
   },
   getIntendedQuality: () => {
     const currentvideoquality = ytutils.getVideoQuality();
@@ -299,7 +291,7 @@ const ytutils = {
       }, 1000);
     }
   },
-  changeVideoSize: (id, isOptionHandle) => {
+  changeVideoSize: (isOptionHandle) => {
     if (
       document.getElementById("playnav-player") ||
       document.location.pathname.search(/^\/watch/) !== 0
@@ -697,18 +689,7 @@ window.onmessage = (ev: MessageEvent) => {
       ytutils.autoexpanddescription = ev.data.autoexpanddescription;
       ytutils.autosubtitles = ev.data.autosubtitles;
       ytutils.isOptionHandle = ev.data.isOptionHandle;
-      ytutils.requestChange(
-        ev.data.id,
-        ev.data.speed,
-        ev.data.volume,
-        ev.data.volumelevel,
-        ev.data.youtubevideoautoplaybehavior,
-        ev.data.playlistvideoautoplaybehavior,
-        ev.data.suggestedautoplay,
-        ev.data.autoexpanddescription,
-        ev.data.autosubtitles,
-        ev.data.isOptionHandle
-      );
+      ytutils.requestChange();
       break;
   }
 };
