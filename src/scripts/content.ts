@@ -32,7 +32,7 @@ const ytworker = {
     window.postMessage(
       {
         type: "FROM_CONTENT_SCRIPT_REQUEST_CHANGE",
-        id: browser.extension.getURL(""),
+        id: browser.runtime.getURL(""),
         speed: data.speed,
         volume: data.volume,
         volumelevel: data.volumelevel,
