@@ -105,8 +105,8 @@ const ytutils = {
       document.querySelector<HTMLElement>("paper-button#less").click();
     }
   },
-  getVolumeLevel: (volume: string, volumelevel: number) => {
-    switch (volume) {
+  getVolumeLevel: () => {
+    switch (ytutils.volume) {
       case "default":
         return "default";
       case "mute":
@@ -114,7 +114,7 @@ const ytutils = {
       case "100%":
         return 100;
       default:
-        return volumelevel;
+        return ytutils.volumelevel;
     }
   },
   checkI: (quality: string) => {
@@ -198,10 +198,7 @@ const ytutils = {
       if (document.location.pathname === "/watch") {
         const currentvideoquality = ytutils.quality;
         const volumespeed = ytutils.speed;
-        ytutils.volumelevel = ytutils.getVolumeLevel(
-          ytutils.volume,
-          ytutils.volumelevel
-        );
+        ytutils.volumelevel = ytutils.getVolumeLevel();
         try {
           ytutils.player.getPlayerState();
         } catch (e) {
