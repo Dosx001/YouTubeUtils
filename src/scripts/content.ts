@@ -1,38 +1,6 @@
 const ytworker = {
   quality: null,
   size: null,
-  requestChange: function(
-    quality,
-    size,
-    speed,
-    volume,
-    volumelevel,
-    youtubevideoautoplaybehavior,
-    playlistvideoautoplaybehavior,
-    suggestedautoplay,
-    autoexpanddescription,
-    autosubtitles,
-    isOptionHandle
-  ) {
-    if (!quality) {
-      ytworker.askQualitySize();
-    } else {
-      ytworker.change(
-        quality,
-        size,
-        speed,
-        volume,
-        volumelevel,
-        youtubevideoautoplaybehavior,
-        playlistvideoautoplaybehavior,
-        suggestedautoplay,
-        autoexpanddescription,
-        autosubtitles,
-        isOptionHandle
-      );
-      //YouTubeHighDefinition.changeVideoQuality(document);
-    }
-  },
   change: function(
     quality,
     size,
@@ -162,13 +130,13 @@ ytworker.addScript();
 
 //change to mutation event
 if (document.location.pathname.indexOf("/embed") !== 0) {
-  ytworker.requestChange();
+  ytworker.askQualitySize();
 }
 
 document.addEventListener(
   "DOMContentLoaded",
   function(event) {
-    ytworker.requestChange();
+    ytworker.askQualitySize();
   },
   false
 );
@@ -176,7 +144,7 @@ document.addEventListener(
 browser.runtime.onMessage.addListener((request) => {
   switch (request.action) {
     case "video_qualitysize_change":
-      ytworker.requestChange(
+      ytworker.change(
         request.quality,
         request.size,
         request.speed,
@@ -200,6 +168,6 @@ browser.runtime.onMessage.addListener((request) => {
 window.onmessage = (ev: MessageEvent) => {
   if (ev.source !== window) return;
   if (ev.data?.type === "FROM_PAGE_SCRIPT_REQUEST_CHANGE") {
-    ytworker.requestChange();
+    ytworker.askQualitySize();
   }
 };
