@@ -25,11 +25,8 @@ const ytutils = {
   requestChange: () => {
     ytutils.changeVideoQuality();
     ytutils.changeVideoSize(ytutils.isOptionHandle);
-    ytutils.expandVideoDescription(
-      ytutils.autoexpanddescription,
-      ytutils.isOptionHandle
-    );
-    ytutils.enablesuggestedautoplay(ytutils.suggestedautoplay);
+    ytutils.expandVideoDescription(ytutils.isOptionHandle);
+    ytutils.enablesuggestedautoplay();
   },
   getIntendedQuality: () => {
     const currentvideoquality = ytutils.getVideoQuality();
@@ -72,27 +69,24 @@ const ytutils = {
         return false;
     }
   },
-  enablesuggestedautoplay: (checked: boolean) => {
+  enablesuggestedautoplay: () => {
     if (document.location.pathname.search(/^\/watch/) == 0) {
       const check =
         document.querySelector<HTMLInputElement>("#autoplay-checkbox");
       if (check) {
         check.click();
-        check.checked = checked;
+        check.checked = ytutils.suggestedautoplay;
       }
       document
         .querySelector<HTMLInputElement>(
-          `paper-toggle-button#toggle[aria-pressed*=${!checked}]`
+          `paper-toggle-button#toggle[aria-pressed*=${!ytutils.suggestedautoplay}]`
         )
         ?.click();
     }
   },
-  expandVideoDescription: (
-    autoexpanddescription: boolean,
-    isOptionHandle: boolean
-  ) => {
+  expandVideoDescription: (isOptionHandle: boolean) => {
     if (document.location.pathname.search(/^\/watch/) !== 0) return;
-    if (autoexpanddescription) {
+    if (ytutils.autoexpanddescription) {
       if (document.getElementById("action-panel-details")) {
         document
           .getElementById("action-panel-details")
@@ -134,7 +128,7 @@ const ytutils = {
   },
   onNavigateFinish: () => {
     window.setTimeout(() => {
-      ytutils.expandVideoDescription(ytutils.autoexpanddescription, null);
+      ytutils.expandVideoDescription(null);
     }, 1000);
   },
   scrollTo: () => {
