@@ -118,13 +118,7 @@ if (document.location.pathname.indexOf("/embed") !== 0) {
   ytworker.askQualitySize();
 }
 
-document.addEventListener(
-  "DOMContentLoaded",
-  function(event) {
-    ytworker.askQualitySize();
-  },
-  false
-);
+document.addEventListener("DOMContentLoaded", ytworker.askQualitySize, false);
 
 browser.runtime.onMessage.addListener((request) => {
   switch (request.action) {
