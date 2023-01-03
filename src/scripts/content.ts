@@ -12,7 +12,7 @@ const ytworker = {
     suggestedautoplay,
     autoexpanddescription,
     autosubtitles,
-    isOptionHandle
+    isOptionHandle?
   ) {
     //YouTubeHighDefinition.changeVideoQuality(document,o['video_quality']);
     //YouTubeHighDefinition.changeVideoSize(document,o['video_size']);
@@ -38,14 +38,12 @@ const ytworker = {
       "*"
     );
   },
-  askQualitySize: function() {
+  askQualitySize: () => {
     if (!ytworker.sto) {
-      browser.runtime.sendMessage({ action: "storage_ask" }, function(o) {
-        //
-      });
+      browser.runtime.sendMessage({ action: "storage_ask" });
       return;
     }
-    ytworker.getStorage().get(null, function(items) {
+    ytworker.getStorage().get((items) => {
       ytworker.change(
         items["video_quality"],
         items["video_size"],
