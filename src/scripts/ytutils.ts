@@ -665,46 +665,18 @@ window.addEventListener("yt-navigate-start", ytutils.onSPFDone);
 
 const onYouTubePlayerReady = (player: player) => {
   ytutils.player = player;
-  var currentvideoquality = ytutils.getVideoQuality();
-  var enableplaylistautoplay = ytutils.getPlaylistVideoAutoPlayBehavior();
-  var enableautoplay = ytutils.getYoutubeVideoAutoPlayBehavior();
-  if (player.getPlaybackQuality() != ytutils.getIntendedQuality(player)) {
-    if (typeof player.getAdState !== "undefined" && player.getAdState() != 1) {
-      if (document.location.search.indexOf("list=") != -1) {
-        if (!enableplaylistautoplay) {
-        }
-      } else {
-        if (!enableautoplay) {
-        }
-      }
-    }
-  }
-  var onYouTubePlayerReadyInterval = window.setInterval(function() {
-    if (document.location.pathname != "/watch") {
-      window.clearInterval(onYouTubePlayerReadyInterval);
+  const interval = window.setInterval(() => {
+    if (document.location.pathname !== "/watch") {
+      window.clearInterval(interval);
     }
     try {
-      if (player.getPlaybackQuality() !== ytutils.getIntendedQuality(player)) {
-        if (
-          typeof player.getAdState !== "undefined" &&
-          player.getAdState() != 1
-        ) {
-          if (document.location.search.indexOf("list=") != -1) {
-            if (!enableplaylistautoplay) {
-            }
-          } else {
-            if (!enableautoplay) {
-            }
-          }
-        }
-      }
-      var mxx = ytutils.getSetVideoQuality(player);
-      player.setPlaybackQualityRange(mxx, mxx);
-      if (player.getPlaybackQuality() === ytutils.getIntendedQuality(player)) {
-        window.clearInterval(onYouTubePlayerReadyInterval);
+      const quality = ytutils.getSetVideoQuality();
+      player.setPlaybackQualityRange(quality, quality);
+      if (player.getPlaybackQuality() === ytutils.getIntendedQuality()) {
+        window.clearInterval(interval);
       }
     } catch (e) {
-      window.clearInterval(onYouTubePlayerReadyInterval);
+      window.clearInterval(interval);
     }
   }, 25);
 };
