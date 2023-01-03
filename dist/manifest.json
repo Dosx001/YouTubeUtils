@@ -5,7 +5,6 @@
   "description": "Extra YouTube functionality",
   "permissions": [
     "<all_urls>",
-    "cookies",
     "storage",
     "tabs",
     "webRequest",
@@ -40,9 +39,6 @@
         "scripts/content.js"
       ]
     }
-  ],
-  "web_accessible_resources": [
-    "scripts/ytutils.js"
   ],
   "browser_specific_settings": {
     "gecko": {
