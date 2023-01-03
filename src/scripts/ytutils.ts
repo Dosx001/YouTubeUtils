@@ -23,16 +23,7 @@ const ytutils = {
   isOptionHandle: null,
   player: document.querySelector<player>("#movie_player"),
   requestChange: () => {
-    ytutils.changeVideoQuality(
-      ytutils.quality ? ytutils.quality : "highress",
-      ytutils.speed,
-      ytutils.volume,
-      ytutils.volumelevel,
-      ytutils.youtubevideoautoplaybehavior,
-      ytutils.playlistvideoautoplaybehavior,
-      ytutils.autosubtitles,
-      ytutils.isOptionHandle
-    );
+    ytutils.changeVideoQuality();
     ytutils.changeVideoSize(ytutils.isOptionHandle);
     ytutils.expandVideoDescription(
       ytutils.autoexpanddescription,
@@ -196,16 +187,7 @@ const ytutils = {
       }
     } catch (e) { }
   },
-  changeVideoQuality: function(
-    quality,
-    speed,
-    volume,
-    volumelevel,
-    youtubevideoautoplaybehavior,
-    playlistvideoautoplaybehavior,
-    autosubtitles,
-    isOptionHandle
-  ) {
+  changeVideoQuality: () => {
     if (location.hostname.search(/youtube.com$/) !== -1) {
       ytutils.player?.addEventListener(
         "onStateChange",
@@ -216,13 +198,16 @@ const ytutils = {
       window.addEventListener("yt-navigate-finish", ytutils.onNavigateFinish);
       window.addEventListener("transitionend", ytutils.Slistener, true);
       if (document.location.pathname.indexOf("/embed") === 0) {
-        ytutils.checkI(quality);
+        ytutils.checkI(ytutils.quality);
       }
 
       if (document.location.pathname === "/watch") {
-        const currentvideoquality = quality;
-        const volumespeed = speed;
-        volumelevel = ytutils.getVolumeLevel(volume, volumelevel);
+        const currentvideoquality = ytutils.quality;
+        const volumespeed = ytutils.speed;
+        ytutils.volumelevel = ytutils.getVolumeLevel(
+          ytutils.volume,
+          ytutils.volumelevel
+        );
         try {
           ytutils.player.getPlayerState();
         } catch (e) {
@@ -230,16 +215,7 @@ const ytutils = {
             try {
               ytutils.player.getPlayerState();
               window.clearTimeout(ythderrinterval);
-              ytutils.changeVideoQuality(
-                quality,
-                speed,
-                volume,
-                volumelevel,
-                youtubevideoautoplaybehavior,
-                playlistvideoautoplaybehavior,
-                autosubtitles,
-                isOptionHandle
-              );
+              ytutils.changeVideoQuality();
             } catch (e) { }
           }, 25);
           return;
@@ -247,9 +223,9 @@ const ytutils = {
         const ythdinterval = window.setInterval(() => {
           if (ytutils.checkPlayerReady()) {
             if (currentvideoquality === "default") {
-              if (volumelevel !== "default") {
+              if (ytutils.volumelevel !== "default") {
                 ytutils.player.unMute();
-                ytutils.player.setVolume(volumelevel);
+                ytutils.player.setVolume(ytutils.volumelevel);
               }
               ytutils.player.setPlaybackQualityRange(
                 currentvideoquality,
@@ -257,9 +233,9 @@ const ytutils = {
               );
               ytutils.player.setPlaybackRate(parseFloat(volumespeed));
             } else {
-              if (volumelevel !== "default") {
+              if (ytutils.volumelevel !== "default") {
                 ytutils.player.unMute();
-                ytutils.player.setVolume(volumelevel);
+                ytutils.player.setVolume(ytutils.volumelevel);
               }
               ytutils.player.setPlaybackQualityRange(
                 currentvideoquality,
