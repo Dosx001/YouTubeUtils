@@ -156,7 +156,7 @@ const ytutils = {
       return false;
     }
   },
-  ythdonPlayerStateChange: (newState: number) => {
+  onPlayerStateChange: (newState: number) => {
     try {
       if (
         newState === -1 ||
@@ -186,7 +186,7 @@ const ytutils = {
     if (location.hostname.search(/youtube.com$/) !== -1) {
       ytutils.player?.addEventListener(
         "onStateChange",
-        ytutils.ythdonPlayerStateChange
+        ytutils.onPlayerStateChange
       );
       window.addEventListener("spfdone", ytutils.onSPFDone);
       window.addEventListener("yt-navigate-start", ytutils.onSPFDone);
@@ -321,8 +321,13 @@ window.onmessage = (ev: MessageEvent) => {
 
 window.addEventListener("spfdone", ytutils.onSPFDone);
 window.addEventListener("yt-navigate-start", ytutils.onSPFDone);
+if (window.onPlayerStateChange)
+  ytutils.player.removeEventListener(
+    "onStateChange",
+    ytutils.onPlayerStateChange
+  );
 
-const onYouTubePlayerReady = (player: player) => {
+window.onYouTubePlayerReady = (player: player) => {
   ytutils.player = player;
   const interval = window.setInterval(() => {
     if (document.location.pathname !== "/watch") {
@@ -334,18 +339,8 @@ const onYouTubePlayerReady = (player: player) => {
       if (player.getPlaybackQuality() === ytutils.getIntendedQuality()) {
         window.clearInterval(interval);
       }
-    } catch (e) {
+    } catch {
       window.clearInterval(interval);
     }
   }, 25);
 };
-
-try {
-  if (window.ythdonPlayerStateChange && ytutils.player.removeEventListener)
-    ytutils.player.removeEventListener(
-      "onStateChange",
-      ytutils.ythdonPlayerStateChange
-    );
-  if (window.onYouTubePlayerReady) window.onYouTubePlayerReady == null;
-  window.onYouTubePlayerReady = onYouTubePlayerReady;
-} catch (e) { }
