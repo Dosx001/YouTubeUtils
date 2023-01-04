@@ -24,12 +24,11 @@ const ytutils = {
   volume: null,
   volumelevel: null,
   youtubevideoautoplaybehavior: null,
-  isOptionHandle: null,
   player: document.querySelector<player>("#movie_player"),
   requestChange: () => {
     ytutils.changeVideoQuality();
     ytutils.changeVideoSize();
-    ytutils.expandVideoDescription(ytutils.isOptionHandle);
+    ytutils.expandVideoDescription();
     ytutils.enablesuggestedautoplay();
   },
   getIntendedQuality: () => {
@@ -88,7 +87,7 @@ const ytutils = {
         ?.click();
     }
   },
-  expandVideoDescription: (isOptionHandle: boolean) => {
+  expandVideoDescription: () => {
     if (document.location.pathname.search(/^\/watch/) !== 0) return;
     if (ytutils.autoexpanddescription) {
       if (document.getElementById("action-panel-details")) {
@@ -105,8 +104,6 @@ const ytutils = {
           document.querySelector<HTMLElement>("paper-button#more").click();
         }, 100);
       }
-    } else if (isOptionHandle) {
-      document.querySelector<HTMLElement>("paper-button#less").click();
     }
   },
   getVolumeLevel: () => {
@@ -129,7 +126,7 @@ const ytutils = {
   },
   onNavigateFinish: () => {
     window.setTimeout(() => {
-      ytutils.expandVideoDescription(null);
+      ytutils.expandVideoDescription();
     }, 1000);
   },
   checkPlayerReady: () => {
@@ -286,7 +283,6 @@ window.onmessage = (ev: MessageEvent) => {
       ytutils.suggestedautoplay = ev.data.suggestedautoplay;
       ytutils.autoexpanddescription = ev.data.autoexpanddescription;
       ytutils.autosubtitles = ev.data.autosubtitles;
-      ytutils.isOptionHandle = ev.data.isOptionHandle;
       ytutils.requestChange();
       break;
   }

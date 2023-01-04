@@ -10,7 +10,6 @@ interface settings {
   volume: string;
   volumelevel: string;
   youtubevideoautoplaybehavior: string;
-  isOptionHandle?: boolean;
 }
 
 const ytworker = {
@@ -30,7 +29,6 @@ const ytworker = {
         suggestedautoplay: data.suggestedautoplay,
         autoexpanddescription: data.autoexpanddescription,
         autosubtitles: data.autosubtitles,
-        isOptionHandle: data.isOptionHandle,
       },
       "*"
     );
