@@ -132,23 +132,6 @@ const ytutils = {
       ytutils.expandVideoDescription(null);
     }, 1000);
   },
-  scrollTo: () => {
-    let top = 0;
-    let node = document.querySelector<HTMLElement>("#page-manager");
-    do {
-      top += node.offsetTop;
-    } while ((node = node.offsetParent as HTMLElement));
-    if (!document.body.classList.contains("fullytpagesize")) top /= 2;
-    document.defaultView.scrollTo(0, top);
-  },
-  Slistener: (ev: TransitionEvent) => {
-    if (
-      ev.propertyName === "transform" &&
-      (ev.target as HTMLElement).id === "progress" &&
-      (ev.target as HTMLElement).style.transform === "scaleX(1)"
-    )
-      ytutils.scrollTo();
-  },
   checkPlayerReady: () => {
     try {
       return ytutils.player.getPlayerState() !== -1;
@@ -191,7 +174,6 @@ const ytutils = {
       window.addEventListener("spfdone", ytutils.onSPFDone);
       window.addEventListener("yt-navigate-start", ytutils.onSPFDone);
       window.addEventListener("yt-navigate-finish", ytutils.onNavigateFinish);
-      window.addEventListener("transitionend", ytutils.Slistener, true);
       if (document.location.pathname.indexOf("/embed") === 0) {
         ytutils.player.setPlaybackQualityRange(
           ytutils.quality,
