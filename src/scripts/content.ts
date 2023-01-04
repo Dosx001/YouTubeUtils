@@ -121,9 +121,6 @@ browser.runtime.onMessage.addListener((request) => {
     case "update_settings":
       ytworker.askQualitySize();
       break;
-    case "storage_answer":
-      ytworker.askQualitySize();
-      break;
   }
 });
 
