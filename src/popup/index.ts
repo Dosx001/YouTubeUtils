@@ -45,7 +45,7 @@ const updateSettings = async () => {
   }
 };
 
-browser.storage.sync.get((data: data) => {
+browser.storage.sync.get((data: settings) => {
   const [sel0, sel1, sel2] = document.querySelectorAll("select");
   sel0.value = data.quality;
   sel1.value = data.size;

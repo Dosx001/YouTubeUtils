@@ -1,15 +1,12 @@
-interface data {
+interface settings {
   autoexpanddescription: boolean;
   autosubtitles: string;
   embeddedvideoautoplaybehavior: string;
-  installed: boolean;
   playlistvideoautoplaybehavior: string;
   quality: string;
   size: string;
   speed: string;
   suggestedautoplay: boolean;
-  transition: boolean;
-  version: string;
   volume: string;
   volumelevel: string;
   youtubevideoautoplaybehavior: string;
@@ -19,7 +16,7 @@ interface data {
 const ytworker = {
   quality: null,
   size: null,
-  change: (data: data) => {
+  change: (data: settings) => {
     window.postMessage(
       { type: "FROM_CONTENT_SCRIPT_SET_VQ", text: data.quality },
       "*"
@@ -46,7 +43,7 @@ const ytworker = {
     );
   },
   askQualitySize: () => {
-    browser.storage.sync.get((data: data) => {
+    browser.storage.sync.get((data: settings) => {
       ytworker.change(data);
     });
   },
