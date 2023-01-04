@@ -1,36 +1,27 @@
 const updateSettings = async () => {
   const [sel0, sel1, sel2] = document.querySelectorAll("select");
-  const quality = sel0.options[sel0.selectedIndex].value;
-  const size = sel1.options[sel1.selectedIndex].value;
-  const speed = sel2.options[sel2.selectedIndex].value;
-  const volume = document.querySelector<HTMLInputElement>(
-    '#volume input[type="radio"][name="volume"]:checked'
-  ).value;
-  const volumelevel =
-    document.querySelector<HTMLInputElement>("#volumelevel").value;
-  const suggestedautoplay =
-    document.querySelector<HTMLInputElement>("#suggestedautoplay").checked;
-  const autoexpanddescription = document.querySelector<HTMLInputElement>(
-    "#autoexpanddescription"
-  ).checked;
-  const autosubtitles = document.querySelector<HTMLInputElement>(
-    '#autosubtitles input[type="radio"][name="autosubtitles"]:checked'
-  ).value;
   browser.storage.sync.set({
-    autoexpanddescription: autoexpanddescription,
-    autosubtitles: autosubtitles,
+    autoexpanddescription: document.querySelector<HTMLInputElement>(
+      "#autoexpanddescription"
+    ).checked,
+    autosubtitles: document.querySelector<HTMLInputElement>(
+      '#autosubtitles input[type="radio"][name="autosubtitles"]:checked'
+    ).value,
     embeddedvideoautoplaybehavior: document.querySelector<HTMLInputElement>(
       "#embeddedvideoautoplaybehavior"
     ).value,
     playlistvideoautoplaybehavior: document.querySelector<HTMLInputElement>(
       "#playlistvideoautoplaybehavior"
     ).value,
-    quality: quality,
-    size: size,
-    speed: speed,
-    suggestedautoplay: suggestedautoplay,
-    volume: volume,
-    volumelevel: volumelevel,
+    quality: sel0.options[sel0.selectedIndex].value,
+    size: sel1.options[sel1.selectedIndex].value,
+    speed: sel2.options[sel2.selectedIndex].value,
+    suggestedautoplay:
+      document.querySelector<HTMLInputElement>("#suggestedautoplay").checked,
+    volume: document.querySelector<HTMLInputElement>(
+      '#volume input[type="radio"][name="volume"]:checked'
+    ).value,
+    volumelevel: document.querySelector<HTMLInputElement>("#volumelevel").value,
     youtubevideoautoplaybehavior: document.querySelector<HTMLInputElement>(
       "#youtubevideoautoplaybehavior"
     ).value,
