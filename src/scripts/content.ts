@@ -121,8 +121,8 @@ document.addEventListener("DOMContentLoaded", ytworker.askQualitySize, false);
 
 browser.runtime.onMessage.addListener((request) => {
   switch (request.action) {
-    case "video_qualitysize_change":
-      ytworker.change(request);
+    case "update_settings":
+      ytworker.askQualitySize();
       break;
     case "storage_answer":
       ytworker.askQualitySize();

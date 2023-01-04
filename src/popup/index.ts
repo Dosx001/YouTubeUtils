@@ -16,43 +16,33 @@ const requestVideoQualitySizeChange = async () => {
   const autosubtitles = document.querySelector<HTMLInputElement>(
     '#autosubtitles input[type="radio"][name="autosubtitles"]:checked'
   ).value;
+  browser.storage.sync.set({
+    autoexpanddescription: autoexpanddescription,
+    autosubtitles: autosubtitles,
+    embeddedvideoautoplaybehavior: document.querySelector<HTMLInputElement>(
+      "#embeddedvideoautoplaybehavior"
+    ).value,
+    playlistvideoautoplaybehavior: document.querySelector<HTMLInputElement>(
+      "#playlistvideoautoplaybehavior"
+    ).value,
+    quality: quality,
+    size: size,
+    speed: speed,
+    suggestedautoplay: suggestedautoplay,
+    volume: volume,
+    volumelevel: volumelevel,
+    youtubevideoautoplaybehavior: document.querySelector<HTMLInputElement>(
+      "#youtubevideoautoplaybehavior"
+    ).value,
+  });
   for (const tab of await browser.tabs.query({
     active: true,
     currentWindow: true,
   })) {
     browser.tabs.sendMessage(tab.id, {
-      action: "video_qualitysize_change",
-      quality: quality,
-      size: size,
-      speed: speed,
-      volume: volume,
-      volumelevel: volumelevel,
-      suggestedautoplay: suggestedautoplay,
-      autoexpanddescription: autoexpanddescription,
-      autosubtitles: autosubtitles,
-      isOptionHandle: true,
+      action: "update_settings",
     });
   }
-  browser.runtime.sendMessage({
-    action: "qualitysize_save",
-    quality: quality,
-    size: size,
-    speed: speed,
-    volume: volume,
-    volumelevel: volumelevel,
-    suggestedautoplay: suggestedautoplay,
-    autoexpanddescription: autoexpanddescription,
-    autosubtitles: autosubtitles,
-    youtubevideoautoplaybehavior: document.querySelector<HTMLInputElement>(
-      "#youtubevideoautoplaybehavior"
-    ).value,
-    playlistvideoautoplaybehavior: document.querySelector<HTMLInputElement>(
-      "#playlistvideoautoplaybehavior"
-    ).value,
-    embeddedvideoautoplaybehavior: document.querySelector<HTMLInputElement>(
-      "#embeddedvideoautoplaybehavior"
-    ).value,
-  });
 };
 
 const askQualitySize = () => {
