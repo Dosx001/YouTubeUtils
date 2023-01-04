@@ -140,30 +140,27 @@ const ytutils = {
     }
   },
   onPlayerStateChange: (newState: number) => {
-    try {
-      if (
-        newState === -1 ||
-        ytutils.player.getPlaybackQuality() !== ytutils.getIntendedQuality()
-      ) {
-        const interval = window.setInterval(() => {
-          if (document.location.pathname !== "/watch") {
+    if (
+      newState === -1 ||
+      ytutils.player.getPlaybackQuality() !== ytutils.getIntendedQuality()
+    ) {
+      const interval = window.setInterval(() => {
+        if (document.location.pathname !== "/watch") {
+          window.clearInterval(interval);
+        }
+        try {
+          const quality = ytutils.getSetVideoQuality();
+          ytutils.player.setPlaybackQualityRange(quality, quality);
+          if (
+            ytutils.player.getPlaybackQuality() === ytutils.getIntendedQuality()
+          ) {
             window.clearInterval(interval);
           }
-          try {
-            const mxx = ytutils.getSetVideoQuality();
-            ytutils.player.setPlaybackQualityRange(mxx, mxx);
-            if (
-              ytutils.player.getPlaybackQuality() ===
-              ytutils.getIntendedQuality()
-            ) {
-              window.clearInterval(interval);
-            }
-          } catch (e) {
-            window.clearInterval(interval);
-          }
-        }, 25);
-      }
-    } catch (e) { }
+        } catch (e) {
+          window.clearInterval(interval);
+        }
+      }, 25);
+    }
   },
   changeVideoQuality: () => {
     if (location.hostname.search(/youtube.com$/) !== -1) {
@@ -188,11 +185,9 @@ const ytutils = {
           ytutils.player.getPlayerState();
         } catch (e) {
           const ythderrinterval = window.setInterval(() => {
-            try {
-              ytutils.player.getPlayerState();
-              window.clearTimeout(ythderrinterval);
-              ytutils.changeVideoQuality();
-            } catch (e) { }
+            ytutils.player.getPlayerState();
+            window.clearTimeout(ythderrinterval);
+            ytutils.changeVideoQuality();
           }, 25);
           return;
         }
