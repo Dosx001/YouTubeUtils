@@ -1,5 +1,4 @@
 const settings = {
-  annotationsoff: false,
   autoexpanddescription: true,
   autosubtitles: "default",
   embeddedvideoautoplaybehavior: "default",
@@ -30,7 +29,6 @@ browser.runtime.onMessage.addListener((request, sender) => {
       break;
     case "qualitysize_save":
       browser.storage.sync.set({
-        annotationsoff: request.annotationsoff,
         autoexpanddescription: request.autoexpanddescription,
         autosubtitles: request.autosubtitles,
         embeddedvideoautoplaybehavior: request.embeddedvideoautoplaybehavior,
@@ -60,16 +58,3 @@ browser.runtime.onMessage.addListener((request, sender) => {
       break;
   }
 });
-
-browser.webRequest.onBeforeRequest.addListener(
-  (details) =>
-    settings.annotationsoff
-      ? {
-        cancel:
-          details.url.indexOf("/annotations_invideo") !== -1 &&
-          details.url.indexOf("instream_ad") === -1,
-      }
-      : { cancel: false },
-  { urls: ["*://www.youtube.com/*"] },
-  ["blocking"]
-);

@@ -1,5 +1,4 @@
 interface data {
-  annotationsoff: boolean;
   autoexpanddescription: boolean;
   autosubtitles: string;
   embeddedvideoautoplaybehavior: string;

@@ -43,8 +43,6 @@ const requestVideoQualitySizeChange = async () => {
     suggestedautoplay: suggestedautoplay,
     autoexpanddescription: autoexpanddescription,
     autosubtitles: autosubtitles,
-    annotationsoff:
-      document.querySelector<HTMLInputElement>("#annotationsoff").checked,
     youtubevideoautoplaybehavior: document.querySelector<HTMLInputElement>(
       "#youtubevideoautoplaybehavior"
     ).value,
@@ -60,7 +58,6 @@ const requestVideoQualitySizeChange = async () => {
 const askQualitySize = () => {
   browser.storage.sync.get(
     (data: {
-      annotationsoff: boolean;
       autoexpanddescription: boolean;
       autosubtitles: string;
       embeddedvideoautoplaybehavior: string;
@@ -80,9 +77,6 @@ const askQualitySize = () => {
       sel0.onchange = () => requestVideoQualitySizeChange();
       sel1.onchange = () => requestVideoQualitySizeChange();
       sel2.onchange = () => requestVideoQualitySizeChange();
-      const anno = document.querySelector<HTMLInputElement>("#annotationsoff");
-      anno.checked = data.annotationsoff;
-      anno.addEventListener("change", requestVideoQualitySizeChange, true);
       document
         .getElementById("volume")
         .addEventListener("change", requestVideoQualitySizeChange, true);
