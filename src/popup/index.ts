@@ -45,73 +45,48 @@ const updateSettings = async () => {
   }
 };
 
-const askQualitySize = () => {
-  browser.storage.sync.get(
-    (data: {
-      autoexpanddescription: boolean;
-      autosubtitles: string;
-      embeddedvideoautoplaybehavior: string;
-      playlistvideoautoplaybehavior: string;
-      quality: string;
-      size: string;
-      speed: string;
-      suggestedautoplay: boolean;
-      volume: string;
-      volumelevel: string;
-      youtubevideoautoplaybehavior: string;
-    }) => {
-      const [sel0, sel1, sel2] = document.querySelectorAll("select");
-      sel0.value = data.quality;
-      sel1.value = data.size;
-      sel2.value = data.speed;
-      sel0.onchange = updateSettings;
-      sel1.onchange = updateSettings;
-      sel2.onchange = updateSettings;
-      document.getElementById("volume").onchange = updateSettings;
-      document.querySelector<HTMLInputElement>(`.vol_${data.volume}`).checked =
-        true;
-      const volLvl = document.querySelector<HTMLInputElement>("#volumelevel");
-      volLvl.value = data.volumelevel;
-      volLvl.onchange = updateSettings;
-      volLvl.onfocus = () =>
-        document.querySelector<HTMLInputElement>("#volumelevelinput").click();
-      const sug =
-        document.querySelector<HTMLInputElement>("#suggestedautoplay");
-      sug.checked = data.suggestedautoplay;
-      sug.onchange = updateSettings;
-      const expand = document.querySelector<HTMLInputElement>(
-        "#autoexpanddescription"
-      );
-      expand.checked = data.autoexpanddescription;
-      expand.addEventListener("change", updateSettings, true);
-      document.querySelector<HTMLSelectElement>("#autosubtitles").onchange =
-        updateSettings;
-      document
-        .querySelector<HTMLInputElement>(`.subt_${data.autosubtitles}`)
-        .click();
-      const autoplybehr = document.querySelector<HTMLSelectElement>(
-        "#youtubevideoautoplaybehavior"
-      );
-      autoplybehr.onchange = updateSettings;
-      autoplybehr.value = data.youtubevideoautoplaybehavior;
-      const playlist = document.querySelector<HTMLSelectElement>(
-        "#playlistvideoautoplaybehavior"
-      );
-      playlist.onchange = updateSettings;
-      playlist.value = data.playlistvideoautoplaybehavior;
-      const embedded = document.querySelector<HTMLSelectElement>(
-        "#embeddedvideoautoplaybehavior"
-      );
-      embedded.onchange = updateSettings;
-      embedded.value = data.embeddedvideoautoplaybehavior;
-    }
+browser.storage.sync.get((data: data) => {
+  const [sel0, sel1, sel2] = document.querySelectorAll("select");
+  sel0.value = data.quality;
+  sel1.value = data.size;
+  sel2.value = data.speed;
+  sel0.onchange = updateSettings;
+  sel1.onchange = updateSettings;
+  sel2.onchange = updateSettings;
+  document.getElementById("volume").onchange = updateSettings;
+  document.querySelector<HTMLInputElement>(`.vol_${data.volume}`).checked =
+    true;
+  const volLvl = document.querySelector<HTMLInputElement>("#volumelevel");
+  volLvl.value = data.volumelevel;
+  volLvl.onchange = updateSettings;
+  volLvl.onfocus = () =>
+    document.querySelector<HTMLInputElement>("#volumelevelinput").click();
+  const sug = document.querySelector<HTMLInputElement>("#suggestedautoplay");
+  sug.checked = data.suggestedautoplay;
+  sug.onchange = updateSettings;
+  const expand = document.querySelector<HTMLInputElement>(
+    "#autoexpanddescription"
   );
-};
-
-browser.runtime.onMessage.addListener((req) => {
-  if (req.action == "storage_answer_to_popup") {
-    askQualitySize();
-  }
+  expand.checked = data.autoexpanddescription;
+  expand.addEventListener("change", updateSettings, true);
+  document.querySelector<HTMLSelectElement>("#autosubtitles").onchange =
+    updateSettings;
+  document
+    .querySelector<HTMLInputElement>(`.subt_${data.autosubtitles}`)
+    .click();
+  const autoplybehr = document.querySelector<HTMLSelectElement>(
+    "#youtubevideoautoplaybehavior"
+  );
+  autoplybehr.onchange = updateSettings;
+  autoplybehr.value = data.youtubevideoautoplaybehavior;
+  const playlist = document.querySelector<HTMLSelectElement>(
+    "#playlistvideoautoplaybehavior"
+  );
+  playlist.onchange = updateSettings;
+  playlist.value = data.playlistvideoautoplaybehavior;
+  const embedded = document.querySelector<HTMLSelectElement>(
+    "#embeddedvideoautoplaybehavior"
+  );
+  embedded.onchange = updateSettings;
+  embedded.value = data.embeddedvideoautoplaybehavior;
 });
-
-document.addEventListener("DOMContentLoaded", () => askQualitySize(), false);
