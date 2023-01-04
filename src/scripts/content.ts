@@ -18,17 +18,10 @@ const ytworker = {
   size: null,
   change: (data: settings) => {
     window.postMessage(
-      { type: "FROM_CONTENT_SCRIPT_SET_VQ", text: data.quality },
-      "*"
-    );
-    window.postMessage(
-      { type: "FROM_CONTENT_SCRIPT_SET_VS", text: data.size },
-      "*"
-    );
-    window.postMessage(
       {
-        type: "FROM_CONTENT_SCRIPT_REQUEST_CHANGE",
-        id: browser.runtime.getURL(""),
+        type: "UPDATE_SETTINGS",
+        quality: data.quality,
+        size: data.size,
         speed: data.speed,
         volume: data.volume,
         volumelevel: data.volumelevel,

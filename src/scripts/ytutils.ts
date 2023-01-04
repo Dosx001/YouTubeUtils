@@ -278,13 +278,9 @@ const ytutils = {
 window.onmessage = (ev: MessageEvent) => {
   if (ev.source !== window && ev.data.type) return;
   switch (ev.data.type) {
-    case "FROM_CONTENT_SCRIPT_SET_VQ":
-      ytutils.quality = ev.data.text;
-      break;
-    case "FROM_CONTENT_SCRIPT_SET_VS":
-      ytutils.size = ev.data.text;
-      break;
-    case "FROM_CONTENT_SCRIPT_REQUEST_CHANGE":
+    case "UPDATE_SETTINGS":
+      ytutils.quality = ev.data.quality;
+      ytutils.size = ev.data.size;
       ytutils.volume = ev.data.volume;
       ytutils.speed = ev.data.speed;
       ytutils.volumelevel = ev.data.volumelevel;
