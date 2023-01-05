@@ -32,25 +32,19 @@ const ytutils = {
     ytutils.enablesuggestedautoplay();
   },
   getIntendedQuality: () => {
-    const currentvideoquality = ytutils.getVideoQuality();
-    if (currentvideoquality === "highres")
+    const quality = ytutils.getVideoQuality();
+    if (quality === "highres")
       return ytutils.player.getAvailableQualityLevels()[0];
-    if (
-      ytutils.player
-        .getAvailableQualityLevels()
-        .indexOf(currentvideoquality) === -1
-    )
+    if (ytutils.player.getAvailableQualityLevels().indexOf(quality) === -1)
       return ytutils.player.getAvailableQualityLevels()[0];
-    return currentvideoquality;
+    return quality;
   },
   getSetVideoQuality: () => {
-    const currentvideoquality = ytutils.getVideoQuality();
-    return currentvideoquality === "hd2160" &&
-      ytutils.player
-        .getAvailableQualityLevels()
-        .indexOf(currentvideoquality) === -1
+    const quality = ytutils.getVideoQuality();
+    return quality === "hd2160" &&
+      ytutils.player.getAvailableQualityLevels().indexOf(quality) === -1
       ? ytutils.player.getAvailableQualityLevels()[0]
-      : currentvideoquality;
+      : quality;
   },
   getVideoQuality: () =>
     ytutils.quality === "4k2160" ? "hd2160" : ytutils.quality,
@@ -175,7 +169,6 @@ const ytutils = {
         );
       }
       if (document.location.pathname === "/watch") {
-        const currentvideoquality = ytutils.quality;
         const volumespeed = ytutils.speed;
         ytutils.volumelevel = ytutils.getVolumeLevel();
         try {
@@ -190,14 +183,14 @@ const ytutils = {
         }
         const ythdinterval = window.setInterval(() => {
           if (ytutils.checkPlayerReady()) {
-            if (currentvideoquality === "default") {
+            if (ytutils.quality === "default") {
               if (ytutils.volumelevel !== "default") {
                 ytutils.player.unMute();
                 ytutils.player.setVolume(ytutils.volumelevel);
               }
               ytutils.player.setPlaybackQualityRange(
-                currentvideoquality,
-                currentvideoquality
+                ytutils.quality,
+                ytutils.quality
               );
               ytutils.player.setPlaybackRate(parseFloat(volumespeed));
             } else {
@@ -206,8 +199,8 @@ const ytutils = {
                 ytutils.player.setVolume(ytutils.volumelevel);
               }
               ytutils.player.setPlaybackQualityRange(
-                currentvideoquality,
-                currentvideoquality
+                ytutils.quality,
+                ytutils.quality
               );
               ytutils.player.setPlaybackRate(parseFloat(volumespeed));
             }
