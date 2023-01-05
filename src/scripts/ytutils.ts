@@ -152,7 +152,7 @@ const ytutils = {
   },
   changeVideoQuality: () => {
     if (location.hostname.search(/youtube.com$/) !== -1) {
-      ytutils.player?.addEventListener(
+      ytutils.player.addEventListener(
         "onStateChange",
         ytutils.onPlayerStateChange
       );
@@ -280,25 +280,14 @@ window.onmessage = (ev: MessageEvent) => {
 
 window.addEventListener("spfdone", ytutils.onSPFDone);
 window.addEventListener("yt-navigate-start", ytutils.onSPFDone);
-if (window.onPlayerStateChange)
-  ytutils.player.removeEventListener(
-    "onStateChange",
-    ytutils.onPlayerStateChange
-  );
 
-window.onYouTubePlayerReady = (player: player) => {
-  ytutils.player = player;
+window.onload = () => {
   const interval = window.setInterval(() => {
-    if (document.location.pathname !== "/watch") {
-      window.clearInterval(interval);
-    }
-    try {
-      const quality = ytutils.getSetVideoQuality();
-      player.setPlaybackQualityRange(quality, quality);
-      if (player.getPlaybackQuality() === ytutils.getIntendedQuality()) {
-        window.clearInterval(interval);
-      }
-    } catch {
+    if (document.location.pathname !== "/watch") window.clearInterval(interval);
+    const player = document.querySelector<player>("#movie_player");
+    if (player) {
+      ytutils.player = player;
+      ytutils.requestChange();
       window.clearInterval(interval);
     }
   }, 25);
