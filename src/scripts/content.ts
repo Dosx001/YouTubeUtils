@@ -33,39 +33,36 @@ const ytworker = {
       );
     });
   },
-  changeVideoQuality: () => {
-    if (location.hostname.search(/youtube.com$/) !== -1) {
-      const channel = document.getElementById("playnav-player");
-      if (channel) {
-        //need to remove listener here else it will create an infinite loop.
-        channel.removeEventListener(
-          "DOMNodeInserted",
-          ytworker.handleChannelChange,
-          true
-        );
-      }
-      const player = document.getElementById("movie_player");
-      if (player) {
-        const playerparentnode = player.parentNode;
-        playerparentnode.removeChild(player);
-        playerparentnode.insertBefore(
-          player.cloneNode(true),
-          player.nextSibling
-        );
-        if (channel) {
-          channel.addEventListener(
-            "DOMNodeInserted",
-            ytworker.handleChannelChange,
-            true
-          );
-        }
-      }
-    }
-  },
   handleChannelChange: (ev: Event) => {
     if ((ev.target as HTMLElement).nodeName == "EMBED")
       window.setTimeout(() => {
-        ytworker.changeVideoQuality();
+        if (location.hostname.search(/youtube.com$/) !== -1) {
+          const channel = document.getElementById("playnav-player");
+          if (channel) {
+            //need to remove listener here else it will create an infinite loop.
+            channel.removeEventListener(
+              "DOMNodeInserted",
+              ytworker.handleChannelChange,
+              true
+            );
+          }
+          const player = document.getElementById("movie_player");
+          if (player) {
+            const playerparentnode = player.parentNode;
+            playerparentnode.removeChild(player);
+            playerparentnode.insertBefore(
+              player.cloneNode(true),
+              player.nextSibling
+            );
+            if (channel) {
+              channel.addEventListener(
+                "DOMNodeInserted",
+                ytworker.handleChannelChange,
+                true
+              );
+            }
+          }
+        }
       }, 1);
   },
   addScript: () => {
