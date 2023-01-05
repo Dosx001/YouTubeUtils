@@ -113,10 +113,7 @@ const ytutils = {
     }
   },
   onSPFDone: () => {
-    window.postMessage(
-      { type: "FROM_PAGE_SCRIPT_REQUEST_CHANGE", text: "NULL" },
-      "*"
-    );
+    window.postMessage({ type: "GET_SETTINGS", text: "NULL" }, "*");
   },
   onNavigateFinish: () => {
     window.setTimeout(() => {

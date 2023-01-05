@@ -98,7 +98,7 @@ browser.runtime.onMessage.addListener((request) => {
 
 window.onmessage = (ev: MessageEvent) => {
   if (ev.source !== window) return;
-  if (ev.data?.type === "FROM_PAGE_SCRIPT_REQUEST_CHANGE") {
+  if (ev.data?.type === "GET_SETTINGS") {
     ytworker.askQualitySize();
   }
 };
