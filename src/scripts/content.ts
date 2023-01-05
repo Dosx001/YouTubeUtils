@@ -12,83 +12,46 @@ interface settings {
   youtubevideoautoplaybehavior: string;
 }
 
-const ytworker = {
-  askQualitySize: () => {
-    browser.storage.sync.get((data: settings) => {
-      window.postMessage(
-        {
-          type: "UPDATE_SETTINGS",
-          quality: data.quality,
-          size: data.size,
-          speed: data.speed,
-          volume: data.volume,
-          volumelevel: data.volumelevel,
-          youtubevideoautoplaybehavior: data.youtubevideoautoplaybehavior,
-          playlistvideoautoplaybehavior: data.playlistvideoautoplaybehavior,
-          suggestedautoplay: data.suggestedautoplay,
-          autoexpanddescription: data.autoexpanddescription,
-          autosubtitles: data.autosubtitles,
-        },
-        "*"
-      );
-    });
-  },
-  handleChannelChange: (ev: Event) => {
-    if ((ev.target as HTMLElement).nodeName == "EMBED")
-      window.setTimeout(() => {
-        if (location.hostname.search(/youtube.com$/) !== -1) {
-          const channel = document.getElementById("playnav-player");
-          if (channel) {
-            //need to remove listener here else it will create an infinite loop.
-            channel.removeEventListener(
-              "DOMNodeInserted",
-              ytworker.handleChannelChange,
-              true
-            );
-          }
-          const player = document.getElementById("movie_player");
-          if (player) {
-            const playerparentnode = player.parentNode;
-            playerparentnode.removeChild(player);
-            playerparentnode.insertBefore(
-              player.cloneNode(true),
-              player.nextSibling
-            );
-            if (channel) {
-              channel.addEventListener(
-                "DOMNodeInserted",
-                ytworker.handleChannelChange,
-                true
-              );
-            }
-          }
-        }
-      }, 1);
-  },
-  addScript: () => {
-    const s = document.createElement("script");
-    s.src = browser.runtime.getURL("scripts/ytutils.js");
-    s.id = "ytutils";
-    s.onload = () => {
-      document.getElementById("ytutils").remove();
-    };
-    (document.head || document.documentElement).appendChild(s);
-  },
+const sendSettings = () => {
+  browser.storage.sync.get((data: settings) => {
+    window.postMessage(
+      {
+        type: "UPDATE_SETTINGS",
+        quality: data.quality,
+        size: data.size,
+        speed: data.speed,
+        volume: data.volume,
+        volumelevel: data.volumelevel,
+        youtubevideoautoplaybehavior: data.youtubevideoautoplaybehavior,
+        playlistvideoautoplaybehavior: data.playlistvideoautoplaybehavior,
+        suggestedautoplay: data.suggestedautoplay,
+        autoexpanddescription: data.autoexpanddescription,
+        autosubtitles: data.autosubtitles,
+      },
+      "*"
+    );
+  });
 };
 
-ytworker.addScript();
+const s = document.createElement("script");
+s.src = browser.runtime.getURL("scripts/ytutils.js");
+s.id = "ytutils";
+s.onload = () => {
+  document.getElementById("ytutils").remove();
+};
+(document.head || document.documentElement).appendChild(s);
 
 //change to mutation event
 if (document.location.pathname.indexOf("/embed") !== 0) {
-  ytworker.askQualitySize();
+  sendSettings();
 }
 
-document.addEventListener("DOMContentLoaded", ytworker.askQualitySize, false);
+document.addEventListener("DOMContentLoaded", sendSettings, false);
 
 browser.runtime.onMessage.addListener((request) => {
   switch (request.action) {
     case "update_settings":
-      ytworker.askQualitySize();
+      sendSettings();
       break;
   }
 });
@@ -96,6 +59,6 @@ browser.runtime.onMessage.addListener((request) => {
 window.onmessage = (ev: MessageEvent) => {
   if (ev.source !== window) return;
   if (ev.data?.type === "GET_SETTINGS") {
-    ytworker.askQualitySize();
+    sendSettings();
   }
 };
