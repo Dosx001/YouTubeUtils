@@ -13,29 +13,24 @@ interface settings {
 }
 
 const ytworker = {
-  quality: null,
-  size: null,
-  change: (data: settings) => {
-    window.postMessage(
-      {
-        type: "UPDATE_SETTINGS",
-        quality: data.quality,
-        size: data.size,
-        speed: data.speed,
-        volume: data.volume,
-        volumelevel: data.volumelevel,
-        youtubevideoautoplaybehavior: data.youtubevideoautoplaybehavior,
-        playlistvideoautoplaybehavior: data.playlistvideoautoplaybehavior,
-        suggestedautoplay: data.suggestedautoplay,
-        autoexpanddescription: data.autoexpanddescription,
-        autosubtitles: data.autosubtitles,
-      },
-      "*"
-    );
-  },
   askQualitySize: () => {
     browser.storage.sync.get((data: settings) => {
-      ytworker.change(data);
+      window.postMessage(
+        {
+          type: "UPDATE_SETTINGS",
+          quality: data.quality,
+          size: data.size,
+          speed: data.speed,
+          volume: data.volume,
+          volumelevel: data.volumelevel,
+          youtubevideoautoplaybehavior: data.youtubevideoautoplaybehavior,
+          playlistvideoautoplaybehavior: data.playlistvideoautoplaybehavior,
+          suggestedautoplay: data.suggestedautoplay,
+          autoexpanddescription: data.autoexpanddescription,
+          autosubtitles: data.autosubtitles,
+        },
+        "*"
+      );
     });
   },
   changeVideoQuality: () => {
@@ -51,20 +46,6 @@ const ytworker = {
       }
       const player = document.getElementById("movie_player");
       if (player) {
-        let flashvars = player.getAttribute("flashvars");
-        const delimit = "&vq";
-        if (flashvars.indexOf(delimit) === -1) {
-          flashvars += `${delimit}=${ytworker.quality}`;
-        } else {
-          const splitarray = flashvars.split(delimit);
-          const result = splitarray[1].indexOf("&");
-          flashvars =
-            result !== -1
-              ? `${splitarray[0]}${delimit}=${ytworker.quality
-              }${splitarray[1].substring(result)}`
-              : `${splitarray[0]}${delimit}=${ytworker.quality}`;
-        }
-        player.setAttribute("flashvars", flashvars);
         const playerparentnode = player.parentNode;
         playerparentnode.removeChild(player);
         playerparentnode.insertBefore(
