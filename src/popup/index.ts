@@ -1,4 +1,4 @@
-const [sel0, sel1, sel2] = document.querySelectorAll("select");
+const [quality, size, speed] = document.querySelectorAll("select");
 const volLvl = document.querySelector<HTMLInputElement>("#volumelevel");
 const autoexpand = document.querySelector<HTMLInputElement>(
   "#autoexpanddescription"
@@ -22,9 +22,9 @@ const updateSettings = async () => {
     ).value,
     embeddedvideoautoplaybehavior: embedded.value,
     playlistvideoautoplaybehavior: playlist.value,
-    quality: sel0.options[sel0.selectedIndex].value,
-    size: sel1.options[sel1.selectedIndex].value,
-    speed: sel2.options[sel2.selectedIndex].value,
+    quality: quality.options[quality.selectedIndex].value,
+    size: size.options[size.selectedIndex].value,
+    speed: speed.options[speed.selectedIndex].value,
     suggestedautoplay: sugguest.checked,
     volume: document.querySelector<HTMLInputElement>(
       '#volume input[type="radio"][name="volume"]:checked'
@@ -43,12 +43,12 @@ const updateSettings = async () => {
 };
 
 browser.storage.sync.get((data: settings) => {
-  sel0.value = data.quality;
-  sel1.value = data.size;
-  sel2.value = data.speed;
-  sel0.onchange = updateSettings;
-  sel1.onchange = updateSettings;
-  sel2.onchange = updateSettings;
+  quality.value = data.quality;
+  size.value = data.size;
+  speed.value = data.speed;
+  quality.onchange = updateSettings;
+  size.onchange = updateSettings;
+  speed.onchange = updateSettings;
   document.getElementById("volume").onchange = updateSettings;
   document.querySelector<HTMLInputElement>(`.vol_${data.volume}`).checked =
     true;
