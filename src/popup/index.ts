@@ -24,12 +24,12 @@ const updateSettings = async () => {
     playlistvideoautoplaybehavior: playlist.value,
     quality: quality.options[quality.selectedIndex].value,
     size: size.options[size.selectedIndex].value,
-    speed: speed.options[speed.selectedIndex].value,
+    speed: Number(speed.options[speed.selectedIndex].value),
     suggestedautoplay: sugguest.checked,
     volume: document.querySelector<HTMLInputElement>(
       '#volume input[type="radio"][name="volume"]:checked'
     ).value,
-    volumelevel: volLvl.value,
+    volumelevel: Number(volLvl.value),
     youtubevideoautoplaybehavior: autoplay.value,
   });
   for (const tab of await browser.tabs.query({
@@ -60,10 +60,10 @@ autoexpand.onchange = updateSettings;
 browser.storage.sync.get((data: settings) => {
   quality.value = data.quality;
   size.value = data.size;
-  speed.value = data.speed;
+  speed.value = data.speed.toString();
   document.querySelector<HTMLInputElement>(`.vol_${data.volume}`).checked =
     true;
-  volLvl.value = data.volumelevel;
+  volLvl.value = data.volumelevel.toString();
   sugguest.checked = data.suggestedautoplay;
   autoexpand.checked = data.autoexpanddescription;
   document

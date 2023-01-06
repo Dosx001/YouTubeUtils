@@ -5,10 +5,10 @@ interface settings {
   playlistvideoautoplaybehavior: string;
   quality: string;
   size: string;
-  speed: string;
+  speed: number;
   suggestedautoplay: boolean;
   volume: string;
-  volumelevel: string;
+  volumelevel: number;
   youtubevideoautoplaybehavior: string;
 }
 

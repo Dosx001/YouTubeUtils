@@ -5,7 +5,7 @@ const settings = {
   playlistvideoautoplaybehavior: "default",
   quality: "highres",
   size: "expand",
-  speed: "1",
+  speed: 1,
   suggestedautoplay: true,
   volume: "default",
   volumelevel: 100,

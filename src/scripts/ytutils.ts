@@ -5,7 +5,7 @@ interface player extends HTMLElement {
   getPlayerState: () => number;
   setPlaybackQualityRange: (min: string, max: string) => void;
   setPlaybackRate: (rate: number) => void;
-  setVolume: (number: string) => void;
+  setVolume: (level: number) => void;
   unMute: () => void;
 }
 
@@ -14,16 +14,17 @@ interface flexy extends HTMLElement {
 }
 
 const ytutils = {
-  autoexpanddescription: null,
-  autosubtitles: null,
-  playlistvideoautoplaybehavior: null,
-  quality: null,
-  size: null,
-  speed: null,
-  suggestedautoplay: null,
-  volume: null,
-  volumelevel: null,
-  youtubevideoautoplaybehavior: null,
+  autoexpanddescription: true,
+  autosubtitles: "default",
+  embeddedvideoautoplaybehavior: "default",
+  playlistvideoautoplaybehavior: "default",
+  quality: "highres",
+  size: "expand",
+  speed: 1,
+  suggestedautoplay: true,
+  volume: "default",
+  volumelevel: 100,
+  youtubevideoautoplaybehavior: "default",
   player: document.querySelector<player>("#movie_player"),
   requestChange: () => {
     ytutils.changeVideoQuality();
@@ -106,7 +107,7 @@ const ytutils = {
         return "default";
       case "mute":
         return 0;
-      case "100%":
+      case "100":
         return 100;
       default:
         return ytutils.volumelevel;
@@ -167,7 +168,6 @@ const ytutils = {
       }
       if (document.location.pathname === "/watch") {
         const volumespeed = ytutils.speed;
-        ytutils.volumelevel = ytutils.getVolumeLevel();
         try {
           ytutils.player.getPlayerState();
         } catch (e) {
@@ -181,7 +181,7 @@ const ytutils = {
         const ythdinterval = window.setInterval(() => {
           if (ytutils.checkPlayerReady()) {
             if (ytutils.quality === "default") {
-              if (ytutils.volumelevel !== "default") {
+              if (ytutils.volume !== "default") {
                 ytutils.player.unMute();
                 ytutils.player.setVolume(ytutils.volumelevel);
               }
@@ -189,17 +189,18 @@ const ytutils = {
                 ytutils.quality,
                 ytutils.quality
               );
-              ytutils.player.setPlaybackRate(parseFloat(volumespeed));
+              ytutils.player.setPlaybackRate(volumespeed);
             } else {
-              if (ytutils.volumelevel !== "default") {
+              const volume = ytutils.getVolumeLevel();
+              if (volume !== "default") {
                 ytutils.player.unMute();
-                ytutils.player.setVolume(ytutils.volumelevel);
+                ytutils.player.setVolume(volume);
               }
               ytutils.player.setPlaybackQualityRange(
                 ytutils.quality,
                 ytutils.quality
               );
-              ytutils.player.setPlaybackRate(parseFloat(volumespeed));
+              ytutils.player.setPlaybackRate(volumespeed);
             }
             window.clearInterval(ythdinterval);
           }
