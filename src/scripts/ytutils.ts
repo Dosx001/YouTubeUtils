@@ -128,85 +128,17 @@ const ytutils = {
       return false;
     }
   },
-  onPlayerStateChange: (newState: number) => {
-    if (
-      newState === -1 ||
-      ytutils.player.getPlaybackQuality() !== ytutils.getIntendedQuality()
-    ) {
-      const interval = window.setInterval(() => {
-        if (document.location.pathname !== "/watch") {
-          window.clearInterval(interval);
-        }
-        try {
-          const quality = ytutils.getSetVideoQuality();
-          ytutils.player.setPlaybackQualityRange(quality, quality);
-          if (
-            ytutils.player.getPlaybackQuality() === ytutils.getIntendedQuality()
-          ) {
-            window.clearInterval(interval);
-          }
-        } catch (e) {
-          window.clearInterval(interval);
-        }
-      }, 25);
-    }
-  },
   changeVideoQuality: () => {
-    if (location.hostname.search(/youtube.com$/) !== -1) {
-      ytutils.player.addEventListener(
-        "onStateChange",
-        ytutils.onPlayerStateChange
-      );
-      window.addEventListener("spfdone", ytutils.onSPFDone);
-      window.addEventListener("yt-navigate-start", ytutils.onSPFDone);
-      window.addEventListener("yt-navigate-finish", ytutils.onNavigateFinish);
-      if (document.location.pathname.indexOf("/embed") === 0) {
-        ytutils.player.setPlaybackQualityRange(
-          ytutils.quality,
-          ytutils.quality
-        );
-      }
-      if (document.location.pathname === "/watch") {
-        const volumespeed = ytutils.speed;
-        try {
-          ytutils.player.getPlayerState();
-        } catch (e) {
-          const ythderrinterval = window.setInterval(() => {
-            ytutils.player.getPlayerState();
-            window.clearTimeout(ythderrinterval);
-            ytutils.changeVideoQuality();
-          }, 25);
-          return;
-        }
-        const ythdinterval = window.setInterval(() => {
-          if (ytutils.checkPlayerReady()) {
-            if (ytutils.quality === "default") {
-              if (ytutils.volume !== "default") {
-                ytutils.player.unMute();
-                ytutils.player.setVolume(ytutils.volumelevel);
-              }
-              ytutils.player.setPlaybackQualityRange(
-                ytutils.quality,
-                ytutils.quality
-              );
-              ytutils.player.setPlaybackRate(volumespeed);
-            } else {
-              const volume = ytutils.getVolumeLevel();
-              if (volume !== "default") {
-                ytutils.player.unMute();
-                ytutils.player.setVolume(volume);
-              }
-              ytutils.player.setPlaybackQualityRange(
-                ytutils.quality,
-                ytutils.quality
-              );
-              ytutils.player.setPlaybackRate(volumespeed);
-            }
-            window.clearInterval(ythdinterval);
-          }
-        }, 50);
-      }
+    if (ytutils.quality !== "default") {
+      const quality = ytutils.getIntendedQuality();
+      ytutils.player.setPlaybackQualityRange(quality, quality);
     }
+    const volume = ytutils.getVolumeLevel();
+    if (volume !== "default") {
+      ytutils.player.unMute();
+      ytutils.player.setVolume(volume);
+    }
+    ytutils.player.setPlaybackRate(ytutils.speed);
   },
   changeVideoSize: () => {
     if (
@@ -281,6 +213,7 @@ window.onmessage = (ev: MessageEvent) => {
 
 window.addEventListener("spfdone", ytutils.onSPFDone);
 window.addEventListener("yt-navigate-start", ytutils.onSPFDone);
+window.addEventListener("yt-navigate-finish", ytutils.onNavigateFinish);
 
 window.onload = () => {
   const interval = window.setInterval(() => {
@@ -289,6 +222,11 @@ window.onload = () => {
     if (player) {
       ytutils.player = player;
       ytutils.requestChange();
+      ytutils.player.addEventListener("onStateChange", (state: number) => {
+        if (state === -1) {
+          ytutils.requestChange();
+        }
+      });
       window.clearInterval(interval);
     }
   }, 25);
