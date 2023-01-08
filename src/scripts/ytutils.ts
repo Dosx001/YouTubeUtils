@@ -203,18 +203,16 @@ window.addEventListener("yt-navigate-start", ytutils.onSPFDone);
 window.addEventListener("yt-navigate-finish", ytutils.onNavigateFinish);
 
 window.onload = () => {
-  const interval = window.setInterval(() => {
-    if (document.location.pathname !== "/watch") window.clearInterval(interval);
+  const id = setInterval(() => {
     const player = document.querySelector<player>("#movie_player");
     if (player) {
       ytutils.player = player;
       ytutils.requestChange();
       ytutils.player.addEventListener("onStateChange", (state: number) => {
-        if (state === -1) {
-          ytutils.requestChange();
-        }
+        if (state === -1) ytutils.requestChange();
       });
-      window.clearInterval(interval);
+      clearInterval(id);
     }
   }, 25);
+  if (document.location.pathname !== "/watch") clearInterval(id);
 };
