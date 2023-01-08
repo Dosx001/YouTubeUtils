@@ -25,7 +25,7 @@ const ytutils = {
   volume: "default",
   volumelevel: 100,
   youtubevideoautoplaybehavior: "default",
-  player: document.querySelector<player>("#movie_player"),
+  player: document.querySelector<player>("#movie_player")!,
   requestChange: () => {
     ytutils.changeVideoQuality();
     ytutils.changeVideoSize();
@@ -87,16 +87,16 @@ const ytutils = {
     if (ytutils.autoexpanddescription) {
       if (document.getElementById("action-panel-details")) {
         document
-          .getElementById("action-panel-details")
+          .getElementById("action-panel-details")!
           .classList.remove("yt-uix-expander-collapsed");
       }
       if (document.querySelector("paper-button#more")) {
-        document.querySelector<HTMLElement>("paper-button#more").click();
+        document.querySelector<HTMLElement>("paper-button#more")!.click();
       } else {
-        const interwal = document.defaultView.setInterval(() => {
+        const interwal = document.defaultView!.setInterval(() => {
           if (!document.querySelector("paper-button#more")) return;
-          document.defaultView.clearInterval(interwal);
-          document.querySelector<HTMLElement>("paper-button#more").click();
+          document.defaultView!.clearInterval(interwal);
+          document.querySelector<HTMLElement>("paper-button#more")!.click();
         }, 100);
       }
     }

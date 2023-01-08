@@ -37,7 +37,7 @@ const s = document.createElement("script");
 s.src = browser.runtime.getURL("scripts/ytutils.js");
 s.id = "ytutils";
 s.onload = () => {
-  document.getElementById("ytutils").remove();
+  document.getElementById("ytutils")!.remove();
 };
 (document.head || document.documentElement).appendChild(s);
 

@@ -1,25 +1,26 @@
-const [quality, size, speed] = document.querySelectorAll("select");
-const volLvl = document.querySelector<HTMLInputElement>("#volumelevel");
+const [quality, size, speed] = document.querySelectorAll("select")!;
+const volLvl = document.querySelector<HTMLInputElement>("#volumelevel")!;
 const autoexpand = document.querySelector<HTMLInputElement>(
   "#autoexpanddescription"
-);
+)!;
 const embedded = document.querySelector<HTMLSelectElement>(
   "#embeddedvideoautoplaybehavior"
-);
+)!;
 const playlist = document.querySelector<HTMLSelectElement>(
   "#playlistvideoautoplaybehavior"
-);
+)!;
 const autoplay = document.querySelector<HTMLSelectElement>(
   "#youtubevideoautoplaybehavior"
-);
-const sugguest = document.querySelector<HTMLInputElement>("#suggestedautoplay");
+)!;
+const sugguest =
+  document.querySelector<HTMLInputElement>("#suggestedautoplay")!;
 
 const updateSettings = async () => {
   browser.storage.sync.set({
     autoexpanddescription: autoexpand.checked,
     autosubtitles: document.querySelector<HTMLInputElement>(
       '#autosubtitles input[type="radio"][name="autosubtitles"]:checked'
-    ).value,
+    )!.value,
     embeddedvideoautoplaybehavior: embedded.value,
     playlistvideoautoplaybehavior: playlist.value,
     quality: quality.options[quality.selectedIndex].value,
@@ -28,7 +29,7 @@ const updateSettings = async () => {
     suggestedautoplay: sugguest.checked,
     volume: document.querySelector<HTMLInputElement>(
       '#volume input[type="radio"][name="volume"]:checked'
-    ).value,
+    )!.value,
     volumelevel: Number(volLvl.value),
     youtubevideoautoplaybehavior: autoplay.value,
   });
@@ -36,17 +37,17 @@ const updateSettings = async () => {
     active: true,
     currentWindow: true,
   })) {
-    browser.tabs.sendMessage(tab.id, {
+    browser.tabs.sendMessage(tab.id!, {
       action: "update_settings",
     });
   }
 };
 
-document.getElementById("volume").onchange = updateSettings;
+document.getElementById("volume")!.onchange = updateSettings;
 volLvl.onchange = updateSettings;
 volLvl.onfocus = () =>
-  document.querySelector<HTMLInputElement>("#volumelevelinput").click();
-document.querySelector<HTMLSelectElement>("#autosubtitles").onchange =
+  document.querySelector<HTMLInputElement>("#volumelevelinput")!.click();
+document.querySelector<HTMLSelectElement>("#autosubtitles")!.onchange =
   updateSettings;
 quality.onchange = updateSettings;
 size.onchange = updateSettings;
@@ -61,13 +62,13 @@ browser.storage.sync.get((data: settings) => {
   quality.value = data.quality;
   size.value = data.size;
   speed.value = data.speed.toString();
-  document.querySelector<HTMLInputElement>(`.vol_${data.volume}`).checked =
+  document.querySelector<HTMLInputElement>(`.vol_${data.volume}`)!.checked =
     true;
   volLvl.value = data.volumelevel.toString();
   sugguest.checked = data.suggestedautoplay;
   autoexpand.checked = data.autoexpanddescription;
   document
-    .querySelector<HTMLInputElement>(`.subt_${data.autosubtitles}`)
+    .querySelector<HTMLInputElement>(`.subt_${data.autosubtitles}`)!
     .click();
   autoplay.value = data.youtubevideoautoplaybehavior;
   playlist.value = data.playlistvideoautoplaybehavior;
