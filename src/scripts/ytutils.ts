@@ -142,51 +142,38 @@ const ytutils = {
   },
   changeVideoSize: () => {
     if (
-      document.getElementById("playnav-player") ||
+      ytutils.size === "default" ||
       document.location.pathname.search(/^\/watch/) !== 0
     )
       return;
-    switch (ytutils.size) {
-      case "expand": {
-        const id = setInterval(() => {
-          const flexy = document.querySelector<flexy>("ytd-watch-flexy");
-          if (flexy) {
+    const id = setInterval(() => {
+      const flexy = document.querySelector<flexy>("ytd-watch-flexy");
+      if (flexy) {
+        clearInterval(id);
+        switch (ytutils.size) {
+          case "expand":
             flexy.theaterModeChanged_(true);
-            clearInterval(id);
-          }
-        }, 100);
-        break;
-      }
-      // case "chat": {
-      //   const outer = setInterval(() => {
-      //     const flexy = document.querySelector("ytd-watch-flexy");
-      //     if (flexy) {
-      //       clearInterval(outer);
-      //       let conut = 0;
-      //       const inner = setInterval(() => {
-      //         if (document.querySelector("#chat")) {
-      //           flexy.theaterModeChanged_(false);
-      //           clearInterval(inner);
-      //         }
-      //         if (conut++ === 20) {
-      //           flexy.theaterModeChanged_(true);
-      //           clearInterval(inner);
-      //         }
-      //       }, 100);
-      //     }
-      //   }, 100);
-      //   break;
-      // }
-      default: {
-        const id = setInterval(() => {
-          const flexy = document.querySelector<flexy>("ytd-watch-flexy");
-          if (flexy) {
+            break;
+          case "shrink":
             flexy.theaterModeChanged_(false);
-            clearInterval(id);
+            break;
+          case "chat": {
+            let conut = 0;
+            const id = setInterval(() => {
+              flexy.theaterModeChanged_(
+                !document
+                  .querySelector("#show-hide-button")
+                  ?.querySelector("button")
+              );
+              if (conut++ === 40) {
+                clearInterval(id);
+              }
+            }, 50);
+            break;
           }
-        }, 100);
+        }
       }
-    }
+    }, 100);
   },
 };
 
