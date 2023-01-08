@@ -6,6 +6,8 @@ interface player extends HTMLElement {
   setPlaybackQualityRange: (min: string, max: string) => void;
   setPlaybackRate: (rate: number) => void;
   setVolume: (level: number) => void;
+  toggleSubtitles: () => void;
+  toggleSubtitlesOn: () => void;
   unMute: () => void;
 }
 
@@ -15,7 +17,7 @@ interface flexy extends HTMLElement {
 
 const ytutils = {
   autoexpanddescription: true,
-  autosubtitles: "default",
+  subtitles: "default",
   embeddedvideoautoplaybehavior: "default",
   playlistvideoautoplaybehavior: "default",
   quality: "highres",
@@ -29,8 +31,14 @@ const ytutils = {
   requestChange: () => {
     ytutils.changeVideoQuality();
     ytutils.changeVideoSize();
+    ytutils.setSubtitles();
     ytutils.expandVideoDescription();
     ytutils.enablesuggestedautoplay();
+  },
+  setSubtitles: () => {
+    if (ytutils.subtitles === "default") return;
+    ytutils.player.toggleSubtitlesOn();
+    if (ytutils.subtitles === "off") ytutils.player.toggleSubtitles();
   },
   getIntendedQuality: () => {
     const quality = ytutils.getVideoQuality();
@@ -61,7 +69,7 @@ const ytutils = {
   getYoutubeVideoAutoPlayBehavior: () => {
     switch (ytutils.youtubevideoautoplaybehavior) {
       case "default":
-      case "autosubtitles":
+      case "subtitles":
         return true;
       case "autopause":
         return false;
@@ -192,7 +200,7 @@ window.onmessage = (ev: MessageEvent) => {
         ev.data.playlistvideoautoplaybehavior;
       ytutils.suggestedautoplay = ev.data.suggestedautoplay;
       ytutils.autoexpanddescription = ev.data.autoexpanddescription;
-      ytutils.autosubtitles = ev.data.autosubtitles;
+      ytutils.subtitles = ev.data.subtitles;
       ytutils.requestChange();
       break;
   }

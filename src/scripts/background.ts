@@ -2,7 +2,7 @@ browser.storage.sync.get((data: settings) => {
   if (Object.keys(data).length === 0)
     browser.storage.sync.set({
       autoexpanddescription: true,
-      autosubtitles: "default",
+      subtitles: "default",
       embeddedvideoautoplaybehavior: "default",
       playlistvideoautoplaybehavior: "default",
       quality: "highres",

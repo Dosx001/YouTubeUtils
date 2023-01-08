@@ -1,6 +1,6 @@
 interface settings {
   autoexpanddescription: boolean;
-  autosubtitles: string;
+  subtitles: string;
   embeddedvideoautoplaybehavior: string;
   playlistvideoautoplaybehavior: string;
   quality: string;
@@ -26,7 +26,7 @@ const sendSettings = () => {
         playlistvideoautoplaybehavior: data.playlistvideoautoplaybehavior,
         suggestedautoplay: data.suggestedautoplay,
         autoexpanddescription: data.autoexpanddescription,
-        autosubtitles: data.autosubtitles,
+        subtitles: data.subtitles,
       },
       "*"
     );

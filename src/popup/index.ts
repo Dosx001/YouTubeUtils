@@ -18,8 +18,8 @@ const sugguest =
 const updateSettings = async () => {
   browser.storage.sync.set({
     autoexpanddescription: autoexpand.checked,
-    autosubtitles: document.querySelector<HTMLInputElement>(
-      '#autosubtitles input[type="radio"][name="autosubtitles"]:checked'
+    subtitles: document.querySelector<HTMLInputElement>(
+      '#subtitles input[type="radio"][name="subtitles"]:checked'
     )!.value,
     embeddedvideoautoplaybehavior: embedded.value,
     playlistvideoautoplaybehavior: playlist.value,
@@ -47,7 +47,7 @@ document.getElementById("volume")!.onchange = updateSettings;
 volLvl.onchange = updateSettings;
 volLvl.onfocus = () =>
   document.querySelector<HTMLInputElement>("#volumelevelinput")!.click();
-document.querySelector<HTMLSelectElement>("#autosubtitles")!.onchange =
+document.querySelector<HTMLSelectElement>("#subtitles")!.onchange =
   updateSettings;
 quality.onchange = updateSettings;
 size.onchange = updateSettings;
@@ -67,9 +67,7 @@ browser.storage.sync.get((data: settings) => {
   volLvl.value = data.volumelevel.toString();
   sugguest.checked = data.suggestedautoplay;
   autoexpand.checked = data.autoexpanddescription;
-  document
-    .querySelector<HTMLInputElement>(`.subt_${data.autosubtitles}`)!
-    .click();
+  document.querySelector<HTMLInputElement>(`.subt_${data.subtitles}`)!.click();
   autoplay.value = data.youtubevideoautoplaybehavior;
   playlist.value = data.playlistvideoautoplaybehavior;
   embedded.value = data.embeddedvideoautoplaybehavior;
