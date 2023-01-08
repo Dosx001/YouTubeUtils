@@ -41,22 +41,12 @@ const ytutils = {
     if (ytutils.subtitles === "off") ytutils.player.toggleSubtitles();
   },
   getIntendedQuality: () => {
-    const quality = ytutils.getVideoQuality();
-    if (quality === "highres")
-      return ytutils.player.getAvailableQualityLevels()[0];
-    if (ytutils.player.getAvailableQualityLevels().indexOf(quality) === -1)
-      return ytutils.player.getAvailableQualityLevels()[0];
-    return quality;
+    const qualities = ytutils.player.getAvailableQualityLevels();
+    return ytutils.quality === "highres" ||
+      qualities.indexOf(ytutils.quality) === -1
+      ? qualities[0]
+      : ytutils.quality;
   },
-  getSetVideoQuality: () => {
-    const quality = ytutils.getVideoQuality();
-    return quality === "hd2160" &&
-      ytutils.player.getAvailableQualityLevels().indexOf(quality) === -1
-      ? ytutils.player.getAvailableQualityLevels()[0]
-      : quality;
-  },
-  getVideoQuality: () =>
-    ytutils.quality === "4k2160" ? "hd2160" : ytutils.quality,
   getPlaylistVideoAutoPlayBehavior: () => {
     switch (ytutils.playlistvideoautoplaybehavior) {
       case "default":
