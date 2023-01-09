@@ -9,108 +9,74 @@
 </head>
 
 <body>
-  <div id="popup">
-    <div class="optiondiv">
-      <fieldset>
-        <legend>Video Quality</legend>
-        <div class="wrapper">
-          <select>
-            <option value="highres">Highres</option>
-            <option value="hd2160">4K 2160p</option>
-            <option value="hd1440">HD 1440p</option>
-            <option value="hd1080">HD 1080p</option>
-            <option value="hd720">720p</option>
-            <option value="large">Large</option>
-            <option value="medium">Medium</option>
-            <option value="small">Small</option>
-            <option value="tiny">Tiny</option>
-            <option value="default">Default</option>
-          </select>
-        </div>
-      </fieldset>
-    </div>
-    <div class="optiondiv">
-      <fieldset>
-        <legend>Video Size</legend>
-        <div class="wrapper">
-          <select>
-            <option value="expand">Expand</option>
-            <option value="shrink">Shrink</option>
-            <option value="chat">Show Chat</option>
-            <option value="default">Default</option>
-          </select>
-        </div>
-      </fieldset>
-    </div>
-    <div class="optiondiv">
-      <fieldset>
-        <legend>Video Speed</legend>
-        <div class="wrapper">
-          <select>
-            <option value="2">2</option>
-            <option value="1.5">1.5</option>
-            <option value="1.25">1.25</option>
-            <option value="1">Normal</option>
-            <option value="0.75">0.75</option>
-            <option value="0.5">0.5</option>
-            <option value="0.25">0.25</option>
-          </select>
-        </div>
-      </fieldset>
-    </div>
-    <div class="optiondiv">
-      <fieldset>
-        <legend>Volume</legend>
-        <div class="wrapper">
-          <form id="volume" style="margin-bottom: 0px">
-            <div style="margin-bottom: 10px">
-              <div style="float: left; margin-right: 10px">
-                <input type="radio" name="volume" class="vol_default" value="default" />
-                Default
-                <br />
-              </div>
-              <div style="float: left; margin-right: 10px">
-                <input type="radio" name="volume" class="vol_mute" value="mute" />
-                Mute
-                <br />
-              </div>
-              <div>
-                <input type="radio" name="volume" class="vol_100" value="100" />
-                100%
-              </div>
-            </div>
-            <div style="clear: both">
-              <input type="radio" name="volume" class="vol_volumelevel" value="volumelevel" id="volumelevelinput" />
-              Volume Level
-              <input style="margin-left: 10px !important" id="volumelevel" type="number" step="1" min="0" max="100" />
-            </div>
-          </form>
-        </div>
-      </fieldset>
-    </div>
-    <div class="optiondiv">
-      <fieldset>
-        <legend>Auto Play</legend>
-        <div class="wrapper">
-          <select id="autoplay">
-            <option value="default">Default</option>
-            <option value="on">On</option>
-            <option value="off">Off</option>
-          </select>
-        </div>
-      </fieldset>
-    </div>
-    <div class="optiondiv">
-      <fieldset>
-        <legend>Auto Subtitles/Closed Captions (CC)</legend>
-        <select id="subtitles">
-          <option value="default">Default</option>
-          <option value="on">On</option>
-          <option value="off">Off</option>
-        </select>
-      </fieldset>
-    </div>
-  </div>
+  <fieldset>
+    <legend>Video Quality</legend>
+    <select>
+      <option value="highres">Highres</option>
+      <option value="hd2160">4K 2160p</option>
+      <option value="hd1440">HD 1440p</option>
+      <option value="hd1080">HD 1080p</option>
+      <option value="hd720">720p</option>
+      <option value="large">Large</option>
+      <option value="medium">Medium</option>
+      <option value="small">Small</option>
+      <option value="tiny">Tiny</option>
+      <option value="default">Default</option>
+    </select>
+  </fieldset>
+  <fieldset>
+    <legend>Video Size</legend>
+    <select>
+      <option value="expand">Expand</option>
+      <option value="shrink">Shrink</option>
+      <option value="chat">Show Chat</option>
+      <option value="default">Default</option>
+    </select>
+  </fieldset>
+  <fieldset>
+    <legend>Video Speed</legend>
+    <select>
+      <option value="2">2</option>
+      <option value="1.5">1.5</option>
+      <option value="1.25">1.25</option>
+      <option value="1">Normal</option>
+      <option value="0.75">0.75</option>
+      <option value="0.5">0.5</option>
+      <option value="0.25">0.25</option>
+    </select>
+  </fieldset>
+  <fieldset>
+    <legend>Volume</legend>
+    <form id="volume">
+      <div>
+        <input type="radio" name="volume" class="vol_default" value="default" />
+        Default
+        <input type="radio" name="volume" class="vol_mute" value="mute" />
+        Mute
+        <input type="radio" name="volume" class="vol_100" value="100" />
+        100%
+      </div>
+      <input type="radio" name="volume" class="vol_volumelevel" value="volumelevel" id="volumelevelinput" />
+      Volume Level
+      <input id="volumelevel" type="number" step="1" min="0" max="100" />
+    </form>
+  </fieldset>
+  <fieldset>
+    <legend>Auto Play</legend>
+    <select id="autoplay">
+      <option value="default">Default</option>
+      <option value="on">On</option>
+      <option value="off">Off</option>
+    </select>
+  </fieldset>
+  <fieldset>
+    <legend>Auto Subtitles/Closed Captions (CC)</legend>
+    <select id="subtitles">
+      <option value="default">Default</option>
+      <option value="on">On</option>
+      <option value="off">Off</option>
+    </select>
+  </fieldset>
   <script src="index.js"></script>
 </body>
 
