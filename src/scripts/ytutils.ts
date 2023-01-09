@@ -25,11 +25,17 @@ const ytutils = {
   volume: "default",
   volumelevel: 100,
   player: document.querySelector<player>("#movie_player")!,
-  requestChange: () => {
-    ytutils.changeVideoQuality();
-    ytutils.changeVideoSize();
+  updatePlayer: () => {
+    ytutils.setQuality();
+    ytutils.setSize();
     ytutils.setSubtitles();
     ytutils.setAutoplay();
+    ytutils.player.setPlaybackRate(ytutils.speed);
+    const volume = ytutils.getVolume();
+    if (volume !== "default") {
+      ytutils.player.unMute();
+      ytutils.player.setVolume(volume);
+    }
   },
   setSubtitles: () => {
     if (ytutils.subtitles === "default") return;
@@ -44,14 +50,7 @@ const ytutils = {
       if (count++ === 20) clearInterval(id);
     }, 25);
   },
-  getIntendedQuality: () => {
-    const qualities = ytutils.player.getAvailableQualityLevels();
-    return ytutils.quality === "highres" ||
-      qualities.indexOf(ytutils.quality) === -1
-      ? qualities[0]
-      : ytutils.quality;
-  },
-  getVolumeLevel: () => {
+  getVolume: () => {
     switch (ytutils.volume) {
       case "default":
         return "default";
@@ -66,19 +65,18 @@ const ytutils = {
   onSPFDone: () => {
     window.postMessage({ type: "GET_SETTINGS", text: "NULL" }, "*");
   },
-  changeVideoQuality: () => {
+  setQuality: () => {
     if (ytutils.quality !== "default") {
-      const quality = ytutils.getIntendedQuality();
+      const qualities = ytutils.player.getAvailableQualityLevels();
+      const quality =
+        ytutils.quality === "highres" ||
+          qualities.indexOf(ytutils.quality) === -1
+          ? qualities[0]
+          : ytutils.quality;
       ytutils.player.setPlaybackQualityRange(quality, quality);
     }
-    const volume = ytutils.getVolumeLevel();
-    if (volume !== "default") {
-      ytutils.player.unMute();
-      ytutils.player.setVolume(volume);
-    }
-    ytutils.player.setPlaybackRate(ytutils.speed);
   },
-  changeVideoSize: () => {
+  setSize: () => {
     if (
       ytutils.size === "default" ||
       document.location.pathname.search(/^\/watch/) !== 0
@@ -126,7 +124,7 @@ window.onmessage = (ev: MessageEvent) => {
       ytutils.subtitles = ev.data.subtitles;
       ytutils.volume = ev.data.volume;
       ytutils.volumelevel = ev.data.volumelevel;
-      ytutils.requestChange();
+      ytutils.updatePlayer();
       break;
   }
 };
@@ -139,9 +137,9 @@ window.onload = () => {
     const player = document.querySelector<player>("#movie_player");
     if (player) {
       ytutils.player = player;
-      ytutils.requestChange();
+      ytutils.updatePlayer();
       ytutils.player.addEventListener("onStateChange", (state: number) => {
-        if (state === -1) ytutils.requestChange();
+        if (state === -1) ytutils.updatePlayer();
       });
       clearInterval(id);
     }
