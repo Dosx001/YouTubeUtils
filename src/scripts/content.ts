@@ -1,5 +1,4 @@
 interface settings {
-  autoexpanddescription: boolean;
   autoplay: string;
   quality: string;
   size: string;
@@ -14,7 +13,6 @@ const sendSettings = () => {
     window.postMessage(
       {
         type: "UPDATE_SETTINGS",
-        autoexpanddescription: data.autoexpanddescription,
         autoplay: data.autoplay,
         quality: data.quality,
         size: data.size,

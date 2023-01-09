@@ -17,7 +17,6 @@ interface flexy extends HTMLElement {
 }
 
 const ytutils = {
-  autoexpanddescription: true,
   autoplay: "default",
   quality: "highres",
   size: "expand",
@@ -31,7 +30,6 @@ const ytutils = {
     ytutils.changeVideoSize();
     ytutils.setSubtitles();
     ytutils.setAutoplay();
-    ytutils.expandVideoDescription();
   },
   setSubtitles: () => {
     if (ytutils.subtitles === "default") return;
@@ -53,25 +51,6 @@ const ytutils = {
       ? qualities[0]
       : ytutils.quality;
   },
-  expandVideoDescription: () => {
-    if (document.location.pathname.search(/^\/watch/) !== 0) return;
-    if (ytutils.autoexpanddescription) {
-      if (document.getElementById("action-panel-details")) {
-        document
-          .getElementById("action-panel-details")!
-          .classList.remove("yt-uix-expander-collapsed");
-      }
-      if (document.querySelector("paper-button#more")) {
-        document.querySelector<HTMLElement>("paper-button#more")!.click();
-      } else {
-        const interwal = document.defaultView!.setInterval(() => {
-          if (!document.querySelector("paper-button#more")) return;
-          document.defaultView!.clearInterval(interwal);
-          document.querySelector<HTMLElement>("paper-button#more")!.click();
-        }, 100);
-      }
-    }
-  },
   getVolumeLevel: () => {
     switch (ytutils.volume) {
       case "default":
@@ -86,11 +65,6 @@ const ytutils = {
   },
   onSPFDone: () => {
     window.postMessage({ type: "GET_SETTINGS", text: "NULL" }, "*");
-  },
-  onNavigateFinish: () => {
-    window.setTimeout(() => {
-      ytutils.expandVideoDescription();
-    }, 1000);
   },
   checkPlayerReady: () => {
     try {
@@ -152,7 +126,6 @@ window.onmessage = (ev: MessageEvent) => {
   if (ev.source !== window && ev.data.type) return;
   switch (ev.data.type) {
     case "UPDATE_SETTINGS":
-      ytutils.autoexpanddescription = ev.data.autoexpanddescription;
       ytutils.autoplay = ev.data.autoplay;
       ytutils.quality = ev.data.quality;
       ytutils.size = ev.data.size;
@@ -167,7 +140,6 @@ window.onmessage = (ev: MessageEvent) => {
 
 window.addEventListener("spfdone", ytutils.onSPFDone);
 window.addEventListener("yt-navigate-start", ytutils.onSPFDone);
-window.addEventListener("yt-navigate-finish", ytutils.onNavigateFinish);
 
 window.onload = () => {
   const id = setInterval(() => {
