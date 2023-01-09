@@ -1,12 +1,11 @@
 const [quality, size, speed] = document.querySelectorAll("select")!;
 const volLvl = document.querySelector<HTMLInputElement>("#volumelevel")!;
 const autoplay = document.querySelector<HTMLSelectElement>("#autoplay")!;
+const subtitles = document.querySelector<HTMLSelectElement>("#subtitles")!;
 
 const updateSettings = async () => {
   browser.storage.sync.set({
-    subtitles: document.querySelector<HTMLInputElement>(
-      '#subtitles input[type="radio"][name="subtitles"]:checked'
-    )!.value,
+    subtitles: subtitles.value,
     quality: quality.options[quality.selectedIndex].value,
     size: size.options[size.selectedIndex].value,
     speed: Number(speed.options[speed.selectedIndex].value),
@@ -30,8 +29,7 @@ document.getElementById("volume")!.onchange = updateSettings;
 volLvl.onchange = updateSettings;
 volLvl.onfocus = () =>
   document.querySelector<HTMLInputElement>("#volumelevelinput")!.click();
-document.querySelector<HTMLSelectElement>("#subtitles")!.onchange =
-  updateSettings;
+subtitles.onchange = updateSettings;
 quality.onchange = updateSettings;
 size.onchange = updateSettings;
 speed.onchange = updateSettings;
@@ -43,8 +41,7 @@ browser.storage.sync.get((data: settings) => {
   speed.value = data.speed.toString();
   volLvl.value = data.volumelevel.toString();
   autoplay.value = data.autoplay;
+  subtitles.value = data.subtitles;
   document.querySelector<HTMLInputElement>(`.vol_${data.volume}`)!.checked =
-    true;
-  document.querySelector<HTMLInputElement>(`.subt_${data.subtitles}`)!.checked =
     true;
 });

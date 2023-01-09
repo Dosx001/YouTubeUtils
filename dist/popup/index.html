@@ -103,27 +103,11 @@
     <div class="optiondiv">
       <fieldset>
         <legend>Auto Subtitles/Closed Captions (CC)</legend>
-        <div class="wrapper">
-          <form id="subtitles" style="margin-bottom: 0px">
-            <div style="">
-              <div style="float: left; margin-right: 30px">
-                <input type="radio" name="subtitles" class="subt_default" value="default" />
-                Default
-                <br />
-              </div>
-              <div style="float: left; margin-right: 30px">
-                <input type="radio" name="subtitles" class="subt_on" value="on" />
-                On
-                <br />
-              </div>
-              <div style="">
-                <input type="radio" name="subtitles" class="subt_off" value="off" />
-                Off
-                <br />
-              </div>
-            </div>
-          </form>
-        </div>
+        <select id="subtitles">
+          <option value="default">Default</option>
+          <option value="on">On</option>
+          <option value="off">Off</option>
+        </select>
       </fieldset>
     </div>
   </div>
