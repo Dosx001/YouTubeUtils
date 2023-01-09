@@ -3,17 +3,7 @@ const volLvl = document.querySelector<HTMLInputElement>("#volumelevel")!;
 const autoexpand = document.querySelector<HTMLInputElement>(
   "#autoexpanddescription"
 )!;
-const embedded = document.querySelector<HTMLSelectElement>(
-  "#embeddedvideoautoplaybehavior"
-)!;
-const playlist = document.querySelector<HTMLSelectElement>(
-  "#playlistvideoautoplaybehavior"
-)!;
-const autoplay = document.querySelector<HTMLSelectElement>(
-  "#youtubevideoautoplaybehavior"
-)!;
-const sugguest =
-  document.querySelector<HTMLInputElement>("#suggestedautoplay")!;
+const autoplay = document.querySelector<HTMLSelectElement>("#autoplay")!;
 
 const updateSettings = async () => {
   browser.storage.sync.set({
@@ -21,17 +11,14 @@ const updateSettings = async () => {
     subtitles: document.querySelector<HTMLInputElement>(
       '#subtitles input[type="radio"][name="subtitles"]:checked'
     )!.value,
-    embeddedvideoautoplaybehavior: embedded.value,
-    playlistvideoautoplaybehavior: playlist.value,
     quality: quality.options[quality.selectedIndex].value,
     size: size.options[size.selectedIndex].value,
     speed: Number(speed.options[speed.selectedIndex].value),
-    suggestedautoplay: sugguest.checked,
     volume: document.querySelector<HTMLInputElement>(
       '#volume input[type="radio"][name="volume"]:checked'
     )!.value,
     volumelevel: Number(volLvl.value),
-    youtubevideoautoplaybehavior: autoplay.value,
+    autoplay: autoplay.value,
   });
   for (const tab of await browser.tabs.query({
     active: true,
@@ -52,23 +39,18 @@ document.querySelector<HTMLSelectElement>("#subtitles")!.onchange =
 quality.onchange = updateSettings;
 size.onchange = updateSettings;
 speed.onchange = updateSettings;
-sugguest.onchange = updateSettings;
 autoplay.onchange = updateSettings;
-playlist.onchange = updateSettings;
-embedded.onchange = updateSettings;
 autoexpand.onchange = updateSettings;
 
 browser.storage.sync.get((data: settings) => {
   quality.value = data.quality;
   size.value = data.size;
   speed.value = data.speed.toString();
+  volLvl.value = data.volumelevel.toString();
+  autoplay.value = data.autoplay;
+  autoexpand.checked = data.autoexpanddescription;
   document.querySelector<HTMLInputElement>(`.vol_${data.volume}`)!.checked =
     true;
-  volLvl.value = data.volumelevel.toString();
-  sugguest.checked = data.suggestedautoplay;
-  autoexpand.checked = data.autoexpanddescription;
-  document.querySelector<HTMLInputElement>(`.subt_${data.subtitles}`)!.click();
-  autoplay.value = data.youtubevideoautoplaybehavior;
-  playlist.value = data.playlistvideoautoplaybehavior;
-  embedded.value = data.embeddedvideoautoplaybehavior;
+  document.querySelector<HTMLInputElement>(`.subt_${data.subtitles}`)!.checked =
+    true;
 });

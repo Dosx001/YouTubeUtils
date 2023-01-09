@@ -1,15 +1,12 @@
 interface settings {
   autoexpanddescription: boolean;
-  subtitles: string;
-  embeddedvideoautoplaybehavior: string;
-  playlistvideoautoplaybehavior: string;
+  autoplay: string;
   quality: string;
   size: string;
   speed: number;
-  suggestedautoplay: boolean;
+  subtitles: string;
   volume: string;
   volumelevel: number;
-  youtubevideoautoplaybehavior: string;
 }
 
 const sendSettings = () => {
@@ -17,16 +14,14 @@ const sendSettings = () => {
     window.postMessage(
       {
         type: "UPDATE_SETTINGS",
+        autoexpanddescription: data.autoexpanddescription,
+        autoplay: data.autoplay,
         quality: data.quality,
         size: data.size,
         speed: data.speed,
+        subtitles: data.subtitles,
         volume: data.volume,
         volumelevel: data.volumelevel,
-        youtubevideoautoplaybehavior: data.youtubevideoautoplaybehavior,
-        playlistvideoautoplaybehavior: data.playlistvideoautoplaybehavior,
-        suggestedautoplay: data.suggestedautoplay,
-        autoexpanddescription: data.autoexpanddescription,
-        subtitles: data.subtitles,
       },
       "*"
     );

@@ -92,39 +92,11 @@
       <fieldset>
         <legend>Auto Play</legend>
         <div class="wrapper">
-          <div style="margin-bottom: 10px">
-            YouTube Video Auto Play Behaviour
-            <select style="float: right" id="youtubevideoautoplaybehavior">
-              <option value="default">Default</option>
-              <option value="autoplay">Auto Play</option>
-              <option value="autopause">Auto Pause</option>
-            </select>
-          </div>
-          <div style="clear: both; margin-bottom: 10px">
-            Playlist Auto Play Behaviour
-            <select style="float: right" id="playlistvideoautoplaybehavior">
-              <option value="default">Default</option>
-              <option value="autoplay">Auto Play</option>
-              <option value="autopause">Auto Pause</option>
-            </select>
-          </div>
-          <input type="checkbox" id="suggestedautoplay" /> Suggested video
-          auto play next
-        </div>
-      </fieldset>
-    </div>
-    <div class="optiondiv">
-      <fieldset>
-        <legend>Embedded Video</legend>
-        <div class="wrapper">
-          <div>
-            Auto Play Behaviour
-            <select style="float: right" id="embeddedvideoautoplaybehavior">
-              <option value="default">Default</option>
-              <option value="autoplay">Auto Play</option>
-              <option value="autopause">Auto Pause</option>
-            </select>
-          </div>
+          <select id="autoplay">
+            <option value="default">Default</option>
+            <option value="on">On</option>
+            <option value="off">Off</option>
+          </select>
         </div>
       </fieldset>
     </div>

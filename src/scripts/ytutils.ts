@@ -3,6 +3,7 @@ interface player extends HTMLElement {
   getCurrentTime: () => number;
   getPlaybackQuality: () => string;
   getPlayerState: () => number;
+  setAutonav: (state: boolean) => void;
   setPlaybackQualityRange: (min: string, max: string) => void;
   setPlaybackRate: (rate: number) => void;
   setVolume: (level: number) => void;
@@ -17,28 +18,33 @@ interface flexy extends HTMLElement {
 
 const ytutils = {
   autoexpanddescription: true,
-  subtitles: "default",
-  embeddedvideoautoplaybehavior: "default",
-  playlistvideoautoplaybehavior: "default",
+  autoplay: "default",
   quality: "highres",
   size: "expand",
   speed: 1,
-  suggestedautoplay: true,
+  subtitles: "default",
   volume: "default",
   volumelevel: 100,
-  youtubevideoautoplaybehavior: "default",
   player: document.querySelector<player>("#movie_player")!,
   requestChange: () => {
     ytutils.changeVideoQuality();
     ytutils.changeVideoSize();
     ytutils.setSubtitles();
+    ytutils.setAutoplay();
     ytutils.expandVideoDescription();
-    ytutils.enablesuggestedautoplay();
   },
   setSubtitles: () => {
     if (ytutils.subtitles === "default") return;
     ytutils.player.toggleSubtitlesOn();
     if (ytutils.subtitles === "off") ytutils.player.toggleSubtitles();
+  },
+  setAutoplay: () => {
+    if (ytutils.autoplay === "default") return;
+    let count = 0;
+    const id = setInterval(() => {
+      ytutils.player.setAutonav(ytutils.autoplay === "on");
+      if (count++ === 20) clearInterval(id);
+    }, 25);
   },
   getIntendedQuality: () => {
     const qualities = ytutils.player.getAvailableQualityLevels();
@@ -46,39 +52,6 @@ const ytutils = {
       qualities.indexOf(ytutils.quality) === -1
       ? qualities[0]
       : ytutils.quality;
-  },
-  getPlaylistVideoAutoPlayBehavior: () => {
-    switch (ytutils.playlistvideoautoplaybehavior) {
-      case "default":
-      case "autoplay":
-        return true;
-      case "autopause":
-        return false;
-    }
-  },
-  getYoutubeVideoAutoPlayBehavior: () => {
-    switch (ytutils.youtubevideoautoplaybehavior) {
-      case "default":
-      case "subtitles":
-        return true;
-      case "autopause":
-        return false;
-    }
-  },
-  enablesuggestedautoplay: () => {
-    if (document.location.pathname.search(/^\/watch/) == 0) {
-      const check =
-        document.querySelector<HTMLInputElement>("#autoplay-checkbox");
-      if (check) {
-        check.click();
-        check.checked = ytutils.suggestedautoplay;
-      }
-      document
-        .querySelector<HTMLInputElement>(
-          `paper-toggle-button#toggle[aria-pressed*=${!ytutils.suggestedautoplay}]`
-        )
-        ?.click();
-    }
   },
   expandVideoDescription: () => {
     if (document.location.pathname.search(/^\/watch/) !== 0) return;
@@ -179,18 +152,14 @@ window.onmessage = (ev: MessageEvent) => {
   if (ev.source !== window && ev.data.type) return;
   switch (ev.data.type) {
     case "UPDATE_SETTINGS":
+      ytutils.autoexpanddescription = ev.data.autoexpanddescription;
+      ytutils.autoplay = ev.data.autoplay;
       ytutils.quality = ev.data.quality;
       ytutils.size = ev.data.size;
-      ytutils.volume = ev.data.volume;
       ytutils.speed = ev.data.speed;
-      ytutils.volumelevel = ev.data.volumelevel;
-      ytutils.youtubevideoautoplaybehavior =
-        ev.data.youtubevideoautoplaybehavior;
-      ytutils.playlistvideoautoplaybehavior =
-        ev.data.playlistvideoautoplaybehavior;
-      ytutils.suggestedautoplay = ev.data.suggestedautoplay;
-      ytutils.autoexpanddescription = ev.data.autoexpanddescription;
       ytutils.subtitles = ev.data.subtitles;
+      ytutils.volume = ev.data.volume;
+      ytutils.volumelevel = ev.data.volumelevel;
       ytutils.requestChange();
       break;
   }
