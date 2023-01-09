@@ -146,3 +146,16 @@ window.onload = () => {
   }, 25);
   if (document.location.pathname !== "/watch") clearInterval(id);
 };
+
+window.addEventListener("keydown", (ev) => {
+  switch (ev.key) {
+    case "e": {
+      const collapse = document.querySelector<HTMLElement>("#collapse")!;
+      console.debug(collapse.hidden);
+      (collapse.hidden
+        ? document.querySelector<HTMLElement>("#expand")
+        : collapse)!.click();
+      break;
+    }
+  }
+});
