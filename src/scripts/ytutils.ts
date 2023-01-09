@@ -66,13 +66,6 @@ const ytutils = {
   onSPFDone: () => {
     window.postMessage({ type: "GET_SETTINGS", text: "NULL" }, "*");
   },
-  checkPlayerReady: () => {
-    try {
-      return ytutils.player.getPlayerState() !== -1;
-    } catch (e) {
-      return false;
-    }
-  },
   changeVideoQuality: () => {
     if (ytutils.quality !== "default") {
       const quality = ytutils.getIntendedQuality();
