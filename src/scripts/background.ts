@@ -3,7 +3,7 @@ browser.storage.sync.get((data: settings) => {
     browser.storage.sync.set({
       autoplay: "default",
       quality: "highres",
-      size: "expand",
+      size: "default",
       speed: 1,
       subtitles: "default",
       volume: "default",
