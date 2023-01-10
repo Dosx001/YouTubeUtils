@@ -48,10 +48,3 @@ browser.runtime.onMessage.addListener((request) => {
       break;
   }
 });
-
-window.onmessage = (ev: MessageEvent) => {
-  if (ev.source !== window) return;
-  if (ev.data?.type === "GET_SETTINGS") {
-    sendSettings();
-  }
-};
