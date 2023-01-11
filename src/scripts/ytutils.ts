@@ -1,6 +1,7 @@
 interface player extends HTMLElement {
   getAvailableQualityLevels: () => string[];
   getCurrentTime: () => number;
+  getLoopVideo: () => boolean;
   getPlaybackQuality: () => string;
   getPlayerState: () => number;
   setAutonav: (state: boolean) => void;
@@ -25,7 +26,6 @@ const ytutils = {
   subtitles: "default",
   volume: "default",
   volumelevel: 100,
-  loop: false,
   player: document.querySelector<player>("#movie_player")!,
   setPlayer: () => {
     const id = setInterval(() => {
@@ -48,9 +48,9 @@ const ytutils = {
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
     path.setAttribute("d", off);
     btn.onclick = () => {
-      ytutils.loop = !ytutils.loop;
-      path.setAttribute("d", ytutils.loop ? on : off);
-      ytutils.player.setLoopVideo(ytutils.loop);
+      const boo = !ytutils.player.getLoopVideo();
+      ytutils.player.setLoopVideo(boo);
+      path.setAttribute("d", boo ? on : off);
     };
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("viewbox", "0 0 24 24");
@@ -174,7 +174,6 @@ window.addEventListener("load", ytutils.setPlayer);
 window.addEventListener("yt-navigate-finish", () => {
   if (!ytutils.player) ytutils.setPlayer();
   ytutils.updatePlayer();
-  ytutils.loop = false;
   document
     .querySelector("#ytutils-loop")!
     .querySelector("path")!
@@ -185,7 +184,6 @@ window.addEventListener("keydown", (ev) => {
   switch (ev.key) {
     case "e": {
       const collapse = document.querySelector<HTMLElement>("#collapse")!;
-      console.debug(collapse.hidden);
       (collapse.hidden
         ? document.querySelector<HTMLElement>("#expand")
         : collapse)!.click();
