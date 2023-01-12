@@ -1,6 +1,6 @@
 {
   "name": "YouTubeUtils",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "Extra YouTube functionality",
   "scripts": {
     "build": "web-ext build -s dist -i '**/*.css.map' --overwrite-dest",

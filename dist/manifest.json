@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "YouTubeUtils",
-  "version": "1.0.1",
-  "description": "Extra YouTube functionality",
+  "version": "1.1.0",
+  "description": "Play videos at the highest quality, dynamically resize video player, extra hotkeys such as to loop video, and more!",
   "permissions": [
     "<all_urls>",
     "storage",
@@ -40,7 +40,7 @@
   ],
   "browser_specific_settings": {
     "gecko": {
-      "id": "@youtubeutils"
+      "id": "{034d548e-9728-4e5a-9133-8ea588e47200}"
     }
   }
 }
