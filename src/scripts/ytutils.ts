@@ -19,7 +19,6 @@ interface flexy extends HTMLElement {
 }
 
 const ytutils = {
-  autoplay: "default",
   quality: "highres",
   size: "expand",
   speed: 1,
@@ -70,7 +69,6 @@ const ytutils = {
     ytutils.setQuality();
     ytutils.setSize();
     ytutils.setSubtitles();
-    ytutils.setAutoplay();
     ytutils.player.setPlaybackRate(ytutils.speed);
     const volume = ytutils.getVolume();
     if (volume !== "default") {
@@ -82,14 +80,6 @@ const ytutils = {
     if (ytutils.subtitles === "default") return;
     ytutils.player.toggleSubtitlesOn();
     if (ytutils.subtitles === "off") ytutils.player.toggleSubtitles();
-  },
-  setAutoplay: () => {
-    if (ytutils.autoplay === "default") return;
-    let count = 0;
-    const id = setInterval(() => {
-      ytutils.player.setAutonav(ytutils.autoplay === "on");
-      if (count++ === 20) clearInterval(id);
-    }, 25);
   },
   getVolume: () => {
     switch (ytutils.volume) {
@@ -153,7 +143,6 @@ const ytutils = {
 
 window.addEventListener("message", (ev) => {
   if (ev.source === window && ev.data.type === "UPDATE_SETTINGS") {
-    ytutils.autoplay = ev.data.autoplay;
     ytutils.quality = ev.data.quality;
     ytutils.size = ev.data.size;
     ytutils.speed = ev.data.speed;
@@ -189,6 +178,11 @@ window.addEventListener("keydown", (ev) => {
         : collapse)!.click();
       break;
     }
+    case "p":
+      document
+        .querySelector<HTMLElement>(".ytp-autonav-toggle-button")
+        ?.click();
+      break;
     case "r":
       document.querySelector<HTMLElement>("#ytutils-loop")!.click();
       break;

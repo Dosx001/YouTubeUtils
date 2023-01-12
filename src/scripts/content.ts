@@ -1,5 +1,4 @@
 interface settings {
-  autoplay: string;
   quality: string;
   size: string;
   speed: number;
@@ -13,7 +12,6 @@ const sendSettings = () => {
     window.postMessage(
       {
         type: "UPDATE_SETTINGS",
-        autoplay: data.autoplay,
         quality: data.quality,
         size: data.size,
         speed: data.speed,

@@ -1,6 +1,5 @@
 const [quality, size, speed] = document.querySelectorAll("select")!;
 const volLvl = document.querySelector<HTMLInputElement>("#volumelevel")!;
-const autoplay = document.querySelector<HTMLSelectElement>("#autoplay")!;
 const subtitles = document.querySelector<HTMLSelectElement>("#subtitles")!;
 
 const updateSettings = async () => {
@@ -13,7 +12,6 @@ const updateSettings = async () => {
       '#volume input[type="radio"][name="volume"]:checked'
     )!.value,
     volumelevel: Number(volLvl.value),
-    autoplay: autoplay.value,
   });
   for (const tab of await browser.tabs.query({
     active: true,
@@ -33,14 +31,12 @@ subtitles.onchange = updateSettings;
 quality.onchange = updateSettings;
 size.onchange = updateSettings;
 speed.onchange = updateSettings;
-autoplay.onchange = updateSettings;
 
 browser.storage.sync.get((data: settings) => {
   quality.value = data.quality;
   size.value = data.size;
   speed.value = data.speed.toString();
   volLvl.value = data.volumelevel.toString();
-  autoplay.value = data.autoplay;
   subtitles.value = data.subtitles;
   document.querySelector<HTMLInputElement>(`.vol_${data.volume}`)!.checked =
     true;
