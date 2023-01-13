@@ -10,19 +10,7 @@ interface settings {
 
 const sendSettings = () => {
   browser.storage.sync.get((data: settings) => {
-    window.postMessage(
-      {
-        type: "UPDATE_SETTINGS",
-        quality: data.quality,
-        size: data.size,
-        speed: data.speed,
-        style: data.style,
-        subtitles: data.subtitles,
-        volume: data.volume,
-        volumelevel: data.volumelevel,
-      },
-      "*"
-    );
+    window.postMessage({ type: "UPDATE_SETTINGS", sets: data }, "*");
   });
 };
 

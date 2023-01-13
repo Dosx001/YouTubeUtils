@@ -159,13 +159,13 @@ const ytutils = {
 
 window.addEventListener("message", (ev) => {
   if (ev.source === window && ev.data.type === "UPDATE_SETTINGS") {
-    ytutils.quality = ev.data.quality;
-    ytutils.size = ev.data.size;
-    ytutils.speed = ev.data.speed;
-    ytutils.style = ev.data.style;
-    ytutils.subtitles = ev.data.subtitles;
-    ytutils.volume = ev.data.volume;
-    ytutils.volumelevel = ev.data.volumelevel;
+    ytutils.quality = ev.data.sets.quality;
+    ytutils.size = ev.data.sets.size;
+    ytutils.speed = ev.data.sets.speed;
+    ytutils.style = ev.data.sets.style;
+    ytutils.subtitles = ev.data.sets.subtitles;
+    ytutils.volume = ev.data.sets.volume;
+    ytutils.volumelevel = ev.data.sets.volumelevel;
     ytutils.updatePlayer();
   }
 });
