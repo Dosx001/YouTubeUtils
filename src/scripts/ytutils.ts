@@ -4,6 +4,7 @@ interface player extends HTMLElement {
   getLoopVideo: () => boolean;
   getPlaybackQuality: () => string;
   getPlayerState: () => number;
+  resetSubtitlesUserSettings: () => void;
   setAutonav: (state: boolean) => void;
   setLoopVideo: (state: boolean) => void;
   setPlaybackQualityRange: (min: string, max: string) => void;
@@ -12,6 +13,7 @@ interface player extends HTMLElement {
   toggleSubtitles: () => void;
   toggleSubtitlesOn: () => void;
   unMute: () => void;
+  updateSubtitlesUserSettings: (styles: object) => void;
 }
 
 interface flexy extends HTMLElement {
@@ -23,6 +25,7 @@ const ytutils = {
   size: "expand",
   speed: 1,
   subtitles: "default",
+  style: "default",
   volume: "default",
   volumelevel: 100,
   player: document.querySelector<player>("#movie_player")!,
@@ -68,6 +71,7 @@ const ytutils = {
   updatePlayer: () => {
     ytutils.setQuality();
     ytutils.setSize();
+    ytutils.setStyle();
     ytutils.setSubtitles();
     ytutils.player.setPlaybackRate(ytutils.speed);
     const volume = ytutils.getVolume();
@@ -75,6 +79,18 @@ const ytutils = {
       ytutils.player.unMute();
       ytutils.player.setVolume(volume);
     }
+  },
+  setStyle: () => {
+    if (ytutils.style === "default") return;
+    ytutils.player.resetSubtitlesUserSettings();
+    if (ytutils.style === "tv") return;
+    const styles = {
+      backgroundOpacity: 0,
+      charEdgeStyle: 3,
+      color: "#fff",
+    };
+    if (ytutils.style === "old") styles.color = "#ff0";
+    ytutils.player.updateSubtitlesUserSettings(styles);
   },
   setSubtitles: () => {
     if (ytutils.subtitles === "default") return;
@@ -146,6 +162,7 @@ window.addEventListener("message", (ev) => {
     ytutils.quality = ev.data.quality;
     ytutils.size = ev.data.size;
     ytutils.speed = ev.data.speed;
+    ytutils.style = ev.data.style;
     ytutils.subtitles = ev.data.subtitles;
     ytutils.volume = ev.data.volume;
     ytutils.volumelevel = ev.data.volumelevel;

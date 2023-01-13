@@ -2,6 +2,7 @@ interface settings {
   quality: string;
   size: string;
   speed: number;
+  style: string;
   subtitles: string;
   volume: string;
   volumelevel: number;
@@ -15,6 +16,7 @@ const sendSettings = () => {
         quality: data.quality,
         size: data.size,
         speed: data.speed,
+        style: data.style,
         subtitles: data.subtitles,
         volume: data.volume,
         volumelevel: data.volumelevel,

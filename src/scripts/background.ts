@@ -4,6 +4,7 @@ browser.storage.sync.get((data: settings) => {
       quality: "highres",
       size: "default",
       speed: 1,
+      style: "default",
       subtitles: "default",
       volume: "default",
       volumelevel: 100,

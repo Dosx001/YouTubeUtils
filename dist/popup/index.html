@@ -62,12 +62,22 @@
     </form>
   </fieldset>
   <fieldset>
-    <legend>Auto Subtitles/Closed Captions (CC)</legend>
-    <select id="subtitles">
-      <option value="on">On</option>
-      <option value="off">Off</option>
+    <legend>Subtitles/Closed Captions (CC)</legend>
+    <div>
+      <select id="subtitles">
+        <option value="on">On</option>
+        <option value="off">Off</option>
+        <option value="default">Default</option>
+      </select>
+      On/Off
+    </div>
+    <select id="style">
+      <option value="anime">Anime</option>
+      <option value="old">Old Anime</option>
+      <option value="tv">TV Caption</option>
       <option value="default">Default</option>
     </select>
+    Subtitles Style
   </fieldset>
   <script src="index.js"></script>
 </body>
