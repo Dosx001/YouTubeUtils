@@ -62,8 +62,8 @@ const ytutils = {
     svg.append(path);
     btn.append(svg);
     document
-      .querySelector(".ytp-right-controls")!
-      .insertBefore(btn, document.querySelector(".ytp-subtitles-button"));
+      .querySelector(".ytp-right-controls")
+      ?.insertBefore(btn, document.querySelector(".ytp-subtitles-button"));
   },
   updatePlayer: () => {
     ytutils.setQuality();
