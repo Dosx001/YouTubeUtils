@@ -93,13 +93,11 @@ const ytutils = {
     if (ytutils.style === "default") return;
     ytutils.player.resetSubtitlesUserSettings();
     if (ytutils.style === "tv") return;
-    const styles = {
+    ytutils.player.updateSubtitlesUserSettings({
       backgroundOpacity: 0,
       charEdgeStyle: 3,
-      color: "#fff",
-    };
-    if (ytutils.style === "old") styles.color = "#ff0";
-    ytutils.player.updateSubtitlesUserSettings(styles);
+      color: ytutils.style === "old" ? "#ff0" : "#fff",
+    });
   },
   setSubtitles: () => {
     if (ytutils.subtitles === "default") return;
