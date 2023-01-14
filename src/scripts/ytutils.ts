@@ -42,16 +42,12 @@ const ytutils = {
       }
     }, 25);
     if (document.location.pathname !== "/watch") clearInterval(id);
-    const zombie = document.querySelector("#ytutils-loop");
-    if (zombie) zombie.remove();
     const btn = document.createElement("button");
     btn.id = "ytutils-loop";
     btn.className = "ytp-button";
-    const loop = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    const check = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "path"
-    );
+    const uri = "http://www.w3.org/2000/svg";
+    const loop = document.createElementNS(uri, "path");
+    const check = document.createElementNS(uri, "path");
     loop.setAttribute(
       "d",
       "M1 3l1 5l5 -1M2 8A10 10 0 0 1 12 1A11 11 0 0 1 23 12M23 21l-1 -5l-5 1M22 16A10 10 0 0 1 12 23A11 11 0 0 1 1 12"
@@ -63,7 +59,7 @@ const ytutils = {
       ytutils.player.setLoopVideo(boo);
       check.style.display = boo ? "" : "none";
     };
-    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    const svg = document.createElementNS(uri, "svg");
     svg.setAttribute("viewbox", "0 0 24 24");
     svg.setAttribute("width", "100%");
     svg.setAttribute("height", "100%");
