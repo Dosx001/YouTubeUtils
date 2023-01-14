@@ -47,24 +47,35 @@ const ytutils = {
     const btn = document.createElement("button");
     btn.id = "ytutils-loop";
     btn.className = "ytp-button";
-    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    path.setAttribute("d", off);
+    const loop = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    const check = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "path"
+    );
+    loop.setAttribute(
+      "d",
+      "M1 3l1 5l5 -1M2 8A10 10 0 0 1 12 1A11 11 0 0 1 23 12M23 21l-1 -5l-5 1M22 16A10 10 0 0 1 12 23A11 11 0 0 1 1 12"
+    );
+    check.setAttribute("d", "M8 12l3 3l6 -6");
+    check.style.display = "none";
     btn.onclick = () => {
       const boo = !ytutils.player.getLoopVideo();
       ytutils.player.setLoopVideo(boo);
-      path.setAttribute("d", boo ? on : off);
+      check.style.display = boo ? "" : "none";
     };
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("viewbox", "0 0 24 24");
     svg.setAttribute("width", "100%");
     svg.setAttribute("height", "100%");
+    svg.style.fill = "transparent";
     svg.style.stroke = "#e6e6e6";
     svg.style.strokeWidth = "2px";
     svg.style.strokeLinecap = "round";
     svg.style.position = "relative";
     svg.style.top = "1rem";
     svg.style.left = "1rem";
-    svg.append(path);
+    svg.append(check);
+    svg.append(loop);
     btn.append(svg);
     document
       .querySelector(".ytp-right-controls")
@@ -172,11 +183,6 @@ window.addEventListener("message", (ev) => {
   }
 });
 
-const on =
-  "M1 3l1 5l5 -1M2 8A10 10 0 0 1 12 1A11 11 0 0 1 23 12M23 21l-1 -5l-5 1M22 16A10 10 0 0 1 12 23A11 11 0 0 1 1 12M8 12l3 3l6 -6";
-const off =
-  "M1 3l1 5l5 -1M2 8A10 10 0 0 1 12 1A11 11 0 0 1 23 12M23 21l-1 -5l-5 1M22 16A10 10 0 0 1 12 23A11 11 0 0 1 1 12";
-
 window.addEventListener("load", ytutils.setPlayer);
 
 window.addEventListener("yt-navigate-finish", () => {
@@ -184,8 +190,7 @@ window.addEventListener("yt-navigate-finish", () => {
   ytutils.updatePlayer();
   document
     .querySelector("#ytutils-loop")!
-    .querySelector("path")!
-    .setAttribute("d", off);
+    .querySelector("path")!.style.display = "none";
 });
 
 window.addEventListener("keydown", (ev) => {
