@@ -36,13 +36,20 @@ const ytutils = {
       ytutils.player = document.querySelector<player>("#movie_player")!;
       if (ytutils.player) {
         ytutils.updatePlayer();
-        if (ytutils.embed)
-          ytutils.player.addEventListener("onStateChange", (state: number) => {
-            if (state === 1) ytutils.updatePlayer();
-          });
+        if (ytutils.embed) {
+          const fn = () => {
+            ytutils.setQuality();
+            ytutils.createSvg();
+            ytutils.player.removeEventListener("onStateChange", fn);
+          };
+          ytutils.player.addEventListener("onStateChange", fn);
+        }
         clearInterval(id);
       }
     }, 25);
+    ytutils.createSvg();
+  },
+  createSvg: () => {
     const zombie = document.querySelector("#ytutils-loop");
     if (zombie) zombie.remove();
     const btn = document.createElement("button");
@@ -71,8 +78,9 @@ const ytutils = {
     svg.style.strokeWidth = "2px";
     svg.style.strokeLinecap = "round";
     svg.style.position = "relative";
-    svg.style.top = "1rem";
-    svg.style.left = "1rem";
+    const size = `${ytutils.embed ? 0.5 : 1}rem`;
+    svg.style.top = size;
+    svg.style.left = size;
     svg.append(check);
     svg.append(loop);
     btn.append(svg);
