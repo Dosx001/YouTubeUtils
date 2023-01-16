@@ -101,7 +101,7 @@ const ytutils = {
     }
   },
   setStyle: () => {
-    if (ytutils.style === "default" || ytutils.embed) return;
+    if (ytutils.style === "default") return;
     ytutils.player.resetSubtitlesUserSettings();
     if (ytutils.style === "tv") return;
     ytutils.player.updateSubtitlesUserSettings({
@@ -111,9 +111,11 @@ const ytutils = {
     });
   },
   setSubtitles: () => {
-    if (ytutils.subtitles === "default" || ytutils.embed) return;
-    ytutils.player.toggleSubtitlesOn();
-    if (ytutils.subtitles === "off") ytutils.player.toggleSubtitles();
+    if (ytutils.subtitles === "default") return;
+    if (!ytutils.embed || ytutils.subtitles === "on")
+      ytutils.player.toggleSubtitlesOn();
+    if (!ytutils.embed && ytutils.subtitles === "off")
+      ytutils.player.toggleSubtitles();
   },
   getVolume: () => {
     switch (ytutils.volume) {
