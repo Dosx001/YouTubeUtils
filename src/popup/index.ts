@@ -15,12 +15,6 @@ const updateSettings = async () => {
     )!.value,
     volumelevel: Number(volLvl.value),
   });
-  for (const tab of await browser.tabs.query({})) {
-    if (tab.url?.search("youtube.com/watch") !== -1)
-      browser.tabs.sendMessage(tab.id!, {
-        action: "update_settings",
-      });
-  }
 };
 
 document.getElementById("volume")!.onchange = updateSettings;

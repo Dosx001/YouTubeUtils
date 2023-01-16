@@ -23,11 +23,4 @@ s.onload = () => {
 (document.head || document.documentElement).appendChild(s);
 
 document.addEventListener("DOMContentLoaded", sendSettings);
-
-browser.runtime.onMessage.addListener((request) => {
-  switch (request.action) {
-    case "update_settings":
-      sendSettings();
-      break;
-  }
-});
+browser.storage.onChanged.addListener(sendSettings);

@@ -39,7 +39,6 @@ const ytutils = {
         if (ytutils.embed) {
           const fn = () => {
             ytutils.setQuality();
-            ytutils.createSvg();
             ytutils.player.removeEventListener("onStateChange", fn);
           };
           ytutils.player.addEventListener("onStateChange", fn);
