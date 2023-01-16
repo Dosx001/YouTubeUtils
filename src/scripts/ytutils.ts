@@ -29,19 +29,22 @@ const ytutils = {
   volume: "default",
   volumelevel: 100,
   player: document.querySelector<player>("#movie_player")!,
+  embed: location.pathname.search("embed") !== -1,
   setPlayer: () => {
+    if (location.pathname !== "/watch" && !ytutils.embed) return;
     const id = setInterval(() => {
-      const player = document.querySelector<player>("#movie_player");
-      if (player) {
-        ytutils.player = player;
+      ytutils.player = document.querySelector<player>("#movie_player")!;
+      if (ytutils.player) {
         ytutils.updatePlayer();
-        ytutils.player.addEventListener("onStateChange", (state: number) => {
-          if (state === -1) ytutils.updatePlayer();
-        });
+        if (ytutils.embed)
+          ytutils.player.addEventListener("onStateChange", (state: number) => {
+            if (state === 1) ytutils.updatePlayer();
+          });
         clearInterval(id);
       }
     }, 25);
-    if (document.location.pathname !== "/watch") clearInterval(id);
+    const zombie = document.querySelector("#ytutils-loop");
+    if (zombie) zombie.remove();
     const btn = document.createElement("button");
     btn.id = "ytutils-loop";
     btn.className = "ytp-button";
@@ -90,7 +93,7 @@ const ytutils = {
     }
   },
   setStyle: () => {
-    if (ytutils.style === "default") return;
+    if (ytutils.style === "default" || ytutils.embed) return;
     ytutils.player.resetSubtitlesUserSettings();
     if (ytutils.style === "tv") return;
     ytutils.player.updateSubtitlesUserSettings({
@@ -100,7 +103,7 @@ const ytutils = {
     });
   },
   setSubtitles: () => {
-    if (ytutils.subtitles === "default") return;
+    if (ytutils.subtitles === "default" || ytutils.embed) return;
     ytutils.player.toggleSubtitlesOn();
     if (ytutils.subtitles === "off") ytutils.player.toggleSubtitles();
   },
@@ -128,11 +131,7 @@ const ytutils = {
     }
   },
   setSize: () => {
-    if (
-      ytutils.size === "default" ||
-      document.location.pathname.search(/^\/watch/) !== 0
-    )
-      return;
+    if (ytutils.size === "default" || ytutils.embed) return;
     const id = setInterval(() => {
       const flexy = document.querySelector<flexy>("ytd-watch-flexy");
       if (flexy) {
@@ -180,8 +179,7 @@ window.addEventListener("message", (ev) => {
 window.addEventListener("load", ytutils.setPlayer);
 
 window.addEventListener("yt-navigate-finish", () => {
-  if (!ytutils.player) ytutils.setPlayer();
-  ytutils.updatePlayer();
+  ytutils.player ? ytutils.updatePlayer() : ytutils.setPlayer();
   document
     .querySelector("#ytutils-loop")!
     .querySelector("path")!.style.display = "none";

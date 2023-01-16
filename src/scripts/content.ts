@@ -22,12 +22,7 @@ s.onload = () => {
 };
 (document.head || document.documentElement).appendChild(s);
 
-//change to mutation event
-if (document.location.pathname.indexOf("/embed") !== 0) {
-  sendSettings();
-}
-
-document.addEventListener("DOMContentLoaded", sendSettings, false);
+document.addEventListener("DOMContentLoaded", sendSettings);
 
 browser.runtime.onMessage.addListener((request) => {
   switch (request.action) {
