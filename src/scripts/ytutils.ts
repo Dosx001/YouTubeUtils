@@ -35,18 +35,22 @@ const ytutils = {
     const id = setInterval(() => {
       ytutils.player = document.querySelector<player>("#movie_player")!;
       if (ytutils.player) {
+        clearInterval(id);
         if (ytutils.embed) {
           const fn = () => {
             ytutils.updatePlayer();
+            ytutils.createSvg();
             ytutils.player.removeEventListener("onStateChange", fn);
           };
           ytutils.player.addEventListener("onStateChange", fn);
         } else {
           ytutils.updatePlayer();
         }
-        clearInterval(id);
       }
     }, 25);
+    ytutils.createSvg();
+  },
+  createSvg: () => {
     const zombie = document.querySelector("#ytutils-loop");
     if (zombie) zombie.remove();
     const btn = document.createElement("button");
@@ -62,9 +66,13 @@ const ytutils = {
     check.setAttribute("d", "M8 12l3 3l6 -6");
     check.style.display = "none";
     btn.onclick = () => {
-      const boo = !ytutils.player.getLoopVideo();
-      ytutils.player.setLoopVideo(boo);
-      check.style.display = boo ? "" : "none";
+      ytutils.player.dispatchEvent(new CustomEvent("contextmenu"));
+      document.querySelector<HTMLElement>("[role='menuitemcheckbox']")!.click();
+      check.style.display =
+        document.querySelector<HTMLElement>("#ytutils-loop path")!.style
+          .display === ""
+          ? "none"
+          : "";
     };
     const svg = document.createElementNS(uri, "svg");
     svg.setAttribute("viewbox", "0 0 24 24");
