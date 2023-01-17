@@ -1,6 +1,5 @@
 interface player extends HTMLElement {
   getAvailableQualityLevels: () => string[];
-  resetSubtitlesUserSettings: () => void;
   setPlaybackQualityRange: (min: string, max: string) => void;
   setPlaybackRate: (rate: number) => void;
   setVolume: (level: number) => void;
@@ -61,7 +60,11 @@ const ytutils = {
     check.style.display = "none";
     btn.onclick = () => {
       ytutils.player.dispatchEvent(new CustomEvent("contextmenu"));
-      document.querySelector<HTMLElement>("[role='menuitemcheckbox']")!.click();
+      document
+        .querySelector<HTMLElement>(
+          ".ytp-contextmenu [role='menuitemcheckbox']"
+        )!
+        .click();
       check.style.display =
         document.querySelector<HTMLElement>("#ytutils-loop path")!.style
           .display === ""
@@ -101,12 +104,17 @@ const ytutils = {
   },
   setStyle: () => {
     if (ytutils.style === "default") return;
-    ytutils.player.resetSubtitlesUserSettings();
-    if (ytutils.style === "tv") return;
     ytutils.player.updateSubtitlesUserSettings({
-      backgroundOpacity: 0,
-      charEdgeStyle: 3,
-      color: ytutils.style === "old" ? "#ff0" : "#fff",
+      background: "#080808",
+      backgroundOpacity: ytutils.style !== "tv" ? 0 : 0.75,
+      charEdgeStyle: ytutils.style !== "tv" ? 3 : 0,
+      color: ytutils.style !== "old" ? "#fff" : "#ff0",
+      fontFamily: 4,
+      fontSizeIncrement: 0,
+      fontStyle: 0,
+      textOpacity: 1,
+      windowColor: "#080808",
+      windowOpacity: 0,
     });
   },
   setSubtitles: () => {
