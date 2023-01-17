@@ -1,11 +1,13 @@
 interface player extends HTMLElement {
   getAvailableQualityLevels: () => string[];
+  getOption(module: string, option: string): { languageCode: string };
+  loadModule(module: string): void;
+  setOption(module: string, option: string, track: object): void;
   setPlaybackQualityRange: (min: string, max: string) => void;
   setPlaybackRate: (rate: number) => void;
   setVolume: (level: number) => void;
-  toggleSubtitles: () => void;
-  toggleSubtitlesOn: () => void;
   unMute: () => void;
+  unloadModule(module: string): void;
   updateSubtitlesUserSettings: (styles: object) => void;
 }
 
@@ -119,10 +121,15 @@ const ytutils = {
   },
   setSubtitles: () => {
     if (ytutils.subtitles === "default") return;
-    if (!ytutils.embed || ytutils.subtitles === "on")
-      ytutils.player.toggleSubtitlesOn();
-    if (!ytutils.embed && ytutils.subtitles === "off")
-      ytutils.player.toggleSubtitles();
+    if (ytutils.subtitles === "on") {
+      const track = ytutils.player.getOption("captions", "track");
+      if (track) {
+        ytutils.player.loadModule("captions");
+        ytutils.player.setOption("captions", "track", {
+          languageCode: track.languageCode,
+        });
+      }
+    } else ytutils.player.unloadModule("captions");
   },
   getVolume: () => {
     switch (ytutils.volume) {
