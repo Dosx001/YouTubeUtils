@@ -1,12 +1,6 @@
 interface player extends HTMLElement {
   getAvailableQualityLevels: () => string[];
-  getCurrentTime: () => number;
-  getLoopVideo: () => boolean;
-  getPlaybackQuality: () => string;
-  getPlayerState: () => number;
   resetSubtitlesUserSettings: () => void;
-  setAutonav: (state: boolean) => void;
-  setLoopVideo: (state: boolean) => void;
   setPlaybackQualityRange: (min: string, max: string) => void;
   setPlaybackRate: (rate: number) => void;
   setVolume: (level: number) => void;
@@ -39,7 +33,7 @@ const ytutils = {
         if (ytutils.embed) {
           const fn = () => {
             ytutils.updatePlayer();
-            ytutils.createSvg();
+            ytutils.loopBtn();
             ytutils.player.removeEventListener("onStateChange", fn);
           };
           ytutils.player.addEventListener("onStateChange", fn);
@@ -48,9 +42,9 @@ const ytutils = {
         }
       }
     }, 25);
-    ytutils.createSvg();
+    ytutils.loopBtn();
   },
-  createSvg: () => {
+  loopBtn: () => {
     const zombie = document.querySelector("#ytutils-loop");
     if (zombie) zombie.remove();
     const btn = document.createElement("button");
@@ -162,9 +156,7 @@ const ytutils = {
             let conut = 0;
             const id = setInterval(() => {
               flexy.theaterModeChanged_(
-                !document
-                  .querySelector("#show-hide-button")
-                  ?.querySelector("button")
+                !document.querySelector("#show-hide-button button")
               );
               if (conut++ === 40) {
                 clearInterval(id);
@@ -195,9 +187,8 @@ window.addEventListener("load", ytutils.setPlayer);
 
 window.addEventListener("yt-navigate-finish", () => {
   ytutils.player ? ytutils.updatePlayer() : ytutils.setPlayer();
-  document
-    .querySelector("#ytutils-loop")!
-    .querySelector("path")!.style.display = "none";
+  document.querySelector<HTMLElement>("#ytutils-loop path")!.style.display =
+    "none";
 });
 
 window.addEventListener("keydown", (ev) => {
