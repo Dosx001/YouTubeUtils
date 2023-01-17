@@ -35,20 +35,18 @@ const ytutils = {
     const id = setInterval(() => {
       ytutils.player = document.querySelector<player>("#movie_player")!;
       if (ytutils.player) {
-        ytutils.updatePlayer();
         if (ytutils.embed) {
           const fn = () => {
-            ytutils.setQuality();
+            ytutils.updatePlayer();
             ytutils.player.removeEventListener("onStateChange", fn);
           };
           ytutils.player.addEventListener("onStateChange", fn);
+        } else {
+          ytutils.updatePlayer();
         }
         clearInterval(id);
       }
     }, 25);
-    ytutils.createSvg();
-  },
-  createSvg: () => {
     const zombie = document.querySelector("#ytutils-loop");
     if (zombie) zombie.remove();
     const btn = document.createElement("button");
