@@ -27,6 +27,7 @@ const ytutils = {
   volumelevel: 100,
   player: document.querySelector<player>("#movie_player")!,
   embed: location.pathname.search("embed") !== -1,
+  mobile: /Android|iPhone|iPad/i.test(navigator.userAgent),
   setPlayer: () => {
     if (location.pathname !== "/watch" && !ytutils.embed) return;
     const id = setInterval(() => {
@@ -71,7 +72,7 @@ const ytutils = {
     svg.append(check);
     svg.append(loop);
     btn.append(svg);
-    if (/Android|iPhone|iPad/i.test(navigator.userAgent)) {
+    if (ytutils.mobile) {
       svg.setAttribute("width", "24px");
       btn.style.position = "absolute";
       btn.style.display = "none";
@@ -131,14 +132,14 @@ const ytutils = {
   updatePlayer: () => {
     ytutils.setQuality();
     ytutils.setSize();
-    ytutils.setStyle();
-    ytutils.setSubtitles();
     ytutils.player.setPlaybackRate(ytutils.speed);
     const volume = ytutils.getVolume();
     if (volume !== "default") {
       ytutils.player.unMute();
       ytutils.player.setVolume(volume);
     }
+    ytutils.setSubtitles();
+    ytutils.setStyle();
   },
   setStyle: () => {
     if (ytutils.style === "default") return;
@@ -191,7 +192,7 @@ const ytutils = {
     }
   },
   setSize: () => {
-    if (ytutils.size === "default" || ytutils.embed) return;
+    if (ytutils.size === "default" || ytutils.embed || ytutils.mobile) return;
     const id = setInterval(() => {
       const flexy = document.querySelector<flexy>("ytd-watch-flexy");
       if (flexy) {
