@@ -1,4 +1,6 @@
 interface player extends HTMLElement {
+  setLoopVideo(state: boolean): void;
+  getLoopVideo(): boolean;
   getAvailableQualityLevels: () => string[];
   getOption(module: string, option: string): { languageCode: string };
   loadModule(module: string): void;
@@ -60,37 +62,71 @@ const ytutils = {
     );
     check.setAttribute("d", "M8 12l3 3l6 -6");
     check.style.display = "none";
-    btn.onclick = () => {
-      ytutils.player.dispatchEvent(new CustomEvent("contextmenu"));
-      document
-        .querySelector<HTMLElement>(
-          ".ytp-contextmenu [role='menuitemcheckbox']"
-        )!
-        .click();
-      check.style.display =
-        document.querySelector<HTMLElement>("#ytutils-loop path")!.style
-          .display === ""
-          ? "none"
-          : "";
-    };
     const svg = document.createElementNS(uri, "svg");
     svg.setAttribute("viewbox", "0 0 24 24");
-    svg.setAttribute("width", "100%");
-    svg.setAttribute("height", "100%");
     svg.style.fill = "transparent";
     svg.style.stroke = "#e6e6e6";
     svg.style.strokeWidth = "2px";
     svg.style.strokeLinecap = "round";
-    svg.style.position = "relative";
-    const size = `${ytutils.embed ? 0.5 : 1}rem`;
-    svg.style.top = size;
-    svg.style.left = size;
     svg.append(check);
     svg.append(loop);
     btn.append(svg);
-    document
-      .querySelector(".ytp-right-controls")
-      ?.insertBefore(btn, document.querySelector(".ytp-subtitles-button"));
+    if (/Android|iPhone|iPad/i.test(navigator.userAgent)) {
+      svg.setAttribute("width", "24px");
+      btn.style.position = "absolute";
+      btn.style.display = "none";
+      btn.style.left = "15px";
+      btn.style.top = "15px";
+      btn.style.height = "40px";
+      btn.style.width = "40px";
+      btn.onclick = () => {
+        const boo = !ytutils.player.getLoopVideo();
+        ytutils.player.setLoopVideo(boo);
+        check.style.display = boo ? "" : "none";
+      };
+      const obver = new MutationObserver((ev) => {
+        btn.style.display = (ev[0].target as HTMLElement).classList.contains(
+          "fadein"
+        )
+          ? ""
+          : "none";
+      });
+      const fn = () => {
+        document.querySelector("#player-container-id")!.append(btn);
+        obver.observe(document.querySelector("#player-control-overlay")!, {
+          attributes: true,
+          attributeFilter: ["class"],
+          childList: false,
+          characterData: false,
+        });
+        ytutils.player.removeEventListener("onStateChange", fn);
+      };
+      const id = setInterval(() => {
+        if (ytutils.player) {
+          ytutils.player.addEventListener("onStateChange", fn);
+          clearInterval(id);
+        }
+      }, 100);
+    } else {
+      svg.setAttribute("width", "100%");
+      svg.setAttribute("height", "100%");
+      svg.style.position = "relative";
+      const size = `${ytutils.embed ? 0.5 : 1}rem`;
+      svg.style.top = size;
+      svg.style.left = size;
+      btn.onclick = () => {
+        ytutils.player.dispatchEvent(new CustomEvent("contextmenu"));
+        document
+          .querySelector<HTMLElement>(
+            ".ytp-contextmenu [role='menuitemcheckbox']"
+          )!
+          .click();
+        check.style.display = check.style.display === "" ? "none" : "";
+      };
+      document
+        .querySelector(".ytp-right-controls")!
+        .insertBefore(btn, document.querySelector(".ytp-subtitles-button"));
+    }
   },
   updatePlayer: () => {
     ytutils.setQuality();
