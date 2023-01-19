@@ -74,12 +74,15 @@ const ytutils = {
     btn.append(svg);
     if (ytutils.mobile) {
       svg.setAttribute("width", "24px");
+      svg.setAttribute("height", "24px");
+      svg.style.position = "relative";
+      svg.style.left = "10px";
       btn.style.position = "absolute";
       btn.style.display = "none";
-      btn.style.left = "15px";
-      btn.style.top = "15px";
+      btn.style.left = "5px";
+      btn.style.top = "5px";
       btn.style.height = "40px";
-      btn.style.width = "40px";
+      btn.style.width = "45px";
       btn.onclick = () => {
         const boo = !ytutils.player.getLoopVideo();
         ytutils.player.setLoopVideo(boo);
