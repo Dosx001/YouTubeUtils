@@ -29,7 +29,6 @@ const ytutils = {
   embed: location.pathname.search("embed") !== -1,
   mobile: /Android|iPhone|iPad/i.test(navigator.userAgent),
   setPlayer: () => {
-    if (location.pathname !== "/watch" && !ytutils.embed) return;
     const id = setInterval(() => {
       ytutils.player = document.querySelector<player>("#movie_player")!;
       if (ytutils.player) {
@@ -241,9 +240,8 @@ window.addEventListener("message", (ev) => {
 window.addEventListener("load", ytutils.setPlayer);
 
 window.addEventListener("yt-navigate-finish", () => {
-  ytutils.player ? ytutils.updatePlayer() : ytutils.setPlayer();
-  document.querySelector<HTMLElement>("#ytutils-loop path")!.style.display =
-    "none";
+  ytutils.loopBtn();
+  ytutils.updatePlayer();
 });
 
 window.addEventListener("keydown", (ev) => {
