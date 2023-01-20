@@ -1,13 +1,15 @@
 interface player extends HTMLElement {
-  setLoopVideo(state: boolean): void;
-  getLoopVideo(): boolean;
+  toggleSubtitles(): void;
   getAvailableQualityLevels: () => string[];
-  getOption(module: string, option: string): { languageCode: string };
+  getLoopVideo(): boolean;
+  getOption(module: string, option: string): object;
   loadModule(module: string): void;
+  setLoopVideo(state: boolean): void;
   setOption(module: string, option: string, track: object): void;
   setPlaybackQualityRange: (min: string, max: string) => void;
   setPlaybackRate: (rate: number) => void;
   setVolume: (level: number) => void;
+  toggleSubtitlesOn(): void;
   unMute: () => void;
   unloadModule(module: string): void;
   updateSubtitlesUserSettings: (styles: object) => void;
@@ -33,7 +35,18 @@ const ytutils = {
       ytutils.player = document.querySelector<player>("#movie_player")!;
       if (ytutils.player) {
         clearInterval(id);
-        if (ytutils.embed) {
+        if (ytutils.mobile) {
+          ytutils.player.addEventListener(
+            "onStateChange",
+            (state: number | Event) => {
+              if (state === -1) {
+                ytutils.loopBtn();
+              } else if (state === 1) {
+                ytutils.updatePlayer();
+              }
+            }
+          );
+        } else if (ytutils.embed) {
           const fn = () => {
             ytutils.updatePlayer();
             ytutils.loopBtn();
@@ -72,6 +85,7 @@ const ytutils = {
     svg.append(loop);
     btn.append(svg);
     if (ytutils.mobile) {
+      if (!ytutils.player) return;
       svg.setAttribute("width", "24px");
       svg.setAttribute("height", "24px");
       svg.style.position = "relative";
@@ -96,20 +110,19 @@ const ytutils = {
       });
       const fn = () => {
         document.querySelector("#player-container-id")!.append(btn);
-        obver.observe(document.querySelector("#player-control-overlay")!, {
-          attributes: true,
-          attributeFilter: ["class"],
-          childList: false,
-          characterData: false,
-        });
+        const id = setInterval(() => {
+          const ctrl = document.querySelector("#player-control-overlay");
+          if (ctrl) {
+            clearInterval(id);
+            obver.observe(ctrl, {
+              attributes: true,
+              attributeFilter: ["class"],
+            });
+          }
+        }, 100);
         ytutils.player.removeEventListener("onStateChange", fn);
       };
-      const id = setInterval(() => {
-        if (ytutils.player) {
-          ytutils.player.addEventListener("onStateChange", fn);
-          clearInterval(id);
-        }
-      }, 100);
+      ytutils.player.addEventListener("onStateChange", fn);
     } else {
       svg.setAttribute("width", "100%");
       svg.setAttribute("height", "100%");
