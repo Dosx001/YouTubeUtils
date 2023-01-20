@@ -262,6 +262,9 @@ window.addEventListener("keydown", (ev) => {
         .querySelector<HTMLElement>(".ytp-autonav-toggle-button")
         ?.click();
       break;
+    case "q":
+      document.querySelector<HTMLElement>("#dismiss-button")?.click();
+      break;
     case "r":
       document.querySelector<HTMLElement>("#ytutils-loop")!.click();
       break;
