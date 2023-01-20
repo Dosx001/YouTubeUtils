@@ -5,7 +5,8 @@
   "scripts": {
     "build": "web-ext build -s dist -i '**/*.css.map' --overwrite-dest",
     "tar": "tar czvf YouTubeUtils.tar.gz src dist build.sh package.json tsconfig.json yarn.lock README_FIREFOX.md",
-    "sass": "sass --update src:dist"
+    "sass": "sass --update src:dist",
+    "fire": "web-ext run -s dist -t firefox-android --adb-device $(adb devices | sed -n 2p | awk '{print $1}') --firefox-apk org.mozilla.fenix"
   },
   "devDependencies": {
     "@types/firefox-webext-browser": "^94.0.1",
