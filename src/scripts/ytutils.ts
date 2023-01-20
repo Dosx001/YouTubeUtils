@@ -161,13 +161,10 @@ const ytutils = {
   setSubtitles: () => {
     if (ytutils.subtitles === "default") return;
     if (ytutils.subtitles === "on") {
-      const track = ytutils.player.getOption("captions", "track");
-      if (track) {
-        ytutils.player.loadModule("captions");
-        ytutils.player.setOption("captions", "track", {
-          languageCode: track.languageCode,
-        });
-      }
+      ytutils.mobile &&
+        Object.keys(ytutils.player.getOption("captions", "track")).length === 0
+        ? ytutils.player.toggleSubtitles()
+        : ytutils.player.toggleSubtitlesOn();
     } else ytutils.player.unloadModule("captions");
   },
   getVolume: () => {
