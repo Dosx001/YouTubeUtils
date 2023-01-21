@@ -1,7 +1,7 @@
 const [quality, size, speed] = document.querySelectorAll("select")!;
 const style = document.querySelector<HTMLSelectElement>("#style")!;
 const subtitles = document.querySelector<HTMLSelectElement>("#subtitles")!;
-const volLvl = document.querySelector<HTMLInputElement>("#volumelevel")!;
+const level = document.querySelector<HTMLInputElement>("#level")!;
 
 const updateSettings = async () => {
   browser.storage.sync.set({
@@ -11,16 +11,16 @@ const updateSettings = async () => {
     style: style.value,
     subtitles: subtitles.value,
     volume: document.querySelector<HTMLInputElement>(
-      '#volume input[type="radio"][name="volume"]:checked'
+      'input[type="radio"]:checked'
     )!.value,
-    volumelevel: Number(volLvl.value),
+    volumelevel: Number(level.value),
   });
 };
 
 document.getElementById("volume")!.onchange = updateSettings;
-volLvl.onchange = updateSettings;
-volLvl.onfocus = () =>
-  document.querySelector<HTMLInputElement>("#volumelevelinput")!.click();
+level.onchange = updateSettings;
+level.onfocus = () =>
+  document.querySelector<HTMLInputElement>(".vol_level")!.click();
 quality.onchange = updateSettings;
 size.onchange = updateSettings;
 speed.onchange = updateSettings;
@@ -33,7 +33,7 @@ browser.storage.sync.get((data: settings) => {
   speed.value = data.speed.toString();
   style.value = data.style;
   subtitles.value = data.subtitles;
-  volLvl.value = data.volumelevel.toString();
+  level.value = data.volumelevel.toString();
   document.querySelector<HTMLInputElement>(`.vol_${data.volume}`)!.checked =
     true;
 });

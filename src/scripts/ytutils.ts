@@ -28,8 +28,8 @@ const ytutils = {
   volume: "default",
   volumelevel: 100,
   player: document.querySelector<player>("#movie_player")!,
-  embed: location.pathname.search("embed") !== -1,
-  mobile: /Android|iPhone|iPad/i.test(navigator.userAgent),
+  embed: location.pathname.includes("embed"),
+  mobile: /Android|iPhone|iPad/.test(navigator.userAgent),
   setPlayer: () => {
     const id = setInterval(() => {
       ytutils.player = document.querySelector<player>("#movie_player")!;
@@ -39,11 +39,8 @@ const ytutils = {
           ytutils.player.addEventListener(
             "onStateChange",
             (state: number | Event) => {
-              if (state === -1) {
-                ytutils.loopBtn();
-              } else if (state === 1) {
-                ytutils.updatePlayer();
-              }
+              if (state === -1) ytutils.loopBtn();
+              else if (state === 1) ytutils.updatePlayer();
             }
           );
         } else if (ytutils.embed) {
@@ -53,16 +50,13 @@ const ytutils = {
             ytutils.player.removeEventListener("onStateChange", fn);
           };
           ytutils.player.addEventListener("onStateChange", fn);
-        } else {
-          ytutils.updatePlayer();
-        }
+        } else ytutils.updatePlayer();
       }
     }, 25);
     ytutils.loopBtn();
   },
   loopBtn: () => {
-    const zombie = document.querySelector("#ytutils-loop");
-    if (zombie) zombie.remove();
+    document.querySelector("#ytutils-loop")?.remove();
     const btn = document.createElement("button");
     btn.id = "ytutils-loop";
     btn.className = "ytp-button";
@@ -130,6 +124,7 @@ const ytutils = {
       const size = `${ytutils.embed ? 0.5 : 1}rem`;
       svg.style.top = size;
       svg.style.left = size;
+      btn.title = "Loop video (r)";
       btn.onclick = () => {
         ytutils.player.dispatchEvent(new CustomEvent("contextmenu"));
         document
@@ -173,35 +168,31 @@ const ytutils = {
   },
   setSubtitles: () => {
     if (ytutils.subtitles === "default") return;
-    if (ytutils.subtitles === "on") {
+    if (ytutils.subtitles === "on")
       ytutils.mobile &&
         Object.keys(ytutils.player.getOption("captions", "track")).length === 0
         ? ytutils.player.toggleSubtitles()
         : ytutils.player.toggleSubtitlesOn();
-    } else ytutils.player.unloadModule("captions");
+    else ytutils.player.unloadModule("captions");
   },
   getVolume: () => {
     switch (ytutils.volume) {
-      case "default":
-        return "default";
       case "mute":
         return 0;
       case "100":
         return 100;
-      default:
+      case "level":
         return ytutils.volumelevel;
     }
+    return "default";
   },
   setQuality: () => {
-    if (ytutils.quality !== "default") {
-      const qualities = ytutils.player.getAvailableQualityLevels();
-      const quality =
-        ytutils.quality === "highres" ||
-          qualities.indexOf(ytutils.quality) === -1
-          ? qualities[0]
-          : ytutils.quality;
-      ytutils.player.setPlaybackQualityRange(quality, quality);
-    }
+    if (ytutils.quality === "default") return;
+    const qualities = ytutils.player.getAvailableQualityLevels();
+    const quality = qualities.includes(ytutils.quality)
+      ? ytutils.quality
+      : qualities[0];
+    ytutils.player.setPlaybackQualityRange(quality, quality);
   },
   setSize: () => {
     if (ytutils.size === "default" || ytutils.embed || ytutils.mobile) return;
@@ -217,14 +208,12 @@ const ytutils = {
             flexy.theaterModeChanged_(false);
             break;
           case "chat": {
-            let conut = 0;
+            let i = 0;
             const id = setInterval(() => {
               flexy.theaterModeChanged_(
                 !document.querySelector("#show-hide-button button")
               );
-              if (conut++ === 40) {
-                clearInterval(id);
-              }
+              if (i++ === 40) clearInterval(id);
             }, 50);
             break;
           }
