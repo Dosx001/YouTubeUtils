@@ -1,4 +1,5 @@
 interface settings {
+  play: boolean;
   quality: string;
   size: string;
   speed: number;

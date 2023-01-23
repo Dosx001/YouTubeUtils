@@ -1,14 +1,13 @@
 interface player extends HTMLElement {
-  toggleSubtitles(): void;
   getAvailableQualityLevels: () => string[];
   getLoopVideo(): boolean;
   getOption(module: string, option: string): object;
-  loadModule(module: string): void;
+  pauseVideo(): void;
   setLoopVideo(state: boolean): void;
-  setOption(module: string, option: string, track: object): void;
   setPlaybackQualityRange: (min: string, max: string) => void;
   setPlaybackRate: (rate: number) => void;
   setVolume: (level: number) => void;
+  toggleSubtitles(): void;
   toggleSubtitlesOn(): void;
   unMute: () => void;
   unloadModule(module: string): void;
@@ -20,11 +19,12 @@ interface flexy extends HTMLElement {
 }
 
 const ytutils = {
+  play: false,
   quality: "highres",
   size: "expand",
   speed: 1,
-  subtitles: "default",
   style: "default",
+  subtitles: "default",
   volume: "default",
   volumelevel: 100,
   player: document.querySelector<player>("#movie_player")!,
@@ -233,8 +233,21 @@ window.addEventListener("message", (ev) => {
 window.addEventListener("load", ytutils.setPlayer);
 
 window.addEventListener("yt-navigate-finish", () => {
-  ytutils.loopBtn();
-  ytutils.updatePlayer();
+  if (/user|channel|@/.test(location.pathname)) {
+    if (!ytutils.play) return;
+    let i = 0;
+    const id = setInterval(() => {
+      const player = document.querySelector<player>("#c4-player")!;
+      if (player) {
+        clearInterval(id);
+        player.pauseVideo();
+      }
+      if (i++ === 20) clearInterval(id);
+    }, 100);
+  } else {
+    ytutils.loopBtn();
+    ytutils.updatePlayer();
+  }
 });
 
 window.addEventListener("keydown", (ev) => {
