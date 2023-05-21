@@ -44,6 +44,7 @@ const ytutils = {
             }
           );
         } else if (ytutils.embed) {
+          if (location.search) return;
           const fn = () => {
             ytutils.updatePlayer();
             ytutils.loopBtn();
@@ -143,11 +144,7 @@ const ytutils = {
     ytutils.setQuality();
     ytutils.setSize();
     ytutils.player.setPlaybackRate(ytutils.speed);
-    const volume = ytutils.getVolume();
-    if (volume !== "default") {
-      ytutils.player.unMute();
-      ytutils.player.setVolume(volume);
-    }
+    ytutils.setVolume();
     ytutils.setSubtitles();
     ytutils.setStyle();
   },
@@ -175,16 +172,21 @@ const ytutils = {
         : ytutils.player.toggleSubtitlesOn();
     else ytutils.player.unloadModule("captions");
   },
-  getVolume: () => {
+  setVolume: () => {
     switch (ytutils.volume) {
       case "mute":
-        return 0;
+        ytutils.player.setVolume(0);
+        break;
       case "100":
-        return 100;
+        ytutils.player.setVolume(100);
+        break;
       case "level":
-        return ytutils.volumelevel;
+        ytutils.player.setVolume(ytutils.volumelevel);
+        break;
+      default:
+        return;
     }
-    return "default";
+    ytutils.player.unMute();
   },
   setQuality: () => {
     if (ytutils.quality === "default") return;
