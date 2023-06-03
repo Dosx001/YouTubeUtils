@@ -208,16 +208,8 @@ const ytutils = {
           case "shrink":
             flexy.theaterModeChanged_(false);
             break;
-          case "chat": {
-            let i = 0;
-            const id = setInterval(() => {
-              flexy.theaterModeChanged_(
-                !document.querySelector("#show-hide-button button")
-              );
-              if (i++ === 40) clearInterval(id);
-            }, 50);
-            break;
-          }
+          case "chat":
+            flexy.theaterModeChanged_(document.querySelector("#chat") === null);
         }
       }
     }, 100);
