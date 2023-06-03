@@ -173,6 +173,8 @@ const ytutils = {
     else ytutils.player.unloadModule("captions");
   },
   setVolume: () => {
+    if (ytutils.volume === "default") return;
+    ytutils.player.unMute();
     switch (ytutils.volume) {
       case "mute":
         ytutils.player.setVolume(0);
@@ -183,10 +185,7 @@ const ytutils = {
       case "level":
         ytutils.player.setVolume(ytutils.volumelevel);
         break;
-      default:
-        return;
     }
-    ytutils.player.unMute();
   },
   setQuality: () => {
     if (ytutils.quality === "default") return;
