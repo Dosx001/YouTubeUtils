@@ -9,10 +9,10 @@
     "fire": "web-ext run -s dist -t firefox-android --adb-device $(adb devices | sed -n 2p | awk '{print $1}') --firefox-apk org.mozilla.fenix"
   },
   "devDependencies": {
-    "@types/firefox-webext-browser": "^94.0.1",
-    "@typescript-eslint/eslint-plugin": "^5.44.0",
-    "@typescript-eslint/parser": "^5.44.0",
-    "eslint": "^8.20.0",
-    "typescript": "^4.9.3"
+    "@types/firefox-webext-browser": "^111.0.1",
+    "@typescript-eslint/eslint-plugin": "^6.2.0",
+    "@typescript-eslint/parser": "^6.2.0",
+    "eslint": "^8.45.0",
+    "typescript": "^5.1.6"
   }
 }
