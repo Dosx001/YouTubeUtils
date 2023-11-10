@@ -13,7 +13,7 @@ const updateSettings = async () => {
     style: style.value,
     subtitles: subtitles.value,
     volume: document.querySelector<HTMLInputElement>(
-      'input[type="radio"]:checked'
+      'input[type="radio"]:checked',
     )!.value,
     volumelevel: Number(level.value),
   });

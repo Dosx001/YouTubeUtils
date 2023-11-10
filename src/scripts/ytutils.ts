@@ -41,7 +41,7 @@ const ytutils = {
             (state: number | Event) => {
               if (state === -1) ytutils.loopBtn();
               else if (state === 1) ytutils.updatePlayer();
-            }
+            },
           );
         } else if (ytutils.embed) {
           if (location.search) return;
@@ -66,7 +66,7 @@ const ytutils = {
     const check = document.createElementNS(uri, "path");
     loop.setAttribute(
       "d",
-      "M1 3l1 5l5 -1M2 8A10 10 0 0 1 12 1A11 11 0 0 1 23 12M23 21l-1 -5l-5 1M22 16A10 10 0 0 1 12 23A11 11 0 0 1 1 12"
+      "M1 3l1 5l5 -1M2 8A10 10 0 0 1 12 1A11 11 0 0 1 23 12M23 21l-1 -5l-5 1M22 16A10 10 0 0 1 12 23A11 11 0 0 1 1 12",
     );
     check.setAttribute("d", "M8 12l3 3l6 -6");
     check.style.display = "none";
@@ -98,7 +98,7 @@ const ytutils = {
       };
       const obver = new MutationObserver((ev) => {
         btn.style.display = (ev[0].target as HTMLElement).classList.contains(
-          "fadein"
+          "fadein",
         )
           ? ""
           : "none";
@@ -130,7 +130,7 @@ const ytutils = {
         ytutils.player.dispatchEvent(new CustomEvent("contextmenu"));
         document
           .querySelector<HTMLElement>(
-            ".ytp-contextmenu [role='menuitemcheckbox']"
+            ".ytp-contextmenu [role='menuitemcheckbox']",
           )!
           .click();
         check.style.display = check.style.display === "" ? "none" : "";
@@ -167,7 +167,7 @@ const ytutils = {
     if (ytutils.subtitles === "default") return;
     if (ytutils.subtitles === "on")
       ytutils.mobile &&
-        Object.keys(ytutils.player.getOption("captions", "track")).length === 0
+      Object.keys(ytutils.player.getOption("captions", "track")).length === 0
         ? ytutils.player.toggleSubtitles()
         : ytutils.player.toggleSubtitlesOn();
     else ytutils.player.unloadModule("captions");
