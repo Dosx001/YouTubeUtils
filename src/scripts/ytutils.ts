@@ -244,6 +244,11 @@ window.addEventListener("yt-navigate-finish", () => {
 });
 
 window.addEventListener("keydown", (ev) => {
+  if (
+    (ev.target as HTMLElement).tagName === "INPUT" ||
+    (ev.target as HTMLElement).id === "contenteditable-root"
+  )
+    return;
   switch (ev.key) {
     case "e": {
       const collapse = document.querySelector<HTMLElement>("#collapse")!;
