@@ -138,6 +138,16 @@ const ytutils = {
       document
         .querySelector(".ytp-right-controls")!
         .insertBefore(btn, document.querySelector(".ytp-subtitles-button"));
+      const video = document.querySelector("video")!;
+      const obver = new MutationObserver(() => {
+        check.style.display = video.attributes.getNamedItem("loop")
+          ? ""
+          : "none";
+      });
+      obver.observe(video, {
+        attributes: true,
+        attributeFilter: ["loop"],
+      });
     }
   },
   updatePlayer: () => {
