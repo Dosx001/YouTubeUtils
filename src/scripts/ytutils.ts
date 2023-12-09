@@ -36,13 +36,20 @@ const ytutils = {
       if (ytutils.player) {
         clearInterval(id);
         if (ytutils.mobile) {
-          ytutils.player.addEventListener(
-            "onStateChange",
-            (state: number | Event) => {
-              if (state === -1) ytutils.loopBtn();
-              else if (state === 1) ytutils.updatePlayer();
-            },
-          );
+          const id = setInterval(() => {
+            try {
+              ytutils.player.addEventListener(
+                "onStateChange",
+                (state: number | Event) => {
+                  if (state === -1) ytutils.loopBtn();
+                  else if (state === 1) ytutils.updatePlayer();
+                  clearInterval(id);
+                },
+              );
+            } catch {
+              ytutils.player = document.querySelector<player>("#movie_player")!;
+            }
+          }, 100);
         } else if (ytutils.embed) {
           if (location.search) return;
           const fn = () => {
