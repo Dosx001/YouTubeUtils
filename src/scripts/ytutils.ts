@@ -15,7 +15,7 @@ interface player extends HTMLElement {
 }
 
 interface flexy extends HTMLElement {
-  theaterModeChanged_: (state: boolean) => void;
+  setTheaterModeRequested: (state: boolean) => void;
 }
 
 const ytutils = {
@@ -222,13 +222,16 @@ const ytutils = {
         clearInterval(id);
         switch (ytutils.size) {
           case "expand":
-            flexy.theaterModeChanged_(true);
+            flexy.setTheaterModeRequested(true);
             break;
           case "shrink":
-            flexy.theaterModeChanged_(false);
+            flexy.setTheaterModeRequested(false);
             break;
           case "chat":
-            flexy.theaterModeChanged_(document.querySelector("#chat") === null);
+            flexy.setTheaterModeRequested(
+              document.querySelector("#chat") === null,
+            );
+            break;
         }
       }
     }, 100);
