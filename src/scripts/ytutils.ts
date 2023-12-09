@@ -182,12 +182,14 @@ const ytutils = {
   },
   setSubtitles: () => {
     if (ytutils.subtitles === "default") return;
-    if (ytutils.subtitles === "on")
-      ytutils.mobile &&
-      Object.keys(ytutils.player.getOption("captions", "track")).length === 0
-        ? ytutils.player.toggleSubtitles()
-        : ytutils.player.toggleSubtitlesOn();
-    else ytutils.player.unloadModule("captions");
+    if (ytutils.subtitles === "on") {
+      if (
+        Object.keys(ytutils.player.getOption("captions", "track")).length === 0
+      )
+        ytutils.mobile
+          ? ytutils.player.toggleSubtitles()
+          : ytutils.player.toggleSubtitlesOn();
+    } else ytutils.player.unloadModule("captions");
   },
   setVolume: () => {
     if (ytutils.volume === "default") return;
