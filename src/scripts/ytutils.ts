@@ -51,7 +51,6 @@ const ytutils = {
             }
           }, 100);
         } else if (ytutils.embed) {
-          if (location.search) return;
           const fn = () => {
             ytutils.updatePlayer();
             ytutils.loopBtn();
