@@ -85,7 +85,7 @@ const ytutils = {
     svg.append(check);
     svg.append(loop);
     btn.append(svg);
-    if (ytutils.mobile) {
+    if (ytutils.mobile && !ytutils.embed) {
       if (!ytutils.player) return;
       svg.setAttribute("width", "24px");
       svg.setAttribute("height", "24px");
