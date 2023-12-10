@@ -128,7 +128,7 @@ const ytutils = {
       svg.setAttribute("width", "100%");
       svg.setAttribute("height", "100%");
       svg.style.position = "relative";
-      const size = `${ytutils.embed ? 0.5 : 1}rem`;
+      const size = "25%";
       svg.style.top = size;
       svg.style.left = size;
       btn.title = "Loop video (r)";
