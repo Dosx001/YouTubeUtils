@@ -57,7 +57,10 @@ const ytutils = {
             ytutils.player.removeEventListener("onStateChange", fn);
           };
           ytutils.player.addEventListener("onStateChange", fn);
-        } else ytutils.updatePlayer();
+        } else {
+          if (location.search) return;
+          ytutils.updatePlayer();
+        }
       }
     }, 25);
     ytutils.loopBtn();
