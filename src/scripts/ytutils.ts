@@ -285,7 +285,14 @@ window.addEventListener("keydown", (ev) => {
         ?.click();
       break;
     case "q":
-      document.querySelector<HTMLElement>("#dismiss-button")?.click();
+      document
+        .querySelectorAll<HTMLButtonElement>(
+          ".ytp-suggested-action-badge-dismiss-button-icon, .dismiss-button",
+        )
+        .forEach((btn) => {
+          btn.click();
+          btn.blur();
+        });
       break;
     case "r":
       document.querySelector<HTMLElement>("#ytutils-loop")!.click();
