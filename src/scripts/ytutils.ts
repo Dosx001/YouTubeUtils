@@ -51,16 +51,14 @@ const ytutils = {
             }
           }, 100);
         } else if (ytutils.embed) {
+          if (!location.pathname.includes("embed") && location.search) return;
           const fn = () => {
             ytutils.updatePlayer();
             ytutils.loopBtn();
             ytutils.player.removeEventListener("onStateChange", fn);
           };
           ytutils.player.addEventListener("onStateChange", fn);
-        } else {
-          if (location.search) return;
-          ytutils.updatePlayer();
-        }
+        } else ytutils.updatePlayer();
       }
     }, 25);
     ytutils.loopBtn();
