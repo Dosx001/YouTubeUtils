@@ -51,7 +51,7 @@ const ytutils = {
             }
           }, 100);
         } else if (ytutils.embed) {
-          if (!location.pathname.includes("embed") && location.search) return;
+          if (location.search.includes("youtube.com")) return;
           const fn = () => {
             ytutils.updatePlayer();
             ytutils.loopBtn();
