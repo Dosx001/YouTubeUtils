@@ -5,7 +5,6 @@ interface settings {
   speed: number;
   style: string;
   subtitles: string;
-  volume: string;
   volumelevel: number;
 }
 
