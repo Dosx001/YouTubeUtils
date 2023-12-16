@@ -35,30 +35,17 @@
       </select>
       Size
     </div>
-    <div>
-      <input id="speed_num" type="number" min="0.01" max="4" step="0.01" />
-      Playback Speed
-      <div>
-        <input id="speed_range" type="range" min="0.01" max="4" step="0.01" />
-      </div>
-    </div>
     <input type="checkbox" id="play" /> Disable autoplay on channel pages
   </fieldset>
-  <fieldset>
+  <fieldset id="speed">
+    <legend>Playback</legend>
+    <input type="number" min="0.01" max="4" step="0.01" /><br />
+    <input type="range" min="0.01" max="4" step="0.01" />
+  </fieldset>
+  <fieldset id="volume">
     <legend>Volume</legend>
-    <form id="volume">
-      <div>
-        <input type="radio" name="volume" class="vol_default" value="default" />
-        Default
-        <input type="radio" name="volume" class="vol_mute" value="mute" />
-        Mute
-        <input type="radio" name="volume" class="vol_100" value="100" />
-        100%
-      </div>
-      <input type="radio" name="volume" class="vol_level" value="level" />
-      Volume Level
-      <input id="level" type="number" step="1" min="0" max="100" />
-    </form>
+    <input type="number" min="0" max="100" step="1" /><br />
+    <input type="range" min="0" max="100" step="1" />
   </fieldset>
   <fieldset>
     <legend>Subtitles/Closed Captions (CC)</legend>

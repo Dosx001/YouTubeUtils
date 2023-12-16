@@ -1,9 +1,8 @@
 const [quality, size] = document.querySelectorAll("select")!;
-const speedNum = document.querySelector<HTMLInputElement>("#speed_num")!;
-const speedRange = document.querySelector<HTMLInputElement>("#speed_range")!;
+const speed = document.querySelectorAll<HTMLInputElement>("#speed input")!;
+const volume = document.querySelectorAll<HTMLInputElement>("#volume input")!;
 const style = document.querySelector<HTMLSelectElement>("#style")!;
 const subtitles = document.querySelector<HTMLSelectElement>("#subtitles")!;
-const level = document.querySelector<HTMLInputElement>("#level")!;
 const play = document.querySelector<HTMLInputElement>("#play")!;
 
 const updateSettings = () => {
@@ -11,32 +10,34 @@ const updateSettings = () => {
     play: play.checked,
     quality: quality.options[quality.selectedIndex].value,
     size: size.options[size.selectedIndex].value,
-    speed: Number(speedNum.value),
+    speed: Number(speed[0].value),
     style: style.value,
     subtitles: subtitles.value,
-    volume: document.querySelector<HTMLInputElement>(
-      'input[type="radio"]:checked',
-    )!.value,
-    volumelevel: Number(level.value),
+    volumelevel: Number(volume[0].value),
   });
 };
 
-document.getElementById("volume")!.onchange = updateSettings;
-level.onchange = updateSettings;
-level.onfocus = () =>
-  document.querySelector<HTMLInputElement>(".vol_level")!.click();
 play.onchange = updateSettings;
 quality.onchange = updateSettings;
 size.onchange = updateSettings;
 style.onchange = updateSettings;
 subtitles.onchange = updateSettings;
 
-speedNum.onchange = () => {
-  speedRange.value = speedNum.value;
+volume[0].onchange = () => {
+  volume[1].value = volume[0].value;
   updateSettings();
 };
-speedRange.oninput = () => {
-  speedNum.value = speedRange.value;
+volume[1].oninput = () => {
+  volume[0].value = volume[1].value;
+  updateSettings();
+};
+
+speed[0].onchange = () => {
+  speed[1].value = speed[0].value;
+  updateSettings();
+};
+speed[1].oninput = () => {
+  speed[0].value = speed[1].value;
   updateSettings();
 };
 
@@ -44,11 +45,10 @@ browser.storage.sync.get((data: settings) => {
   play.checked = data.play;
   quality.value = data.quality;
   size.value = data.size;
-  speedNum.value = data.speed.toString();
-  speedRange.value = data.speed.toString();
+  speed[0].value = data.speed.toString();
+  speed[1].value = data.speed.toString();
+  volume[0].value = data.volumelevel.toString();
+  volume[1].value = data.volumelevel.toString();
   style.value = data.style;
   subtitles.value = data.subtitles;
-  level.value = data.volumelevel.toString();
-  document.querySelector<HTMLInputElement>(`.vol_${data.volume}`)!.checked =
-    true;
 });

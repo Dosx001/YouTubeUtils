@@ -25,7 +25,6 @@ const ytutils = {
   speed: 1,
   style: "default",
   subtitles: "default",
-  volume: "default",
   volumelevel: 100,
   player: document.querySelector<player>("#movie_player")!,
   embed: location.pathname.includes("embed"),
@@ -196,19 +195,8 @@ const ytutils = {
     } else ytutils.player.unloadModule("captions");
   },
   setVolume: () => {
-    if (ytutils.volume === "default") return;
     ytutils.player.unMute();
-    switch (ytutils.volume) {
-      case "mute":
-        ytutils.player.setVolume(0);
-        break;
-      case "100":
-        ytutils.player.setVolume(100);
-        break;
-      case "level":
-        ytutils.player.setVolume(ytutils.volumelevel);
-        break;
-    }
+    ytutils.player.setVolume(ytutils.volumelevel);
   },
   setQuality: () => {
     if (ytutils.quality === "default") return;
