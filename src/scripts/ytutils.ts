@@ -162,8 +162,12 @@ const ytutils = {
     ytutils.setSize();
     ytutils.player.setPlaybackRate(ytutils.speed);
     ytutils.setVolume();
-    ytutils.setSubtitles();
-    ytutils.setStyle();
+    try {
+      ytutils.setSubtitles();
+      ytutils.setStyle();
+    } catch {
+      // no available subtitles
+    }
   },
   setStyle: () => {
     if (ytutils.style === "default") return;
