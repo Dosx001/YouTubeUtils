@@ -12,14 +12,14 @@ and autoplay, and more! Works on mobile, desktop, and embed videos.
 | --- | --------------------------------- |
 | e   | Expand/Collapse video description |
 | p   | Toggle auto play                  |
-| q   | Dismiss YouTube popup             |
+| q   | Dismiss YouTube/merch popup       |
 | r   | Replay/loop video                 |
 
 ## UI
 
 ### Desktop
 
-![popup](https://addons.mozilla.org/user-media/previews/thumbs/277/277780.jpg)
+![popup](https://addons.mozilla.org/user-media/previews/full/293/293184.png)
 
 ![loop button](https://addons.mozilla.org/user-media/previews/thumbs/277/277522.jpg)
 
@@ -28,6 +28,7 @@ and autoplay, and more! Works on mobile, desktop, and embed videos.
 ![fullscreen](https://addons.mozilla.org/user-media/previews/thumbs/277/277616.jpg)
 
 ![mobile](https://addons.mozilla.org/user-media/previews/thumbs/277/277617.jpg)
+![mobile menu](https://addons.mozilla.org/user-media/previews/thumbs/293/293202.jpg)
 
 ### Embed Videos
 
