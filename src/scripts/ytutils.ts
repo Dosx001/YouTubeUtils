@@ -264,6 +264,9 @@ window.addEventListener("yt-navigate-finish", () => {
 
 window.addEventListener("keydown", (ev) => {
   if (
+    ev.altKey ||
+    ev.ctrlKey ||
+    ev.metaKey ||
     (ev.target as HTMLElement).tagName === "INPUT" ||
     (ev.target as HTMLElement).id === "contenteditable-root"
   )
