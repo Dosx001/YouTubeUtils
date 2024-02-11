@@ -158,9 +158,9 @@ const ytutils = {
   },
   updatePlayer: () => {
     ytutils.setQuality();
-    ytutils.setSize();
     ytutils.player.setPlaybackRate(ytutils.speed);
     ytutils.setVolume();
+    if (!ytutils.mobile) ytutils.setSize();
     try {
       ytutils.setSubtitles();
       ytutils.setStyle();
