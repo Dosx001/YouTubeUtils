@@ -2,6 +2,7 @@ interface player extends HTMLElement {
   getAvailableQualityLevels: () => string[];
   getLoopVideo(): boolean;
   getOption(module: string, option: string): object;
+  isAtLiveHead(): () => boolean;
   pauseVideo(): void;
   setLoopVideo(state: boolean): void;
   setPlaybackQualityRange: (min: string, max: string) => void;
@@ -158,7 +159,9 @@ const ytutils = {
   },
   updatePlayer: () => {
     ytutils.setQuality();
-    ytutils.player.setPlaybackRate(ytutils.speed);
+    ytutils.player.setPlaybackRate(
+      ytutils.mobile && ytutils.player.isAtLiveHead() ? 1 : ytutils.speed,
+    );
     ytutils.setVolume();
     if (!ytutils.mobile) ytutils.setSize();
     try {
