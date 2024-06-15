@@ -1,3 +1,5 @@
+import "./styles.scss";
+
 const [quality, size] = document.querySelectorAll("select")!;
 const speed = document.querySelectorAll<HTMLInputElement>("#speed input")!;
 const volume = document.querySelectorAll<HTMLInputElement>("#volume input")!;

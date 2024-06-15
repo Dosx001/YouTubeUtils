@@ -1,10 +1,11 @@
 {
   "name": "YouTubeUtils",
-  "version": "1.0.0",
-  "description": "Extra YouTube functionality",
+  "version": "1.12.2",
+  "description": "Play videos at the highest quality, dynamically resize video player, extra hotkeys such as to loop video, and more!",
   "scripts": {
-    "build": "web-ext build -s dist -i '**/*.css.map' --overwrite-dest",
-    "tar": "tar czvf YouTubeUtils.tar.gz src dist build.sh package.json tsconfig.json pnpm-lock.yaml README_FIREFOX.md",
+    "build": "vite build",
+    "bundle": "web-ext build -s dist -o",
+    "tar": "tar czvf YouTubeUtils.tar.gz src public vite.config.mts package.json tsconfig.json pnpm-lock.yaml README_FIREFOX.md",
     "sass": "sass --update src:dist",
     "fire": "web-ext run -s dist -t firefox-android --adb-device $(adb devices | sed -n 2p | awk '{print $1}') --firefox-apk org.mozilla.fenix"
   },
@@ -13,6 +14,9 @@
     "@typescript-eslint/eslint-plugin": "^7.4.0",
     "@typescript-eslint/parser": "^7.4.0",
     "eslint": "^8.57.0",
-    "typescript": "^5.4.3"
+    "sass": "^1.72.0",
+    "typescript": "^5.4.3",
+    "vite": "^5.2.6",
+    "vite-plugin-web-extension": "^4.1.3"
   }
 }
