@@ -14,6 +14,7 @@ const sendSettings = () => {
   });
 };
 
+document.getElementById("ytutils")?.remove();
 const s = document.createElement("script");
 s.src = browser.runtime.getURL("src/scripts/ytutils.js");
 s.id = "ytutils";
