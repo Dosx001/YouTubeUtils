@@ -41,7 +41,8 @@ const ytutils = {
               ytutils.player.addEventListener(
                 "onStateChange",
                 (state: number | Event) => {
-                  if (state === -1) ytutils.loopBtn();
+                  if (state === -1)
+                    ytutils.loopBtn(!!document.querySelector("#ytutils-loop"));
                   else if (state === 1) ytutils.updatePlayer();
                   clearInterval(id);
                 },
@@ -63,7 +64,7 @@ const ytutils = {
     }, 25);
     ytutils.loopBtn();
   },
-  loopBtn: () => {
+  loopBtn: (reload = false) => {
     document.querySelector("#ytutils-loop")?.remove();
     const btn = document.createElement("button");
     btn.id = "ytutils-loop";
@@ -124,7 +125,7 @@ const ytutils = {
         }, 100);
         ytutils.player.removeEventListener("onStateChange", fn);
       };
-      ytutils.player.addEventListener("onStateChange", fn);
+      reload ? fn() : ytutils.player.addEventListener("onStateChange", fn);
     } else {
       svg.setAttribute("width", "100%");
       svg.setAttribute("height", "100%");
@@ -158,6 +159,7 @@ const ytutils = {
     }
   },
   updatePlayer: () => {
+    if (!document.querySelector("#ytutils-loop")) ytutils.loopBtn(true);
     ytutils.setQuality();
     ytutils.player.setPlaybackRate(
       ytutils.mobile && ytutils.player.isAtLiveHead() ? 1 : ytutils.speed,
@@ -263,6 +265,15 @@ window.addEventListener("yt-navigate-finish", () => {
     ytutils.loopBtn();
     ytutils.updatePlayer();
   }
+});
+
+window.addEventListener("popstate", () => {
+  try {
+    ytutils.setPlayer();
+  } catch {
+    ytutils.setPlayer();
+  }
+  ytutils.loopBtn(true);
 });
 
 window.addEventListener("keydown", (ev) => {
