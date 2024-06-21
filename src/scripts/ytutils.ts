@@ -267,14 +267,32 @@ window.addEventListener("yt-navigate-finish", () => {
   }
 });
 
-window.addEventListener("popstate", () => {
-  try {
-    ytutils.setPlayer();
-  } catch {
-    ytutils.setPlayer();
-  }
-  ytutils.loopBtn(true);
-});
+let url = document.location.href;
+function setupObserver() {
+  setTimeout(() => {
+    const app = document.querySelector("ytm-app");
+    if (app) {
+      new MutationObserver(() => {
+        if (url !== document.location.href) {
+          url = document.location.href;
+          document.querySelector("#ytutils-loop")?.remove();
+          try {
+            ytutils.setPlayer();
+          } catch {
+            ytutils.setPlayer();
+          }
+          ytutils.loopBtn(true);
+        }
+      }).observe(app, {
+        childList: true,
+        subtree: false,
+      });
+      return;
+    }
+    setupObserver();
+  }, 200);
+}
+setupObserver();
 
 window.addEventListener("keydown", (ev) => {
   if (
