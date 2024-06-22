@@ -7,7 +7,7 @@
     "bundle": "web-ext build -s dist -o",
     "tar": "tar czvf YouTubeUtils.tar.gz src public vite.config.mts package.json tsconfig.json pnpm-lock.yaml README_FIREFOX.md",
     "sass": "sass --update src:dist",
-    "fire": "web-ext run -s dist -t firefox-android --adb-device $(adb devices | sed -n 2p | awk '{print $1}') --firefox-apk org.mozilla.fenix"
+    "fire": "web-ext run -s dist -t firefox-android --adb-device $(adb devices | sed -n 2p | awk '{print $1}') --firefox-apk org.mozilla.fenix --adb-remove-old-artifacts"
   },
   "devDependencies": {
     "@types/firefox-webext-browser": "^120.0.3",
