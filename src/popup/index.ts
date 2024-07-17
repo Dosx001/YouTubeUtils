@@ -6,6 +6,7 @@ const volume = document.querySelectorAll<HTMLInputElement>("#volume input")!;
 const style = document.querySelector<HTMLSelectElement>("#style")!;
 const subtitles = document.querySelector<HTMLSelectElement>("#subtitles")!;
 const play = document.querySelector<HTMLInputElement>("#play")!;
+const zoom = document.querySelector<HTMLSelectElement>("#zoom")!;
 
 const updateSettings = () => {
   browser.storage.sync.set({
@@ -16,6 +17,7 @@ const updateSettings = () => {
     style: style.value,
     subtitles: subtitles.value,
     volumelevel: Number(volume[0].value),
+    zoom: Number(zoom.value),
   });
 };
 
@@ -24,6 +26,7 @@ quality.onchange = updateSettings;
 size.onchange = updateSettings;
 style.onchange = updateSettings;
 subtitles.onchange = updateSettings;
+zoom.onchange = updateSettings;
 
 volume[0].onchange = () => {
   volume[1].value = volume[0].value;
@@ -53,4 +56,5 @@ browser.storage.sync.get((data: settings) => {
   volume[1].value = data.volumelevel.toString();
   style.value = data.style;
   subtitles.value = data.subtitles;
+  zoom.value = data.zoom.toString();
 });

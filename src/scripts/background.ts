@@ -10,4 +10,5 @@ browser.storage.sync.get((data: settings) => {
       volume: "default",
       volumelevel: 100,
     });
+  if (!data.zoom) browser.storage.sync.set({ zoom: 0 });
 });

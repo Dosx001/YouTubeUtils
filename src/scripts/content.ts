@@ -6,6 +6,7 @@ interface settings {
   style: string;
   subtitles: string;
   volumelevel: number;
+  zoom: number;
 }
 
 const sendSettings = () => {
