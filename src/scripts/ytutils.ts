@@ -100,6 +100,7 @@ const ytutils = {
       btn.style.top = "5px";
       btn.style.height = "40px";
       btn.style.width = "45px";
+      btn.style.zIndex = "9999";
       btn.onclick = () => {
         const boo = !ytutils.player.getLoopVideo();
         ytutils.player.setLoopVideo(boo);
