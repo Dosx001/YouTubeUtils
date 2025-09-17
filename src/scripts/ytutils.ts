@@ -132,9 +132,6 @@ const ytutils = {
       svg.setAttribute("width", "100%");
       svg.setAttribute("height", "100%");
       svg.style.position = "relative";
-      const size = "25%";
-      svg.style.top = size;
-      svg.style.left = size;
       btn.title = "Loop video (r)";
       btn.onclick = () => {
         ytutils.player.dispatchEvent(new CustomEvent("contextmenu"));
@@ -145,9 +142,14 @@ const ytutils = {
           .click();
         check.style.display = check.style.display === "" ? "none" : "";
       };
-      document
-        .querySelector(".ytp-right-controls")!
-        .insertBefore(btn, document.querySelector(".ytp-subtitles-button"));
+      const container = document.querySelector(".ytp-right-controls-left");
+      if (container) container.before(btn);
+      else {
+        const size = "25%";
+        svg.style.top = size;
+        svg.style.left = size;
+        document.querySelector(".ytp-right-controls")!.before(btn);
+      }
       const video = document.querySelector("video")!;
       const obver = new MutationObserver(() => {
         check.style.display = video.attributes.getNamedItem("loop")
