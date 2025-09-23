@@ -55,8 +55,12 @@ const ytutils = {
         } else if (ytutils.embed) {
           if (location.search.includes("youtube.com")) return;
           const fn = () => {
-            ytutils.updatePlayer();
-            ytutils.loopBtn();
+            const id = setInterval(() => {
+              if (0 < ytutils.player.getAvailableQualityLevels().length) {
+                clearInterval(id);
+                ytutils.updatePlayer();
+              }
+            }, 200);
             ytutils.player.removeEventListener("onStateChange", fn);
           };
           ytutils.player.addEventListener("onStateChange", fn);
