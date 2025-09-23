@@ -86,6 +86,7 @@ const ytutils = {
     const svg = document.createElementNS(uri, "svg");
     svg.setAttribute("viewbox", "0 0 24 24");
     svg.style.fill = "transparent";
+    svg.style.position = "relative";
     svg.style.stroke = "#e6e6e6";
     svg.style.strokeWidth = "2px";
     svg.style.strokeLinecap = "round";
@@ -96,9 +97,8 @@ const ytutils = {
       if (!ytutils.player) return;
       svg.setAttribute("width", "24px");
       svg.setAttribute("height", "24px");
-      svg.style.position = "relative";
       svg.style.left = "10px";
-      btn.style.position = "absolute";
+      btn.style.position = "relative";
       btn.style.display = "none";
       btn.style.left = "5px";
       btn.style.top = "5px";
@@ -118,7 +118,8 @@ const ytutils = {
           : "none";
       });
       const fn = () => {
-        document.querySelector("#player-container-id")!.append(btn);
+        document.querySelector("#ytutils-loop")?.remove();
+        document.querySelector("player-top-controls")!.append(btn);
         const id = setInterval(() => {
           const ctrl = document.querySelector("#player-control-overlay");
           if (ctrl) {
