@@ -28,12 +28,12 @@ const ytutils = {
   subtitles: "default",
   volumelevel: 100,
   zoom: 0,
-  player: document.querySelector<player>("#movie_player")!,
+  player: document.querySelector<player>("#movie_player,#shorts-player")!,
   embed: location.pathname.includes("embed"),
   mobile: /Android|iPhone|iPad/.test(navigator.userAgent),
   setPlayer: () => {
     const id = setInterval(() => {
-      ytutils.player = document.querySelector<player>("#movie_player")!;
+      ytutils.player = document.querySelector<player>("#movie_player,#shorts-player")!;
       if (ytutils.player) {
         clearInterval(id);
         if (ytutils.mobile) {
@@ -49,7 +49,7 @@ const ytutils = {
                 },
               );
             } catch {
-              ytutils.player = document.querySelector<player>("#movie_player")!;
+              ytutils.player = document.querySelector<player>("#movie_player,#shorts-player")!;
             }
           }, 100);
         } else if (ytutils.embed) {
