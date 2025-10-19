@@ -314,9 +314,9 @@ window.addEventListener("keydown", (ev) => {
     return;
   switch (ev.key) {
     case "e": {
-      const collapse = document.querySelector<HTMLElement>("#collapse")!;
+      const collapse = document.querySelector<HTMLElement>("tp-yt-paper-button#collapse")!;
       (collapse.hidden
-        ? document.querySelector<HTMLElement>("#expand")
+        ? document.querySelector<HTMLElement>("tp-yt-paper-button#expand")
         : collapse)!.click();
       break;
     }
